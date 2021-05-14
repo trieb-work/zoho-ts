@@ -4,7 +4,7 @@ There are several functions already created, but in the end they are all custom.
 
 ## Usage
 ```
-import { ZohoClientInstance } from '@trieb.work/zoho-inventory-ts';
+import { ZohoClientInstance } from '@trieb.work/zoho-ts';
 
 
 const zohoClient = new ZohoClientInstance({
