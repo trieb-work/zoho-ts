@@ -580,7 +580,7 @@ export class MultiMethods extends ZohoClientBase {
         });
         assert.strictEqual(result.data.code, 0);
         const returnValue = result.data.items;
-        if (returnValue < 1) throw new Error(`No product for this SKU found! Create the product first in Zoho ${product_sku}`);
+        if (returnValue < 1) console.error(`No product for this SKU found! Create the product first in Zoho ${product_sku}`);
         return {
             zohoItemId: returnValue[0].item_id as string,
             zohoTaxRate: returnValue[0].tax_percentage as number,
