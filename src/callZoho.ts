@@ -398,7 +398,7 @@ export class MultiMethods extends ZohoClientBase {
         return exactMatch?.contact_id;
     };
 
-    async createContactPerson(contactId :string, contactPerson :ContactPerson) {
+    createContactPerson = async (contactId :string, contactPerson :ContactPerson) => {
         if (!contactId) throw new Error(`contactId missing! Can't create the contact person ${contactPerson}`);
         const createData = {
             ...contactPerson,
