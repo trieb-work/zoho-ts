@@ -707,6 +707,15 @@ export class MultiMethods extends ZohoClientBase {
     };
   };
 
+  deleteContact = async (contactId: string) => {
+    const result = await this.instance({
+      method: "DELETE",
+      url: `/contacts/${contactId}`,
+    });
+    assert.strictEqual(result.data.code, 0);
+    return true;
+  };
+
   /**
    * Create a contact and return the ID of the contact, the billing_address, shipping_address and contact person ID
    * @param data
@@ -725,7 +734,7 @@ export class MultiMethods extends ZohoClientBase {
     return {
       contact_id: result.data.contact.contact_id,
       contact_person_id:
-        result.data.contact.contact_persons[0].contact_person_id,
+        result.data.contact.contact_persons[0]?.contact_person_id,
       billing_address_id:
         result.data.contact.billing_address.address_id || null,
       shipping_address_id:

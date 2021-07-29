@@ -826,7 +826,7 @@ export type Contact = {
 
 export type ContactCreate = {
   contact_name: string;
-  company_name?: "";
+  company_name?: string;
   first_name?: string;
   last_name?: string;
   designation?: "";
