@@ -16,7 +16,7 @@
   "scripts": {
     "build": "yarn run clean && yarn tsc",
     "clean": "yarn rimraf dist",
-    "publish": "yarn run clean && yarn run build && yarn npm publish --access public",
+    "publish": "yarn run clean && yarn run build && yarn publish --access public",
     "dev": "yarn tsc --watch --preserveWatchOutput",
     "format": "prettier --write .",
     "lint": "eslint . --ext ts --ext tsx --ext js --fix",
