@@ -5,7 +5,10 @@ import { ZohoClientInstance } from "./index";
 dotenv.config({ path: "./.env" });
 
 async function main() {
-  let contactID: string = "";
+  let testingContactID: string = "";
+  const testProductSku: string = process.env.TEST_PRODUCT_SKU || "";
+  let testProductId: string = "";
+  let testSalesOrderId: string = "";
 
   const client = new ZohoClientInstance({
     zohoClientId: process.env.ZOHO_CLIENT_ID!,
@@ -25,11 +28,47 @@ async function main() {
       contact_persons: [{ first_name: "Jest", last_name: "User" }],
     });
     expect(contactData.contact_person_id).toBeDefined();
-    contactID = contactData.contact_id;
+    testingContactID = contactData.contact_id;
+  });
+
+  it("works to get a contact by id", async () => {
+    const getContactData = await client.getContactById(testingContactID);
+    expect(getContactData.first_name).toBe("Jest");
+  });
+
+  it("works to look-up a product by SKU", async () => {
+    const productData = await client.getItembySKU({
+      product_sku: testProductSku,
+    });
+    expect(productData.zohoItemId).toBeDefined();
+
+    testProductId = productData.zohoItemId;
+  });
+
+  it("works to create a salesorder for the new contact", async () => {
+    try {
+      const salesOrderCreateData = await client.createSalesorder({
+        salesorder_number: "TEST-24",
+        customer_id: testingContactID,
+        line_items: [{ item_id: testProductId, quantity: 1 }],
+      });
+      expect(salesOrderCreateData.salesorder_number).toBe("TEST-24");
+      testSalesOrderId = salesOrderCreateData.salesorder_id;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  });
+
+  it("works to delete a salesorder again", async () => {
+    const deleteSalesorderResult = await client.deleteSalesorder(
+      testSalesOrderId,
+    );
+    expect(deleteSalesorderResult).toBeTruthy();
   });
 
   it("works to delete the contact again", async () => {
-    const deleteData = await client.deleteContact(contactID);
+    const deleteData = await client.deleteContact(testingContactID);
     expect(deleteData).toBeTruthy();
   });
 
@@ -46,7 +85,6 @@ async function main() {
   //   console.log(
   //     await client.getPackagesTotal({ from: "2021-01-01", to: "2021-02-01" }),
   //   );
-  //   console.log(await client.getContactById(id));
   //   console.log(await client.getSalesorder("SO-000100"));
 
   //   const dataRObject = await client.getDocumentBase64StringOrBuffer(

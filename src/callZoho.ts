@@ -781,7 +781,10 @@ export class MultiMethods extends ZohoClientBase {
    * @param rawData
    * @param totalGrossAmount
    */
-  createSalesorder = async (rawData: SalesOrder, totalGrossAmount?: string) => {
+  createSalesorder = async (
+    rawData: Partial<SalesOrder>,
+    totalGrossAmount?: string,
+  ) => {
     const total_gross_amount = totalGrossAmount
       ? parseFloat(totalGrossAmount)
       : undefined;
@@ -810,6 +813,19 @@ export class MultiMethods extends ZohoClientBase {
       assert.strictEqual(total_gross_amount, result.data.salesorder.total);
 
     return result.data.salesorder as SalesOrderReturn;
+  };
+
+  /**
+   * Delete a salesorder by ID
+   * @param salesorderId
+   */
+  deleteSalesorder = async (salesorderId: string) => {
+    const result = await this.instance({
+      method: "DELETE",
+      url: `/salesorders/${salesorderId}`,
+    });
+    assert.strictEqual(result.data.code, 0);
+    return true;
   };
 
   /**

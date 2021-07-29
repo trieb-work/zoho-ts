@@ -491,7 +491,7 @@ export type SalesOrder = {
   is_offline_payment?: boolean;
   created_by_email?: string;
   total_quantity?: number;
-  line_items?: LineItem[];
+  line_items?: Partial<LineItem>[];
   submitter_id?: "";
   approver_id?: "";
   submitted_date?: "";
