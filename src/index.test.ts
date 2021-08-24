@@ -67,33 +67,17 @@ async function main() {
     expect(deleteSalesorderResult).toBeTruthy();
   });
 
+  it("works to add a contact person to a contact", async () => {
+    const contactPersonId = await client.createContactPerson(testingContactID, {
+      first_name: "Testing",
+      last_name: "Person",
+      email: "testing@contact-person.de",
+    });
+    expect(contactPersonId).toBeDefined();
+  });
   it("works to delete the contact again", async () => {
     const deleteData = await client.deleteContact(testingContactID);
     expect(deleteData).toBeTruthy();
   });
-
-  // try {
-  //   console.log(await client.salesOrderEditpage());
-  //   const id = await client.getContact({
-  //     first_name: "Jannik",
-  //     last_name: "Zinkl",
-  //     email: "zinkljannik@gmail.com",
-  //     company_name: "",
-  //   });
-  //   console.log("customer", id);
-
-  //   console.log(
-  //     await client.getPackagesTotal({ from: "2021-01-01", to: "2021-02-01" }),
-  //   );
-  //   console.log(await client.getSalesorder("SO-000100"));
-
-  //   const dataRObject = await client.getDocumentBase64StringOrBuffer(
-  //     "salesorders",
-  //     "116240000000673009",
-  //   );
-  //   console.log(dataRObject.filename);
-  // } catch (error) {
-  //   console.error(error);
-  // }
 }
 main();

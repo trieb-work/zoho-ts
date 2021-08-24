@@ -509,7 +509,7 @@ export class MultiMethods extends ZohoClientBase {
       data,
     });
     assert.strictEqual(result.data.code, 0);
-    return result.data.contact_person.contact_person_id;
+    return result.data.contact_person.contact_person_id as string;
   };
 
   /**
