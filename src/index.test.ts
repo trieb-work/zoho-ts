@@ -60,6 +60,11 @@ async function main() {
     }
   });
 
+  it("works to search for several salesorders with a string", async () => {
+    const searchResult = await client.searchSalesOrdersWithScrolling("TEST-");
+    expect(searchResult[0].salesorder_number).toBe("TEST-24");
+  });
+
   it("works to delete a salesorder again", async () => {
     const deleteSalesorderResult = await client.deleteSalesorder(
       testSalesOrderId,

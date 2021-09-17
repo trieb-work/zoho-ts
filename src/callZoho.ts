@@ -41,6 +41,8 @@ import {
   CustomFunctionSearch,
   ContactCreate,
   CustomerPaymentCreate,
+  SalesOrderSearchResponse,
+  SalesOrderShortSearchOverview,
 } from "./types";
 
 dayjs.extend(isBetween);
@@ -1359,5 +1361,34 @@ export class MultiMethods extends ZohoClientBase {
     });
     assert.strictEqual(result.data.code, 0);
     return result.data.webhook as CustomFunctionSearch;
+  };
+
+  /**
+   * Search for salesorders with a string and returns all matching results.
+   * Uses scrolling to get 200+ results with as little API-requests as possible
+   * @param searchString
+   */
+  searchSalesOrdersWithScrolling = async (searchString: string) => {
+
+    const search = async (
+      page = 1,
+    ): Promise<SalesOrderShortSearchOverview[]> => {
+      const searchResult = await this.instance({
+        url: "/salesorders",
+        params: {
+          salesorder_number_contains: searchString,
+          per_page: 200,
+          page,
+        },
+      });
+      assert.strictEqual(searchResult.data.code, 0);
+      const data = searchResult.data as SalesOrderSearchResponse;
+      if (searchResult.data.page_context.has_more_page) {
+        return data.salesorders.concat(await search(page + 1));
+      }
+      return data.salesorders;
+    };
+
+    return search();
   };
 }
