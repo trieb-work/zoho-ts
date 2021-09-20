@@ -47,7 +47,7 @@ export type SalesOrderShortSearchOverview = {
   current_sub_status: "confirmed";
   current_sub_status_formatted: "Confirmed";
   pickup_location_id: "";
-  salesorder_number: "SO-00032";
+  salesorder_number: string;
   reference_number: "";
   date: "2021-09-17";
   date_formatted: "17-09-2021";

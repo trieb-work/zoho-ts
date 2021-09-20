@@ -9,12 +9,16 @@ async function main() {
   const testProductSku: string = process.env.TEST_PRODUCT_SKU || "";
   let testProductId: string = "";
   let testSalesOrderId: string = "";
+  let secondTestSalesOrderId: string = "";
+  const readyToFulfillCustomFieldId = "116240000000112068";
 
   const client = new ZohoClientInstance({
     zohoClientId: process.env.ZOHO_CLIENT_ID!,
     zohoClientSecret: process.env.ZOHO_CLIENT_SECRET!,
     zohoOrgId: process.env.ZOHO_ORGANIZATION_ID!,
   });
+
+  const multipleSalesOrdersIdArray: string[] = [];
 
   it("works to authenticate", async () => {
     await client.authenticate();
@@ -60,9 +64,56 @@ async function main() {
     }
   });
 
+  it("works to create a second salesorder for the new contact", async () => {
+    try {
+      const salesOrderCreateData = await client.createSalesorder({
+        salesorder_number: "TEST-25",
+        customer_id: testingContactID,
+        line_items: [{ item_id: testProductId, quantity: 1 }],
+      });
+      expect(salesOrderCreateData.salesorder_number).toBe("TEST-25");
+      secondTestSalesOrderId = salesOrderCreateData.salesorder_id;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  });
+
+  /**
+   * Create some salesorders etc. to later test bulk delete, update etc.
+   */
+  it("works to create 20 salesorders for further testing", async () => {
+    const testArray = [
+      1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    ];
+    // eslint-disable-next-line no-restricted-syntax
+    for (const x of testArray) {
+      // eslint-disable-next-line no-await-in-loop
+      const response = await client.createSalesorder({
+        salesorder_number: `MULTI-${x}`,
+        customer_id: testingContactID,
+        line_items: [{ item_id: testProductId, quantity: 1 }],
+      });
+      multipleSalesOrdersIdArray.push(response.salesorder_id);
+    }
+    expect(multipleSalesOrdersIdArray.length).toBe(20);
+  }, 20000);
+
   it("works to search for several salesorders with a string", async () => {
     const searchResult = await client.searchSalesOrdersWithScrolling("TEST-");
-    expect(searchResult[0].salesorder_number).toBe("TEST-24");
+    expect(
+      searchResult.find((x) => x.salesorder_number === "TEST-25")
+        ?.salesorder_number,
+    ).toBe("TEST-25");
+  });
+
+  it("works to bulk update two salesorders at once", async () => {
+    const updateResult = await client.bulkUpdateSalesOrderCustomField(
+      [testSalesOrderId, secondTestSalesOrderId],
+      readyToFulfillCustomFieldId,
+      true,
+    );
+    updateResult.map((x) => expect(x.salesperson_id).toBeDefined());
   });
 
   it("works to delete a salesorder again", async () => {
@@ -70,6 +121,14 @@ async function main() {
       testSalesOrderId,
     );
     expect(deleteSalesorderResult).toBeTruthy();
+  });
+
+  it("works to delete multiple salesorders at once", async () => {
+    multipleSalesOrdersIdArray.push(secondTestSalesOrderId);
+    const deleteSalesOrdersResult = await client.bulkDeleteSalesOrders(
+      multipleSalesOrdersIdArray,
+    );
+    expect(deleteSalesOrdersResult).toBeTruthy();
   });
 
   it("works to add a contact person to a contact", async () => {

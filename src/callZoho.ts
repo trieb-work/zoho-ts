@@ -4,7 +4,7 @@
 /* eslint-disable prefer-destructuring */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable @typescript-eslint/naming-convention */
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { strict as assert } from "assert";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
@@ -865,6 +865,8 @@ export class MultiMethods extends ZohoClientBase {
    */
   async salesordersConfirm(salesorders: string[], retries = 3) {
     const data = `salesorder_ids=${encodeURIComponent(salesorders.join(","))}`;
+    if (salesorders.length > 25)
+      throw new Error("We can only confirm 25 salesorders at once!");
     await retry(
       async () => {
         const result = await this.instance({
@@ -1369,7 +1371,6 @@ export class MultiMethods extends ZohoClientBase {
    * @param searchString
    */
   searchSalesOrdersWithScrolling = async (searchString: string) => {
-
     const search = async (
       page = 1,
     ): Promise<SalesOrderShortSearchOverview[]> => {
@@ -1390,5 +1391,72 @@ export class MultiMethods extends ZohoClientBase {
     };
 
     return search();
+  };
+
+  /**
+   * Update custom fields of many salesorders at once with a single API call.
+   * @param salesOrderIds
+   * @param customFieldId
+   * @param value
+   */
+  bulkUpdateSalesOrderCustomField = async (
+    salesOrderIds: string[],
+    customFieldId: string,
+    value: any,
+  ) => {
+    const salesOrderIDs = salesOrderIds.join(",");
+    const customField = { customfield_id: customFieldId, value };
+    const updateData = {
+      custom_fields: [customField],
+      salesorder_id: salesOrderIDs,
+    };
+    const data = `bulk_update=true&JSONString=${encodeURIComponent(
+      JSON.stringify(updateData),
+    )}`;
+
+    interface ExtendedSalesorder extends SalesOrder {
+      code: number;
+      message: string;
+    }
+
+    interface UpdateResponseObject {
+      salesorders: ExtendedSalesorder[];
+    }
+
+    const result: AxiosResponse<UpdateResponseObject> = await this.instance({
+      method: "PUT",
+      url: "/salesorders",
+      data,
+    });
+
+    result.data.salesorders.map((x) => {
+      assert.strictEqual(x.code, 0);
+      return true;
+    });
+
+    return result.data.salesorders;
+  };
+
+  /**
+   * Delete multiple salesorders at once. Insert an array of salesorder Ids.
+   * @param salesOrderIds
+   * @returns true
+   */
+  bulkDeleteSalesOrders = async (salesOrderIds: string[]) => {
+    const result = await this.instance({
+      method: "DELETE",
+      url: "/salesorders",
+      params: {
+        salesorder_ids: salesOrderIds.join(","),
+      },
+    });
+    assert.strictEqual(result.data.code, 0);
+    if (result.data.data.length > 0)
+      throw new Error(
+        `Not all salesorders could be deleted: ${JSON.stringify(
+          result.data.data,
+        )}`,
+      );
+    return true;
   };
 }
