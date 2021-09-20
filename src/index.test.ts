@@ -139,6 +139,7 @@ async function main() {
     });
     expect(contactPersonId).toBeDefined();
   });
+
   it("works to delete the contact again", async () => {
     const deleteData = await client.deleteContact(testingContactID);
     expect(deleteData).toBeTruthy();
