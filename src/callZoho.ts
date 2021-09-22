@@ -104,7 +104,7 @@ async function authenticate(zohoConfig: ZohoConfig) {
     return accessToken;
   } catch (error) {
     console.error("Error accessing Zoho", error);
-    throw new Error(error);
+    throw new Error(error as string);
   }
 }
 
@@ -863,7 +863,7 @@ export class MultiMethods extends ZohoClientBase {
    * @param salesorders Array of Salesorder Ids to confirm at once
    * @param retries the number of retries we should do when request fails
    */
-  async salesordersConfirm(salesorders: string[], retries = 3) {
+  salesordersConfirm = async (salesorders: string[], retries = 3) => {
     const data = `salesorder_ids=${encodeURIComponent(salesorders.join(","))}`;
     if (salesorders.length > 25)
       throw new Error("We can only confirm 25 salesorders at once!");
@@ -884,7 +884,7 @@ export class MultiMethods extends ZohoClientBase {
         retries,
       },
     );
-  }
+  };
 
   salesorderConfirm = async (salesorderId: string, retries = 3) => {
     await retry(

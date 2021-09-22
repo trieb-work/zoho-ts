@@ -1,6 +1,6 @@
 {
   "name": "@trieb.work/zoho-ts",
-  "version": "0.2.6",
+  "version": "0.2.8",
   "description": "Our Typescript library helps you to work easily with the Zoho Inventory API. Most functions are generic and self-explanatory. Some are specific to our use-cases",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,9 +16,10 @@
   "scripts": {
     "build": "yarn run clean && yarn tsc",
     "clean": "yarn rimraf dist",
-    "publish": "yarn run clean && yarn run build && yarn publish --access public",
+    "publish": "yarn run build && yarn publish --access public",
     "dev": "yarn tsc --watch --preserveWatchOutput",
     "format": "prettier --write .",
+    "fmt": "yarn lint && yarn format",
     "lint": "eslint . --ext ts --ext tsx --ext js --fix",
     "test": "jest"
   },
@@ -36,9 +37,10 @@
     "@babel/core": "^7.14.8",
     "@babel/preset-env": "^7.14.8",
     "@babel/preset-typescript": "^7.14.5",
-    "@trieb.work/eslint-config-base": "^1.6.7",
+    "@commitlint/config-conventional": "^13.1.0",
+    "@trieb.work/eslint-config-base": "^1.8.14",
     "@trieb.work/prettier-base": "^0.1.0-alpha.2",
-    "@trieb.work/tsconfig-base": "^1.6.1",
+    "@trieb.work/tsconfig-base": "^1.6.2",
     "@types/assert": "^1.5.2",
     "@types/async-retry": "^1.4.2",
     "@types/await-timeout": "^0.3.1",
@@ -49,15 +51,16 @@
     "@typescript-eslint/parser": "^4.11.1",
     "assert": "^2.0.0",
     "babel-jest": "^27.0.6",
+    "commitlint": "^13.1.0",
     "dotenv": "^8.2.0",
-    "eslint": "^7.31.0",
-    "husky": "^7.0.1",
+    "eslint": "^7.32.0",
+    "husky": "^7.0.2",
     "jest": "^27.0.6",
-    "lint-staged": "^11.1.1",
-    "prettier": "^2.3.2",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.4",
     "ts-node": "^9.1.1",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.3"
   }
 }

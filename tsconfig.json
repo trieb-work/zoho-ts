@@ -1,3 +1,16 @@
 {
-  "extends": "@trieb.work/tsconfig-base"
+  "extends": "@trieb.work/tsconfig-base",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "noEmit": false
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
