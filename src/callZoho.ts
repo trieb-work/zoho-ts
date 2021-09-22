@@ -197,6 +197,10 @@ const getPackage = async (instance: AxiosInstance, packageId: string) => {
   return result.data.package as Package;
 };
 
+interface ExtendedSalesorder extends SalesOrder {
+  code: number;
+  message: string;
+}
 export class MultiMethods extends ZohoClientBase {
   /**
    * Create an invoice in Zoho. Set totalGrossAmount to compare the result of the salesorder with a total Gross Amount.
@@ -1413,11 +1417,6 @@ export class MultiMethods extends ZohoClientBase {
     const data = `bulk_update=true&JSONString=${encodeURIComponent(
       JSON.stringify(updateData),
     )}`;
-
-    interface ExtendedSalesorder extends SalesOrder {
-      code: number;
-      message: string;
-    }
 
     interface UpdateResponseObject {
       salesorders: ExtendedSalesorder[];
