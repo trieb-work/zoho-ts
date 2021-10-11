@@ -1,7 +1,7 @@
 import axios from "axios";
 import { MultiMethods } from "./callZoho";
 
-export default class ZohoBrowserInstance extends MultiMethods {
+export class ZohoBrowserInstance extends MultiMethods {
   constructor(config: { zohoOrgId: string }) {
     super();
     this.zohoOrgId = config.zohoOrgId;

@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import dotenv from "dotenv";
-import { ZohoClientInstance } from "./index";
+import { ZohoClientInstance, ZohoBrowserInstance } from "./index";
 
 dotenv.config({ path: "./.env" });
 
@@ -12,10 +12,11 @@ async function main() {
   let secondTestSalesOrderId: string = "";
   const readyToFulfillCustomFieldId = "116240000000112068";
 
+  const testingZohoOrgID = process.env.ZOHO_ORGANIZATION_ID!;
   const client = new ZohoClientInstance({
     zohoClientId: process.env.ZOHO_CLIENT_ID!,
     zohoClientSecret: process.env.ZOHO_CLIENT_SECRET!,
-    zohoOrgId: process.env.ZOHO_ORGANIZATION_ID!,
+    zohoOrgId: testingZohoOrgID,
   });
 
   const multipleSalesOrdersIdArray: string[] = [];
@@ -143,6 +144,12 @@ async function main() {
   it("works to delete the contact again", async () => {
     const deleteData = await client.deleteContact(testingContactID);
     expect(deleteData).toBeTruthy();
+  });
+
+  it("works to create a new browser instance", () => {
+    new ZohoBrowserInstance({
+      zohoOrgId: testingZohoOrgID,
+    });
   });
 }
 main();
