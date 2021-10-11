@@ -1,6 +1,5 @@
-import { Mixin } from "ts-mixer";
 import * as methods from "./callZoho";
 
 export * from "./types";
-
-export class ZohoClientInstance extends Mixin(methods.MultiMethods) {}
+export * from "./browserInstance";
+export const ZohoClientInstance = methods.ZohoClientInstance;

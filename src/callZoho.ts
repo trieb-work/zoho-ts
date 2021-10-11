@@ -128,6 +128,7 @@ async function createInstance(zohoConfig: ZohoConfig) {
     });
     return instanceWithCookies;
   }
+
   const auth = await authenticate(zohoConfig);
   const { access_token, token_type } = auth.token;
   const instance = axios.create({
@@ -137,42 +138,6 @@ async function createInstance(zohoConfig: ZohoConfig) {
     },
   });
   return instance;
-}
-
-export abstract class ZohoClientBase {
-  private zohoClientId: string;
-
-  private zohoClientSecret: string;
-
-  private zohoTokenHost: string;
-
-  private zohoTokenPath?: string;
-
-  protected zohoOrgId: string;
-
-  protected instance!: AxiosInstance;
-
-  constructor(config: ZohoConfig) {
-    this.zohoClientId = config.zohoClientId;
-    this.zohoClientSecret = config.zohoClientSecret;
-    this.zohoTokenHost = config.zohoTokenHost || "https://accounts.zoho.eu";
-    this.zohoTokenPath = config.zohoTokenPath || "/oauth/v2/token";
-    this.zohoOrgId = config.zohoOrgId;
-    if (!config.zohoClientId) throw new Error("Zoho Client ID missing!");
-  }
-
-  /**
-   * Needs to be called before any other function. Gets an Access Token or validates existing ones.
-   */
-  authenticate = async () => {
-    this.instance = await createInstance({
-      zohoClientId: this.zohoClientId,
-      zohoClientSecret: this.zohoClientSecret,
-      zohoOrgId: this.zohoOrgId,
-      zohoTokenHost: this.zohoTokenHost,
-      zohoTokenPath: this.zohoTokenPath,
-    });
-  };
 }
 
 type taxes = {
@@ -201,17 +166,21 @@ interface ExtendedSalesorder extends SalesOrder {
   code: number;
   message: string;
 }
-export class MultiMethods extends ZohoClientBase {
+export abstract class MultiMethods {
+  protected instance!: AxiosInstance;
+
+  protected zohoOrgId!: string;
+
   /**
    * Create an invoice in Zoho. Set totalGrossAmount to compare the result of the salesorder with a total Gross Amount.
    * @param rawData
    * @param totalGrossAmount
    */
-  async createInvoice(
+  createInvoice = async (
     rawData: InvoiceOptional,
     // totalGrossAmount?: number,
     timeout = 20000,
-  ) {
+  ) => {
     this.instance.defaults.timeout = timeout;
     const data = `JSONString=${encodeURIComponent(JSON.stringify(rawData))}`;
 
@@ -226,7 +195,7 @@ export class MultiMethods extends ZohoClientBase {
 
     assert.strictEqual(result.data.code, 0);
     return result.data.invoice.invoice_number as string;
-  }
+  };
 
   /**
    * Add an address to a contact. Do not change the default address or edit any existing documents from this customer.
@@ -1459,3 +1428,37 @@ export class MultiMethods extends ZohoClientBase {
     return true;
   };
 }
+
+export class ZohoClientInstance extends MultiMethods {
+  private zohoClientId: string;
+
+  private zohoClientSecret: string;
+
+  private zohoTokenHost: string;
+
+  private zohoTokenPath?: string;
+
+  constructor(config: ZohoConfig) {
+    super();
+    this.zohoClientId = config.zohoClientId;
+    this.zohoClientSecret = config.zohoClientSecret;
+    this.zohoTokenHost = config.zohoTokenHost || "https://accounts.zoho.eu";
+    this.zohoTokenPath = config.zohoTokenPath || "/oauth/v2/token";
+    this.zohoOrgId = config.zohoOrgId;
+    if (!config.zohoClientId) throw new Error("Zoho Client ID missing!");
+  }
+
+  /**
+   * Needs to be called before any other function. Gets an Access Token or validates existing ones.
+   */
+  authenticate = async () => {
+    this.instance = await createInstance({
+      zohoClientId: this.zohoClientId,
+      zohoClientSecret: this.zohoClientSecret,
+      zohoOrgId: this.zohoOrgId,
+      zohoTokenHost: this.zohoTokenHost,
+      zohoTokenPath: this.zohoTokenPath,
+    });
+  };
+}
+
