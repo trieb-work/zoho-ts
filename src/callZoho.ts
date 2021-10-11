@@ -109,7 +109,7 @@ async function authenticate(zohoConfig: ZohoConfig) {
 }
 
 async function createInstance(zohoConfig: ZohoConfig) {
-  const { ZOHO_COOKIES, ZOHO_TOKEN } = process.env;
+  const { ZOHO_COOKIES, ZOHO_TOKEN } = process?.env;
   const options = {
     baseURL: "https://inventory.zoho.eu/api/v1",
     timeout: 7000,

@@ -1,6 +1,6 @@
 {
   "name": "@trieb.work/zoho-ts",
-  "version": "0.2.14",
+  "version": "0.2.15",
   "description": "Our Typescript library helps you to work easily with the Zoho Inventory API. Most functions are generic and self-explanatory. Some are specific to our use-cases",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -31,8 +31,12 @@
     "axios-retry": "^3.1.9",
     "dayjs": "^1.10.4",
     "form-data": "^3.0.0",
+    "http": "^0.0.1-security",
+    "https": "^1.0.0",
     "simple-oauth2": "^4.2.0",
-    "ts-mixer": "^5.4.0"
+    "stream": "^0.0.2",
+    "ts-mixer": "^5.4.0",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.14.8",
