@@ -283,7 +283,7 @@ export type LineItem = {
   line_item_id: string;
   item_id: string;
   product_sku: string;
-  sku: "pf-dose-5-cj-dunkle";
+  sku: string;
   warehouse_id?: "116240000000067007";
   warehouses?: Warehouse[];
   warehouse_name?: "GIGATEC GmbH";
@@ -301,6 +301,14 @@ export type LineItem = {
   variant_id: string;
   expense_receipt_name: "";
   name: string;
+  package_details: {
+    length: "";
+    width: "";
+    height: "";
+    weight: number;
+    weight_unit: "g" | "kg";
+    dimension_unit: "cm";
+  };
   description: "";
   item_order: 1;
   bcy_rate: 19.9;
@@ -792,7 +800,7 @@ export type SalesOrder = {
   balance?: number;
   approvers_list?: [];
 };
-export interface SalesOrderReturn extends SalesOrder {
+export interface SalesOrderReturn extends Required<SalesOrder> {
   salesorder_id: string;
   date: string;
   status: SalesOrderStatus;

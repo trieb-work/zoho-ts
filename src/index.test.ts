@@ -21,6 +21,11 @@ async function main() {
 
   const multipleSalesOrdersIdArray: string[] = [];
 
+  it("works to use ZohoClientInstance as type", () => {
+    const test: ZohoClientInstance = client;
+    expect(test).toBeInstanceOf(ZohoClientInstance);
+  });
+
   it("works to authenticate", async () => {
     await client.authenticate();
   });
@@ -63,6 +68,11 @@ async function main() {
       console.error(error);
       throw error;
     }
+  });
+
+  it("works to get a salesorder by id", async () => {
+    const salesorder = await client.getSalesorderById(testSalesOrderId);
+    expect(salesorder.salesorder_number).toBe("TEST-24");
   });
 
   it("works to create a second salesorder for the new contact", async () => {
@@ -149,6 +159,7 @@ async function main() {
   it("works to create a new browser instance", () => {
     new ZohoBrowserInstance({
       zohoOrgId: testingZohoOrgID,
+      csrfToken: "945895894592475972375",
     });
   });
 }
