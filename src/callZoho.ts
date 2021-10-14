@@ -157,7 +157,8 @@ const getPackage = async (instance: AxiosInstance, packageId: string) => {
       "X-ZB-SOURCE": "zbclient",
     },
   });
-  if (result.status !== 200) throw new Error("Zoho API did not return code 0");
+  if (result.status < 200 || result.status >= 300)
+    throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
   return result.data.package as Package;
 };
 
@@ -192,8 +193,8 @@ export abstract class MultiMethods {
       data,
     });
 
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return result.data.invoice.invoice_number as string;
   };
 
@@ -245,7 +246,9 @@ export abstract class MultiMethods {
       method: "get",
     });
     if (responseData.data.code !== 0)
-      throw new Error("Zoho API did not return code 0");
+      throw new Error(
+        `Error Zoho Api: [${responseData.status}]: ${responseData.data}`,
+      );
     const From = dayjs(from);
     const To = dayjs(to);
     const bundles: Bundle[] = responseData.data.bundles;
@@ -282,8 +285,8 @@ export abstract class MultiMethods {
         invoice_id: invoiceId,
       },
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return {
       contact_person_id: result.data.contact.primary_contact_id as string,
       email: result.data.contact.email_id as string,
@@ -302,8 +305,8 @@ export abstract class MultiMethods {
         tracking_number_contains: trackingNumber,
       },
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     const returnValue = result.data.packages;
     if (returnValue.length < 1) return null;
     // we just receive a certain package subset - pulling the full package data to return it.
@@ -319,8 +322,8 @@ export abstract class MultiMethods {
    */
   salesOrderEditpage = async () => {
     const result = await this.instance.get("/salesorders/editpage");
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     const taxes = result.data.taxes.filter(
       (x: { deleted: boolean }) => x.deleted === false,
     ) as taxes;
@@ -344,16 +347,16 @@ export abstract class MultiMethods {
     const result = await this.instance({
       url: `/contacts/${contactId}`,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     const returnValue = result?.data?.contact;
     if (returnValue.language_code === "") returnValue.language_code = "de";
 
     const addressResult = await this.instance({
       url: `/contacts/${contactId}/address`,
     });
-    if (addressResult.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (addressResult.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return {
       ...(returnValue as Contact),
       addresses: addressResult.data.addresses as Address[],
@@ -370,8 +373,8 @@ export abstract class MultiMethods {
     const result = await this.instance({
       url: `/contacts/${contactId}`,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     const returnValue = result?.data?.contact;
     if (returnValue.language_code === "") returnValue.language_code = "de";
 
@@ -399,16 +402,16 @@ export abstract class MultiMethods {
         is_inclusive_tax: isInclusiveTax,
       },
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     const invoiceSettingsResult = await this.instance({
       url: "/invoices/editpage/fromcontacts",
       params: {
         contact_id: contactId,
       },
     });
-    if (invoiceSettingsResult.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (invoiceSettingsResult.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     const invoiceSettings: InvoiceSettings =
       invoiceSettingsResult.data.invoice_settings;
     const contact: ContactSettings = invoiceSettingsResult.data.contact;
@@ -461,8 +464,8 @@ export abstract class MultiMethods {
         status: "active",
       },
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     const returnValue = result.data.contacts;
     if (returnValue.length < 1) return null;
     // zoho might give us "closely" matching email addresses, so we select the return value with the exact same email address.
@@ -493,8 +496,8 @@ export abstract class MultiMethods {
       url: "/contacts/contactpersons",
       data,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return result.data.contact_person.contact_person_id as string;
   };
 
@@ -514,8 +517,8 @@ export abstract class MultiMethods {
         response_option: 2,
       },
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     const totalAmount: number = result.data?.page_context?.total;
     return totalAmount;
   };
@@ -528,8 +531,8 @@ export abstract class MultiMethods {
     const result = await this.instance({
       url: `/salesorders/${salesorderId}`,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return result.data.salesorder as SalesOrderReturn;
   };
 
@@ -544,8 +547,8 @@ export abstract class MultiMethods {
         salesorder_number: salesorderNumber,
       },
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     const returnValue = result.data.salesorders;
     if (returnValue.length < 1) return null;
 
@@ -553,8 +556,8 @@ export abstract class MultiMethods {
     const FullResult = await this.instance({
       url: `/salesorders/${returnValue[0].salesorder_id}`,
     });
-    if (FullResult.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (FullResult.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
 
     // this easy to use value is NOT set by Zoho when accessing the Salesorder directly ..
     FullResult.data.salesorder.total_invoiced_amount =
@@ -584,8 +587,8 @@ export abstract class MultiMethods {
         customview_id,
       },
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
 
     return result.data.invoices as Invoice[];
   };
@@ -598,8 +601,8 @@ export abstract class MultiMethods {
     const result = await this.instance({
       url: `/invoices/${invoiceId}`,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return result.data.invoice as Invoice;
   };
 
@@ -612,8 +615,8 @@ export abstract class MultiMethods {
       url: "/customerpayments",
       params: searchParams,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return result.data.customerpayments as CustomerPayment[];
   };
 
@@ -640,8 +643,8 @@ export abstract class MultiMethods {
           },
           data,
         });
-        if (result.status !== 200)
-          throw new Error("Zoho API did not return code 0");
+        if (result.status < 200 || result.status >= 300)
+          throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
         return true;
       },
       {
@@ -661,8 +664,8 @@ export abstract class MultiMethods {
         salesorder_id: salesOrderId,
       },
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     const returnValue = result.data.salesorder.invoices;
     if (returnValue.length < 1)
       throw new Error("This salesorder has no invoices attached.");
@@ -688,8 +691,8 @@ export abstract class MultiMethods {
         sku: product_sku,
       },
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     const returnValue = result.data.items;
     if (returnValue < 1)
       console.error(
@@ -708,8 +711,8 @@ export abstract class MultiMethods {
       method: "DELETE",
       url: `/contacts/${contactId}`,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return true;
   };
 
@@ -727,8 +730,8 @@ export abstract class MultiMethods {
       url: "/contacts",
       data,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return {
       contact_id: result.data.contact.contact_id,
       contact_person_id:
@@ -750,8 +753,8 @@ export abstract class MultiMethods {
     const result = await this.instance({
       url: `/items/${product_id}`,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     if (!result.data.item)
       throw new Error(
         `No Product data returned from Zoho! ${JSON.stringify(result.data)}`,
@@ -767,8 +770,8 @@ export abstract class MultiMethods {
     const result = await this.instance({
       url: `/itemgroups/${product_id}`,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     if (!result.data.item_group)
       throw new Error(
         `No Product data returned from Zoho! ${JSON.stringify(result.data)}`,
@@ -801,15 +804,15 @@ export abstract class MultiMethods {
       },
       data,
     });
-    if (result.status !== 200) {
+    if (result.status < 200 || result.status >= 300) {
       console.error(
         "Creating the Salesorder failed in Zoho. Printing out response and the salesorder we wanted to create",
         result.data,
       );
       console.info(JSON.stringify(data, null, 2));
     }
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     if (total_gross_amount)
       if (total_gross_amount !== result.data.salesorder.total)
         throw new Error(
@@ -828,8 +831,8 @@ export abstract class MultiMethods {
       method: "DELETE",
       url: `/salesorders/${salesorderId}`,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return true;
   };
 
@@ -852,8 +855,8 @@ export abstract class MultiMethods {
           },
           data,
         });
-        if (result.status !== 200)
-          throw new Error("Zoho API did not return code 0");
+        if (result.status < 200 || result.status >= 300)
+          throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
         return true;
       },
       {
@@ -881,8 +884,8 @@ export abstract class MultiMethods {
           },
           data,
         });
-        if (result.status !== 200)
-          throw new Error("Zoho API did not return code 0");
+        if (result.status < 200 || result.status >= 300)
+          throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
         return true;
       },
       {
@@ -901,8 +904,8 @@ export abstract class MultiMethods {
             "Content-Type": "application/x-www-form-urlencoded",
           },
         });
-        if (result.status !== 200)
-          throw new Error("Zoho API did not return code 0");
+        if (result.status < 200 || result.status >= 300)
+          throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
       },
       {
         retries,
@@ -924,8 +927,8 @@ export abstract class MultiMethods {
         salesorder_id: salesorderId,
       },
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     const returnValue = result.data.invoice;
     return returnValue.invoice_id;
   };
@@ -942,8 +945,8 @@ export abstract class MultiMethods {
       },
       data,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return true;
   };
 
@@ -962,8 +965,8 @@ export abstract class MultiMethods {
       },
       data,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return result.data.invoice as Invoice;
   };
 
@@ -1018,8 +1021,8 @@ export abstract class MultiMethods {
     const result = await this.instance({
       url: "/integrations/customfunctions",
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return result.data.customfunctions as CustomFunction[];
   };
 
@@ -1030,8 +1033,8 @@ export abstract class MultiMethods {
     const result = await this.instance({
       url: "/settings/webhooks",
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return result.data.webhooks as WebhookSearch[];
   };
 
@@ -1091,8 +1094,10 @@ export abstract class MultiMethods {
       method: "post",
       data: form,
     });
-    if (emailSendResult.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (emailSendResult.status < 200 || emailSendResult.status >= 300)
+      throw new Error(
+        `Error Zoho Api: [${emailSendResult.status}]: ${emailSendResult.data}`,
+      );
     return true;
   };
 
@@ -1110,7 +1115,7 @@ export abstract class MultiMethods {
   //       }),
   //     )}`,
   //   });
-  //   if (result.status !== 200) throw new Error("Zoho API did not return code 0")
+  //   if (result.status < 200 || result.status >= 300) throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`)
   // };
 
   /**
@@ -1135,8 +1140,8 @@ export abstract class MultiMethods {
           expiry_time,
         },
       });
-      if (result.status !== 200)
-        throw new Error("Zoho API did not return code 0");
+      if (result.status < 200 || result.status >= 300)
+        throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
       returnValue = replace(result.data.share_link);
     } else {
       if (!invoiceURL)
@@ -1229,8 +1234,8 @@ export abstract class MultiMethods {
       },
       data,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return true;
   };
 
@@ -1251,8 +1256,8 @@ export abstract class MultiMethods {
       },
       data,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return true;
   };
 
@@ -1326,8 +1331,8 @@ export abstract class MultiMethods {
       url: "/settings/webhooks/",
       data,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return result.data.webhook as Webhook;
   };
 
@@ -1343,8 +1348,8 @@ export abstract class MultiMethods {
       url: `/settings/webhooks/${webhookId}`,
       data,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return result.data.webhook as Webhook;
   };
 
@@ -1367,8 +1372,8 @@ export abstract class MultiMethods {
       url: "/integrations/customfunctions",
       data,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return result.data.customfunction as CustomFunctionSearch;
   };
 
@@ -1379,8 +1384,8 @@ export abstract class MultiMethods {
       url: `/integrations/customfunctions/${customfunctionId}`,
       data,
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     return result.data.webhook as CustomFunctionSearch;
   };
 
@@ -1401,8 +1406,10 @@ export abstract class MultiMethods {
           page,
         },
       });
-      if (searchResult.status !== 200)
-        throw new Error("Zoho API did not return code 0");
+      if (searchResult.status < 200 || searchResult.status >= 300)
+        throw new Error(
+          `Error Zoho Api: [${searchResult.status}]: ${searchResult.data}`,
+        );
       const data = searchResult.data as SalesOrderSearchResponse;
       if (searchResult.data.page_context.has_more_page) {
         return data.salesorders.concat(await search(page + 1));
@@ -1445,7 +1452,8 @@ export abstract class MultiMethods {
     });
 
     result.data.salesorders.map((x) => {
-      if (x.code !== 0) throw new Error("Zoho API did not return code 0");
+      if (x.code !== 0)
+        throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
       return true;
     });
 
@@ -1465,8 +1473,8 @@ export abstract class MultiMethods {
         salesorder_ids: salesOrderIds.join(","),
       },
     });
-    if (result.status !== 200)
-      throw new Error("Zoho API did not return code 0");
+    if (result.status < 200 || result.status >= 300)
+      throw new Error(`Error Zoho Api: [${result.status}]: ${result.data}`);
     if (result.data.data.length > 0)
       throw new Error(
         `Not all salesorders could be deleted: ${JSON.stringify(
