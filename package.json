@@ -1,6 +1,6 @@
 {
   "name": "@trieb.work/zoho-ts",
-  "version": "0.2.22",
+  "version": "0.2.23",
   "description": "Our Typescript library helps you to work easily with the Zoho Inventory API. Most functions are generic and self-explanatory. Some are specific to our use-cases",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -17,7 +17,7 @@
     "build": "yarn run clean && yarn tsc",
     "clean": "yarn rimraf dist",
     "dev": "yarn tsc --watch --preserveWatchOutput",
-    "publish": "yarn build",
+    "prepublish": "yarn build",
     "format": "prettier --write .",
     "fmt": "yarn lint && yarn format",
     "lint": "eslint . --ext ts --ext tsx --ext js --fix",
