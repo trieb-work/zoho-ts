@@ -1418,14 +1418,17 @@ export abstract class MultiMethods {
    * @param salesOrderIds
    * @param customFieldId
    * @param value
+   * @param isApiField true, if the customFieldId should be treated as api_name (this api_name is shown in the frontend)
    */
   bulkUpdateSalesOrderCustomField = async (
     salesOrderIds: string[],
     customFieldId: string,
     value: any,
+    isApiField = false,
   ) => {
     const salesOrderIDs = salesOrderIds.join(",");
-    const customField = { customfield_id: customFieldId, value };
+    const customFieldKey = isApiField ? "api_name" : "customfield_id";
+    const customField = { [customFieldKey]: customFieldId, value };
     const updateData = {
       custom_fields: [customField],
       salesorder_id: salesOrderIDs,

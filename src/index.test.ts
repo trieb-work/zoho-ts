@@ -108,7 +108,7 @@ async function main() {
       multipleSalesOrdersIdArray.push(response.salesorder_id);
     }
     expect(multipleSalesOrdersIdArray.length).toBe(20);
-  }, 20000);
+  }, 25000);
 
   it("works to search for several salesorders with a string", async () => {
     const searchResult = await client.searchSalesOrdersWithScrolling("TEST-");
@@ -118,13 +118,28 @@ async function main() {
     ).toBe("TEST-25");
   });
 
-  it("works to bulk update two salesorders at once", async () => {
+  it("works to bulk update two salesorders at once with customFieldID", async () => {
     const updateResult = await client.bulkUpdateSalesOrderCustomField(
       [testSalesOrderId, secondTestSalesOrderId],
       readyToFulfillCustomFieldId,
       true,
     );
     updateResult.map((x) => expect(x.salesperson_id).toBeDefined());
+  });
+
+  it("works to bulk update two salesorders at once with customFieldID", async () => {
+    const updateResult = await client.bulkUpdateSalesOrderCustomField(
+      [testSalesOrderId, secondTestSalesOrderId],
+      'cf_ready_to_fulfill',
+      false,
+      true,
+    );
+    updateResult.map((x) => expect(x.salesperson_id).toBeDefined());
+
+    const test = await client.getSalesorderById(testSalesOrderId);
+    const cf = test?.custom_fields?.find((x) => x.placeholder === 'cf_ready_to_fulfill')?.value
+
+    expect(cf).toBe(false);
   });
 
   it("works to delete a salesorder again", async () => {
