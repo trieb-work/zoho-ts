@@ -19,6 +19,7 @@ await zohoClient.authenticate();
 ```
 
 ## Usage in Browser Context (use cookies for auth)
+
 ```
 import { ZohoBrowserInstance } from '@trieb.work/zoho-ts';
 
