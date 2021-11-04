@@ -4,7 +4,7 @@ import { ZohoClientInstance, ZohoBrowserInstance } from "./index";
 
 dotenv.config({ path: "./.env" });
 
-async function main() {
+
   let testingContactID: string = "";
   const testProductSku: string = process.env.TEST_PRODUCT_SKU || "";
   let testProductId: string = "";
@@ -21,7 +21,7 @@ async function main() {
 
   const multipleSalesOrdersIdArray: string[] = [];
 
-  it("works to use ZohoClientInstance as type", () => {
+  it("works to use ZohoClientInstance as type", async () => {
     const test: ZohoClientInstance = client;
     expect(test).toBeInstanceOf(ZohoClientInstance);
   });
@@ -75,20 +75,28 @@ async function main() {
     expect(salesorder.salesorder_number).toBe("TEST-24");
   });
 
-  it("works to create a second salesorder for the new contact", async () => {
+  it("works to create a second salesorder for the new contact with custom field as api_name", async () => {
     try {
       const salesOrderCreateData = await client.createSalesorder({
         salesorder_number: "TEST-25",
         customer_id: testingContactID,
         line_items: [{ item_id: testProductId, quantity: 1 }],
+        custom_fields: [{
+          api_name: 'cf_ready_to_fulfill',
+          value: true,
+        }]
       });
       expect(salesOrderCreateData.salesorder_number).toBe("TEST-25");
+      expect(salesOrderCreateData?.custom_fields?.find((x) => x.placeholder === 'cf_ready_to_fulfill')?.value).toBe(true);
       secondTestSalesOrderId = salesOrderCreateData.salesorder_id;
     } catch (error) {
       console.error(error);
       throw error;
     }
   });
+
+
+
 
   /**
    * Create some salesorders etc. to later test bulk delete, update etc.
@@ -108,7 +116,7 @@ async function main() {
       multipleSalesOrdersIdArray.push(response.salesorder_id);
     }
     expect(multipleSalesOrdersIdArray.length).toBe(20);
-  }, 20000);
+  }, 25000);
 
   it("works to search for several salesorders with a string", async () => {
     const searchResult = await client.searchSalesOrdersWithScrolling("TEST-");
@@ -118,13 +126,28 @@ async function main() {
     ).toBe("TEST-25");
   });
 
-  it("works to bulk update two salesorders at once", async () => {
+  it("works to bulk update two salesorders at once with customFieldID", async () => {
     const updateResult = await client.bulkUpdateSalesOrderCustomField(
       [testSalesOrderId, secondTestSalesOrderId],
       readyToFulfillCustomFieldId,
       true,
     );
     updateResult.map((x) => expect(x.salesperson_id).toBeDefined());
+  });
+
+  it("works to bulk update two salesorders at once with customfield as api_name", async () => {
+    const updateResult = await client.bulkUpdateSalesOrderCustomField(
+      [testSalesOrderId, secondTestSalesOrderId],
+      'cf_ready_to_fulfill',
+      false,
+      true,
+    );
+    updateResult.map((x) => expect(x.salesperson_id).toBeDefined());
+
+    const test = await client.getSalesorderById(testSalesOrderId);
+    const cf = test?.custom_fields?.find((x) => x.placeholder === 'cf_ready_to_fulfill')?.value
+
+    expect(cf).toBe(false);
   });
 
   it("works to delete a salesorder again", async () => {
@@ -162,5 +185,4 @@ async function main() {
       csrfToken: "945895894592475972375",
     });
   });
-}
-main();
+
