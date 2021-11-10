@@ -150,6 +150,8 @@ type taxes = {
   tax_percentage: number;
 }[];
 
+type AfterShipCarrier = "Deutsche Post DHL" | "DPD Germany";
+
 const getPackage = async (instance: AxiosInstance, packageId: string) => {
   const result = await instance({
     url: `/packages/${packageId}`,
@@ -1768,6 +1770,61 @@ export abstract class MultiMethods {
     });
 
     return result.data.webhook as Webhook;
+  };
+
+  /**
+   * Activate the realtime tracking for a package
+   * @param param0
+   */
+  activatePackageTracking = async ({
+    shipmentOrderId,
+    trackingNumber,
+    carrier,
+  }: {
+    shipmentOrderId: string;
+    trackingNumber: string;
+    carrier: AfterShipCarrier;
+  }) => {
+    const aftershipLookup = {
+      "Deutsche Post DHL": "dhl-germany",
+      "DPD Germany": "dpd-de",
+    };
+
+    const dataObject = {
+      carrier,
+      tracking_number: trackingNumber,
+      notification_email_ids: [],
+      notification_phone_numbers: [],
+      aftership_carrier_code: aftershipLookup[carrier],
+      shipper_account_number: "",
+    };
+
+    const updateData = `JSONString=${JSON.stringify(dataObject)}`;
+
+    const result = await this.instance({
+      method: "POST",
+      url: `/shipmentorders/${shipmentOrderId}/enable/tracking`,
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded;charset=utf-8",
+        "X-ZB-SOURCE": "zbclient",
+      },
+      data: updateData,
+    }).catch((err) => {
+      if (err.response) {
+        throw new Error(
+          `Zoho Api Error: ${JSON.stringify(
+            { data: err.response.data, headers: err.response.headers },
+            null,
+            2,
+          )}`,
+        );
+      } else {
+        throw err;
+      }
+    });
+
+    if (result.data.code === 0) return true;
+    return false;
   };
 
   /**
