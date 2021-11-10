@@ -100,6 +100,20 @@ it("works to create a second salesorder for the new contact with custom field as
   }
 });
 
+it("works to create a package for a salesorder", async () => {
+
+});
+
+it("works to fulfill the package manually", async () => {
+
+});
+
+it("works to enable tracking for a package", async () => {
+
+
+
+});
+
 /**
  * Create some salesorders etc. to later test bulk delete, update etc.
  */
