@@ -27,8 +27,18 @@ it("works to use ZohoClientInstance as type", async () => {
 
 it("works to authenticate", async () => {
   const headers = await client.authenticate();
-  expect(headers.Authorization).toBeDefined();
+  expect(headers.Authorization).toMatch(/Bearer/);
 });
+
+it("fails when using wrong auth data", async () => {
+  const wrongClient = new ZohoClientInstance({
+    zohoClientId: "1234",
+    zohoClientSecret: "435646",
+    zohoOrgId: "3546"
+  });
+  await expect(wrongClient.authenticate()).rejects.toThrow();
+
+})
 
 it("works to create a customer", async () => {
   const contactData = await client.createContact({

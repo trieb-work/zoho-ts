@@ -8,7 +8,7 @@ import axios, { AxiosInstance, AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 
-import { ClientCredentials, ModuleOptions, AccessToken } from "simple-oauth2";
+import { ClientCredentials, ModuleOptions } from "simple-oauth2";
 import FormData from "form-data";
 import retry from "async-retry";
 import {
@@ -58,8 +58,6 @@ async function authenticate(zohoConfig: ZohoConfig) {
   // authenticate to the Zoho API
   // try to re-use existing and valid tokens
 
-  let accessToken: AccessToken;
-
   const tokenConfig = {
     scope: "ZohoInventory.FullAccess.all",
   };
@@ -96,14 +94,14 @@ async function authenticate(zohoConfig: ZohoConfig) {
   const clientCredentials = new ClientCredentials(config);
 
   try {
-    accessToken = await clientCredentials.getToken(tokenConfig);
-    if (accessToken.expired(300)) {
-      accessToken = await clientCredentials.getToken(tokenConfig);
-    }
+    const accessToken = await clientCredentials.getToken(tokenConfig);
+    if (accessToken?.token?.error)
+      throw new Error(
+        `Error getting the access token from Zoho! Your credentials are not correct ${accessToken.token?.error}`,
+      );
     return accessToken;
-  } catch (error) {
-    console.error("Error accessing Zoho", error);
-    throw new Error(error as string);
+  } catch (error: any) {
+    throw new Error(error);
   }
 }
 
