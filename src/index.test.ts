@@ -134,12 +134,20 @@ it("works to create 20 salesorders for further testing", async () => {
   expect(multipleSalesOrdersIdArray.length).toBe(20);
 }, 25000);
 
-it("works to search for several salesorders with a string", async () => {
-  const searchResult = await client.searchSalesOrdersWithScrolling("TEST-");
+it("works to search for several salesorders with a string or a custom view ID", async () => {
+  const searchResult = await client.searchSalesOrdersWithScrolling({ searchString: "TEST-" });
   expect(
     searchResult.find((x) => x.salesorder_number === "TEST-25")
       ?.salesorder_number,
   ).toBe("TEST-25");
+
+  const searchResultCustomView = await client.searchSalesOrdersWithScrolling({ customViewID: "116240000000909825" });
+  expect(
+    searchResultCustomView.find((x) => x.salesorder_number === "TEST-25")
+      ?.salesorder_number,
+  ).toBe("TEST-25");
+
+  
 });
 
 it("works to bulk update two salesorders at once with customFieldID", async () => {
