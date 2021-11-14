@@ -97,7 +97,7 @@ async function authenticate(zohoConfig: ZohoConfig) {
     const accessToken = await clientCredentials.getToken(tokenConfig);
     if (accessToken?.token?.error)
       throw new Error(
-        `Error getting the access token from Zoho! Your credentials are not correct ${accessToken.token?.error}`,
+        `Error getting the access token from Zoho! Your credentials are not correct ${accessToken.token?.error}. Client id: ${config.client.id}`,
       );
     return accessToken;
   } catch (error: any) {
