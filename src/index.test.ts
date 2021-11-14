@@ -26,7 +26,8 @@ it("works to use ZohoClientInstance as type", async () => {
 });
 
 it("works to authenticate", async () => {
-  await client.authenticate();
+  const headers = await client.authenticate();
+  expect(headers.Authorization).toBeDefined();
 });
 
 it("works to create a customer", async () => {

@@ -162,7 +162,11 @@ const getPackage = async (instance: AxiosInstance, packageId: string) => {
     if (err.response) {
       throw new Error(
         `Zoho Api Error: ${JSON.stringify(
-          { data: err.response.data, headers: err.response.headers },
+          {
+            data: err.response.data,
+            headers: err.response.headers,
+            requestHeaders: err.request?.headers,
+          },
           null,
           2,
         )}`,
@@ -208,7 +212,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -323,7 +331,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -354,7 +366,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -384,7 +400,11 @@ export abstract class MultiMethods {
         if (err.response) {
           throw new Error(
             `Zoho Api Error: ${JSON.stringify(
-              { data: err.response.data, headers: err.response.headers },
+              {
+                data: err.response.data,
+                headers: err.response.headers,
+                requestHeaders: err.request?.headers,
+              },
               null,
               2,
             )}`,
@@ -420,7 +440,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -456,7 +480,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -496,7 +524,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -568,7 +600,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -611,7 +647,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -643,7 +683,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -668,7 +712,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -695,7 +743,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -744,7 +796,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -768,7 +824,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -793,7 +853,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -832,7 +896,11 @@ export abstract class MultiMethods {
           if (err.response) {
             throw new Error(
               `Zoho Api Error: ${JSON.stringify(
-                { data: err.response.data, headers: err.response.headers },
+                {
+                  data: err.response.data,
+                  headers: err.response.headers,
+                  requestHeaders: err.request?.headers,
+                },
                 null,
                 2,
               )}`,
@@ -864,7 +932,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -902,7 +974,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -933,7 +1009,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -963,7 +1043,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -997,7 +1081,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1025,7 +1113,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1101,7 +1193,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1136,7 +1232,11 @@ export abstract class MultiMethods {
           if (err.response) {
             throw new Error(
               `Zoho Api Error: ${JSON.stringify(
-                { data: err.response.data, headers: err.response.headers },
+                {
+                  data: err.response.data,
+                  headers: err.response.headers,
+                  requestHeaders: err.request?.headers,
+                },
                 null,
                 2,
               )}`,
@@ -1181,7 +1281,11 @@ export abstract class MultiMethods {
             if (err.response) {
               throw new Error(
                 `Zoho Api Error: ${JSON.stringify(
-                  { data: err.response.data, headers: err.response.headers },
+                  {
+                    data: err.response.data,
+                    headers: err.response.headers,
+                    requestHeaders: err.request?.headers,
+                  },
                   null,
                   2,
                 )}`,
@@ -1213,7 +1317,11 @@ export abstract class MultiMethods {
           if (err.response) {
             throw new Error(
               `Zoho Api Error: ${JSON.stringify(
-                { data: err.response.data, headers: err.response.headers },
+                {
+                  data: err.response.data,
+                  headers: err.response.headers,
+                  requestHeaders: err.request?.headers,
+                },
                 null,
                 2,
               )}`,
@@ -1246,7 +1354,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1275,7 +1387,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1306,7 +1422,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1373,7 +1493,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1396,7 +1520,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1468,7 +1596,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1507,7 +1639,11 @@ export abstract class MultiMethods {
         if (err.response) {
           throw new Error(
             `Zoho Api Error: ${JSON.stringify(
-              { data: err.response.data, headers: err.response.headers },
+              {
+                data: err.response.data,
+                headers: err.response.headers,
+                requestHeaders: err.request?.headers,
+              },
               null,
               2,
             )}`,
@@ -1612,7 +1748,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1645,7 +1785,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1731,7 +1875,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1759,7 +1907,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1813,7 +1965,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1849,7 +2005,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1872,7 +2032,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1912,7 +2076,11 @@ export abstract class MultiMethods {
         if (err.response) {
           throw new Error(
             `Zoho Api Error: ${JSON.stringify(
-              { data: err.response.data, headers: err.response.headers },
+              {
+                data: err.response.data,
+                headers: err.response.headers,
+                requestHeaders: err.request?.headers,
+              },
               null,
               2,
             )}`,
@@ -1968,7 +2136,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -1997,7 +2169,11 @@ export abstract class MultiMethods {
       if (err.response) {
         throw new Error(
           `Zoho Api Error: ${JSON.stringify(
-            { data: err.response.data, headers: err.response.headers },
+            {
+              data: err.response.data,
+              headers: err.response.headers,
+              requestHeaders: err.request?.headers,
+            },
             null,
             2,
           )}`,
@@ -2038,6 +2214,7 @@ export class ZohoClientInstance extends MultiMethods {
 
   /**
    * Needs to be called before any other function. Gets an Access Token or validates existing ones.
+   * Returns the headers, that we send
    */
   authenticate = async () => {
     this.instance = await createInstance({
@@ -2047,5 +2224,6 @@ export class ZohoClientInstance extends MultiMethods {
       zohoTokenHost: this.zohoTokenHost,
       zohoTokenPath: this.zohoTokenPath,
     });
+    return this.instance.defaults.headers;
   };
 }
