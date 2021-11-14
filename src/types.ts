@@ -616,6 +616,7 @@ export type Package = {
     delivery_guarantee: false;
     tracking_url: "";
     is_carrier_shipment: false;
+    is_tracking_enabled: boolean;
     notes: string;
   };
   shipping_address?: {

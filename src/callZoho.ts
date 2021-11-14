@@ -1886,11 +1886,17 @@ export abstract class MultiMethods {
   };
 
   /**
-   * Search for salesorders with a string and returns all matching results.
+   * Search for salesorder numbers with a string or with a custom view ID and returns all matching results.
    * Uses scrolling to get 200+ results with as little API-requests as possible
    * @param searchString
    */
-  searchSalesOrdersWithScrolling = async (searchString: string) => {
+  searchSalesOrdersWithScrolling = async ({
+    searchString,
+    customViewID,
+  }: {
+    searchString?: string;
+    customViewID?: string;
+  }) => {
     const search = async (
       page = 1,
     ): Promise<SalesOrderShortSearchOverview[]> => {
@@ -1898,6 +1904,7 @@ export abstract class MultiMethods {
         url: "/salesorders",
         params: {
           salesorder_number_contains: searchString,
+          customview_id: customViewID,
           per_page: 200,
           page,
         },
