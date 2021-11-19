@@ -51,7 +51,7 @@ export type SalesOrderShortSearchOverview = {
   reference_number: "";
   date: "2021-09-17";
   date_formatted: "17-09-2021";
-  shipment_date: "";
+  shipment_date: string;
   shipment_date_formatted: "";
   shipment_days: "";
   due_by_days: "";
@@ -574,7 +574,7 @@ export type Package = {
   carrier: "DPD" | "DPD Germany";
   service: "";
   tracking_number: "";
-  shipment_date: "";
+  shipment_date: string;
   delivery_days: "";
   notes: string;
   delivery_guarantee: false;
@@ -638,7 +638,7 @@ export type SalesOrder = {
   salesorder_number?: string;
   date?: string;
   status?: SalesOrderStatus;
-  shipment_date?: "";
+  shipment_date?: string;
   reference_number?: string;
   customer_id?: string;
   customer_name?: string;
@@ -1121,7 +1121,7 @@ export type InvoiceOptional = {
       total: 22.4;
       sub_total: 18.95;
       date: "2020-11-08";
-      shipment_date: "";
+      shipment_date: string;
     },
   ];
   shipping_charge_tax_id?: string;
