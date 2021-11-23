@@ -34,11 +34,10 @@ it("fails when using wrong auth data", async () => {
   const wrongClient = new ZohoClientInstance({
     zohoClientId: "1234",
     zohoClientSecret: "435646",
-    zohoOrgId: "3546"
+    zohoOrgId: "3546",
   });
   await expect(wrongClient.authenticate()).rejects.toThrow();
-
-})
+});
 
 it("works to create a customer", async () => {
   const contactData = await client.createContact({
@@ -111,19 +110,11 @@ it("works to create a second salesorder for the new contact with custom field as
   }
 });
 
-it("works to create a package for a salesorder", async () => {
+it("works to create a package for a salesorder", async () => {});
 
-});
+it("works to fulfill the package manually", async () => {});
 
-it("works to fulfill the package manually", async () => {
-
-});
-
-it("works to enable tracking for a package", async () => {
-
-
-
-});
+it("works to enable tracking for a package", async () => {});
 
 /**
  * Create some salesorders etc. to later test bulk delete, update etc.
@@ -146,19 +137,21 @@ it("works to create 20 salesorders for further testing", async () => {
 }, 25000);
 
 it("works to search for several salesorders with a string or a custom view ID", async () => {
-  const searchResult = await client.searchSalesOrdersWithScrolling({ searchString: "TEST-" });
+  const searchResult = await client.searchSalesOrdersWithScrolling({
+    searchString: "TEST-",
+  });
   expect(
     searchResult.find((x) => x.salesorder_number === "TEST-25")
       ?.salesorder_number,
   ).toBe("TEST-25");
 
-  const searchResultCustomView = await client.searchSalesOrdersWithScrolling({ customViewID: "116240000000909825" });
+  const searchResultCustomView = await client.searchSalesOrdersWithScrolling({
+    customViewID: "116240000000909825",
+  });
   expect(
     searchResultCustomView.find((x) => x.salesorder_number === "TEST-25")
       ?.salesorder_number,
   ).toBe("TEST-25");
-
-  
 });
 
 it("works to bulk update two salesorders at once with customFieldID", async () => {
