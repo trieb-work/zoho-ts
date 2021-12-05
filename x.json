@@ -1,0 +1,44 @@
+{
+  "customer_id": "116240000001023815",
+  "contact_persons": [],
+  "date": "2021-12-03",
+  "shipment_date": "",
+  "custom_fields": [
+    { "value": true, "customfield_id": "116240000000112068" },
+    { "value": "", "customfield_id": "116240000000323827" },
+    { "value": "", "customfield_id": "116240000000415068" },
+    { "value": "", "customfield_id": "116240000000872052" }
+  ],
+  "is_inclusive_tax": false,
+  "line_items": [
+    {
+      "item_order": "0",
+      "item_id": "116240000000203041",
+      "rate": 14.9,
+      "name": "5 Lebkuchen in Bio-Folie - gemischt",
+      "description": "",
+      "quantity": "1.00",
+      "discount": "0%",
+      "tax_id": "116240000000147001",
+      "tags": [],
+      "item_custom_fields": [],
+      "warehouse_id": "116240000000067007",
+      "unit": "pcs"
+    }
+  ],
+  "notes": "",
+  "terms": "",
+  "is_discount_before_tax": true,
+  "discount_type": "entity_level",
+  "adjustment_description": "Adjustment",
+  "pricebook_id": "",
+  "template_id": "116240000000000111",
+  "documents": [],
+  "shipping_address_id": "116240000001023819",
+  "billing_address_id": "116240000001023817",
+  "zcrm_potential_id": "",
+  "zcrm_potential_name": "",
+  "payment_terms": 0,
+  "payment_terms_label": "Due on Receipt",
+  "is_adv_tracking_in_package": false
+}

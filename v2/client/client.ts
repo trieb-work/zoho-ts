@@ -1,4 +1,8 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, {
+  AxiosError,
+  AxiosInstance,
+  AxiosRequestConfig,
+} from "axios";
 import { ClientCredentials } from "simple-oauth2";
 
 export type Request = {
@@ -35,19 +39,20 @@ export type ZohoResponse<TResponse> = TResponse & {
    * Message for the invoked API.
    */
   message: string;
+
+  page_context?: {
+    page: number;
+    per_page: number;
+    has_more_pages: boolean;
+  };
 };
 
 export class ZohoApiError extends Error {
-  public readonly req?: unknown;
-  public readonly res?: unknown;
-  public readonly json: unknown;
+    path?: string;
 
-  constructor(err: AxiosError) {
-    super(err.message);
-    err.code;
-    this.req = err.request;
-    this.res = err.response;
-    this.json = err.toJSON();
+  constructor(err: AxiosError<{ code: number; message: string }>) {
+    super(err.response?.data.message ?? err.message);
+    this.path = err.request?.path
   }
 }
 
@@ -100,14 +105,14 @@ export class ZohoApiClient {
    *
    * This is an undocumented unsupported hack
    */
-  static async fromBrowserCookies(
-    orgId: string,
-    cookie: string,
-    zsrfToken: string,
-  ): Promise<ZohoApiClient> {
-    return new ZohoApiClient(orgId, {
-      cookie,
-      "X-ZCSRF-TOKEN": zsrfToken,
+  static async fromBrowserCookies(config: {
+    orgId: string;
+    cookie: string;
+    zsrfToken: string;
+  }): Promise<ZohoApiClient> {
+    return new ZohoApiClient(config.orgId, {
+      cookie: config.cookie,
+      "X-ZCSRF-TOKEN": config.zsrfToken,
       "User-Agent":
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36",
     });
@@ -120,7 +125,7 @@ export class ZohoApiClient {
     const axiosRequest: AxiosRequestConfig = {
       method,
       url: `/${req.path.join("/")}`,
-      headers: req.headers,
+      headers: req.headers ?? {},
       params: req.params,
     };
     if (req.timeout) {
@@ -137,6 +142,13 @@ export class ZohoApiClient {
       .catch((err) => {
         throw new ZohoApiError(err);
       });
+
+    if (res.data.code !== 0) {
+      console.error(
+        `Zoho response error [${res.data.code}]: ${res.data.message}`,
+      );
+    }
+
     return res.data;
   }
 
