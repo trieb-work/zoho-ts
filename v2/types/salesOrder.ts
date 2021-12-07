@@ -9,7 +9,7 @@ import type { CustomField } from "./customField";
 
 export type UpdateSalesOrder = Omit<
   CreateSalesOrder,
-  "documents" | "salesorder_id" | "template_id"
+  "documents" | "template_id"
 >;
 export type CreateSalesOrder =
   /**

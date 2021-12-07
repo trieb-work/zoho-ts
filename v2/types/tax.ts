@@ -10,4 +10,4 @@ export type Tax = {
    * Amount of the tax.
    */
   tax_amount: number;
-}
+};

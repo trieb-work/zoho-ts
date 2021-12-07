@@ -1,8 +1,4 @@
-import axios, {
-  AxiosError,
-  AxiosInstance,
-  AxiosRequestConfig,
-} from "axios";
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { ClientCredentials } from "simple-oauth2";
 
 export type Request = {
@@ -10,13 +6,13 @@ export type Request = {
   /**
    * Url Paramters
    */
-  params?: Record<string, string | number>;
+  params?: Record<string, string | number | boolean>;
   /**
    * Request body will be serialized to json
    */
   body?: unknown;
 
-  headers?: Record<string, string | number>;
+  headers?: Record<string, string | number | boolean>;
 
   /**
    * Retry the request a number of times while backing off exponentially
@@ -48,11 +44,11 @@ export type ZohoResponse<TResponse> = TResponse & {
 };
 
 export class ZohoApiError extends Error {
-    path?: string;
+  path?: string;
 
   constructor(err: AxiosError<{ code: number; message: string }>) {
     super(err.response?.data.message ?? err.message);
-    this.path = err.request?.path
+    this.path = err.request?.path;
   }
 }
 
@@ -61,7 +57,7 @@ export class ZohoApiClient {
 
   private constructor(orgId: string, headers: Record<string, string>) {
     this.httpClient = axios.create({
-      baseURL: "https://inventory.zoho.com/api/v1",
+      baseURL: "https://inventory.zoho.eu/api/v1",
       headers,
       params: {
         organization_id: orgId,
@@ -111,10 +107,10 @@ export class ZohoApiClient {
     zsrfToken: string;
   }): Promise<ZohoApiClient> {
     return new ZohoApiClient(config.orgId, {
-      cookie: config.cookie,
+      Cookie: config.cookie,
       "X-ZCSRF-TOKEN": config.zsrfToken,
       "User-Agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.183 Safari/537.36",
+        "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
     });
   }
 
