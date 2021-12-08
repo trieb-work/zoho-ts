@@ -1,5 +1,6 @@
 import { Contact, CreateContact } from "../types/contact";
 import { ZohoApiClient } from "../client/client";
+import { CreateAddress } from "../types/address";
 export class ContactHandler {
   private client: ZohoApiClient;
 
@@ -27,5 +28,20 @@ export class ContactHandler {
     await this.client.delete({
       path: ["contacts", ids.join(",")],
     });
+  }
+
+  public async addAddress(
+    id: string,
+    address: CreateAddress,
+  ): Promise<Contact> {
+    const res = await this.client.post<{ contact: Contact }>({
+      path: ["contacts", id, "address"],
+      body: {
+        update_existing_transactions_address: false,
+        ...address,
+      },
+    });
+
+    return res.contact;
   }
 }

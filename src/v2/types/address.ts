@@ -44,3 +44,7 @@ export type Address = {
    */
   street2: string;
 };
+
+export type CreateAddress = Address & {
+  update_existing_transactions_address?: boolean;
+};
