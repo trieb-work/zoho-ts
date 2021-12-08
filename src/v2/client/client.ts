@@ -39,7 +39,7 @@ export type ZohoResponse<TResponse> = TResponse & {
   page_context?: {
     page: number;
     per_page: number;
-    has_more_pages: boolean;
+    has_more_page: boolean;
   };
 };
 
@@ -130,8 +130,12 @@ export class ZohoApiClient {
     }
 
     if (req.body) {
-      axiosRequest.data = req.body;
-      axiosRequest.headers["Content-Type"] = "application/json;charset=UTF-8";
+      if (typeof req.body === "string") {
+        axiosRequest.data = req.body;
+      } else {
+        axiosRequest.data = req.body;
+        axiosRequest.headers["Content-Type"] = "application/json;charset=UTF-8";
+      }
     }
 
     const res = await this.httpClient

@@ -1,3 +1,7 @@
+async function sleep(ms: number): Promise<void> {
+  return new Promise((res) => setTimeout(res, ms));
+}
+
 /**
  * retry automatically retries to perform an asyncronous action.
  * @param fn - Must throw an error to indicate failure
@@ -19,7 +23,7 @@ export async function retry<Result = unknown>(
     try {
       return await fn();
     } catch {
-      await new Promise((resolve) => setTimeout(resolve, backoff));
+      await sleep(backoff);
     }
   }
   throw new Error(`Unable to perform action: ran out of retries.`);

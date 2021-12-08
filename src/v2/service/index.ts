@@ -1,11 +1,11 @@
 import { ZohoApiClient } from "../client/client";
-import { ItemService, SalesOrderService } from "./interface";
 import { SalesOrderHandler } from "./salesOrder";
 import { ItemHandler } from "./item";
 
 export class Zoho {
-  public readonly salesOrder: SalesOrderService;
-  public readonly item: ItemService;
+  public readonly salesOrder: SalesOrderHandler;
+
+  public readonly item: ItemHandler;
 
   constructor(client: ZohoApiClient) {
     this.salesOrder = new SalesOrderHandler(client);

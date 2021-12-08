@@ -1,5 +1,6 @@
-import { ZohoApiClient } from "../v2/client/client";
-import { Zoho } from "../v2/service";
+import { randomInt } from "crypto";
+import { ZohoApiClient } from "../src/v2/client/client";
+import { Zoho } from "../src/v2/service";
 
 async function main() {
   const client = await ZohoApiClient.fromBrowserCookies({
@@ -12,22 +13,37 @@ async function main() {
 
   const zoho = new Zoho(client);
 
-  const salesOrder = await zoho
-    .salesOrder.create({
-      salesorder_number: "TEST-123",
-      customer_id: "116240000001023815",
-      line_items: [
-        {
-          item_id: "116240000000203041",
-          quantity: 5,
-        },
-      ],
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  const salesOrder = await zoho.salesOrder.create({
+    salesorder_number: ["TEST", randomInt(90000)].join("-"),
+    customer_id: "116240000001023815",
+    line_items: [
+      {
+        item_id: "116240000000203041",
+        quantity: 5,
+      },
+    ],
 
-  console.log(JSON.stringify(salesOrder, null, 2));
+  });
+  console.log(JSON.stringify({salesOrder},null,2))
+
+
+  await zoho.salesOrder.setCustomFieldValue({
+    customFieldName: "cf_orderhash",
+    salesOrderIds: [salesOrder.salesorder_id],
+    value: "bcc"
+  })
+  await zoho.salesOrder.setCustomFieldValue({
+    customFieldName: "cf_ready_to_fulfill",
+    salesOrderIds: [salesOrder.salesorder_id],
+    value: "true"
+  })
+
+  const found = await zoho.salesOrder.search("TEST-");
+
+  console.log(JSON.stringify({found}, null, 2));
 }
 
-main();
+main().catch(err=>{
+  console.error(err)
+  process.exit(1)
+})
