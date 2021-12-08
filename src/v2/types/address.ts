@@ -27,7 +27,7 @@ export type Address = {
   /**
    * Zip code of the customer’s shipping address.
    */
-  zip: number;
+  zip: string;
 
   /**
    * Name of the country of the customer’s shipping address.
