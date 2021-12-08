@@ -12,6 +12,7 @@ export type UpdateSalesOrder = Omit<
   "documents" | "template_id"
 > &
   Pick<SalesOrder, "salesorder_id">;
+
 export type CreateSalesOrder =
   /**
    * Required fields
@@ -42,6 +43,7 @@ export type CreateSalesOrder =
         | "salesorder_id"
         | "salesperson_name"
         | "shipment_date"
+        | "shipping_charge_tax_id"
         | "shipping_charge"
         | "template_id"
         | "terms"
@@ -270,12 +272,12 @@ export type SalesOrder = {
   /**
    * Customer's shipping address.
    */
-  shipping_address: Address[];
+  shipping_address: Address;
 
   /**
    * Customer's billing address.
    */
-  billing_address: Address[];
+  billing_address: Address;
 
   /**
    * Notes for the Sales Order.
@@ -365,4 +367,23 @@ export type SalesOrder = {
    * India Edition only
    */
   place_of_supply: string;
+
+  /**
+   * Id of the shipping tax
+   *
+   * Not documented
+   */
+  shipping_charge_tax_id: number;
+
+  /**
+   * Shipping charge tax rate in percent.
+   *
+   * Not officially documented
+   */
+  shipping_charge_tax_percentage: number;
+
+  /**
+   *  Additional custom fields
+   */
+  [key: string]: unknown;
 };

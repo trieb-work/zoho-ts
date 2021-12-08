@@ -1,5 +1,10 @@
 export type Address = {
   /**
+   * Intended recipient at given address
+   */
+  attention: string;
+
+  /**
    * Name of the street of the customer’s shipping address.
    */
   address: string;
@@ -28,4 +33,9 @@ export type Address = {
    * Fax number of the customer’s shipping address.
    */
   fax: string;
+
+  /**
+   * Additional Street address of the contact. Maximum length allowed [255]
+   */
+  street2: string;
 };

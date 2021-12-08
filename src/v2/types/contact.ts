@@ -2,6 +2,11 @@ import { Address } from ".";
 
 export type Contact = {
   /**
+   * Unique id for this contact.
+   */
+  contact_id: string;
+
+  /**
    * Name of the contact. This can be the name of an organisation or the name of an individual. Maximum length [200]
    */
   contact_name: string;
@@ -95,6 +100,16 @@ export type Contact = {
    * US, Canada, Australia and India editions only
    */
   tax_exemption_code: string;
+
+  /**
+   * Not documented
+   */
+  addresses: Address[];
+
+  /**
+   * Not documented
+   */
+  contact_type: "customer";
 };
 
 export type CreateContact =

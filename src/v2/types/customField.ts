@@ -14,4 +14,11 @@ export type CustomField = {
    * Value of the Custom Field
    */
   value?: string | number | boolean;
+
+  /**
+   * Optionally reference this field by its api name
+   *
+   * Not documented
+   */
+  api_name?: string;
 };
