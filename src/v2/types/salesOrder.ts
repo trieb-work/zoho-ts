@@ -373,7 +373,7 @@ export type SalesOrder = {
    *
    * Not documented
    */
-  shipping_charge_tax_id: number;
+  shipping_charge_tax_id: string;
 
   /**
    * Shipping charge tax rate in percent.
