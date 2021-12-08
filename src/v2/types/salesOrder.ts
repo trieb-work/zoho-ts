@@ -10,7 +10,8 @@ import type { CustomField } from "./customField";
 export type UpdateSalesOrder = Omit<
   CreateSalesOrder,
   "documents" | "template_id"
->;
+> &
+  Pick<SalesOrder, "salesorder_id">;
 export type CreateSalesOrder =
   /**
    * Required fields

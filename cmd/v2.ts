@@ -1,5 +1,5 @@
 import { ZohoApiClient } from "../v2/client/client";
-import { Zoho } from "../v2/service/service";
+import { Zoho } from "../v2/service";
 
 async function main() {
   const client = await ZohoApiClient.fromBrowserCookies({
@@ -13,7 +13,7 @@ async function main() {
   const zoho = new Zoho(client);
 
   const salesOrder = await zoho
-    .createSalesOrder({
+    .salesOrder.create({
       salesorder_number: "TEST-123",
       customer_id: "116240000001023815",
       line_items: [

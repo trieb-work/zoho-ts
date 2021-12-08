@@ -96,6 +96,7 @@ export class ZohoApiClient {
       authorization: `${res.token.token_type} ${res.token.access_token}`,
     });
   }
+
   /**
    * Create a zoho api instance from cookies
    *
@@ -149,18 +150,20 @@ export class ZohoApiClient {
   }
 
   public async get<TResponse>(req: Request): Promise<ZohoResponse<TResponse>> {
-    return await this.request<TResponse>("GET", req);
+    return this.request<TResponse>("GET", req);
   }
 
   public async post<TResponse>(req: Request): Promise<ZohoResponse<TResponse>> {
-    return await this.request<TResponse>("POST", req);
+    return this.request<TResponse>("POST", req);
   }
+
   public async put<TResponse>(req: Request): Promise<ZohoResponse<TResponse>> {
-    return await this.request<TResponse>("PUT", req);
+    return this.request<TResponse>("PUT", req);
   }
+
   public async delete<TResponse>(
     req: Request,
   ): Promise<ZohoResponse<TResponse>> {
-    return await this.request<TResponse>("DELETE", req);
+    return this.request<TResponse>("DELETE", req);
   }
 }

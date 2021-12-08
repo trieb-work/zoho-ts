@@ -12,7 +12,7 @@ export class SalesOrderHandler implements SalesOrderService {
     this.client = client;
   }
 
-  public async createSalesOrder(
+  public async create(
     salesOrder: CreateSalesOrder,
   ): Promise<SalesOrder> {
     const res = await this.client.post<{ salesorder: SalesOrder }>({
