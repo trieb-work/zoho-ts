@@ -45,6 +45,6 @@ export type Address = {
   street2: string;
 };
 
-export type CreateAddress = Address & {
+export type CreateAddress = Partial<Omit<Address, "address_id">> & {
   update_existing_transactions_address?: boolean;
 };
