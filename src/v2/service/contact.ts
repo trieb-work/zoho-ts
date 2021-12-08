@@ -30,11 +30,14 @@ export class ContactHandler {
     });
   }
 
-  public async addAddress(
-    id: string,
-    address: CreateAddress,
-  ): Promise<Contact> {
-    const res = await this.client.post<{ contact: Contact }>({
+  /**
+   *
+   * @returns The address Id
+   */
+  public async addAddress(id: string, address: CreateAddress): Promise<string> {
+    const res = await this.client.post<{
+      address_info: { address_id: string };
+    }>({
       path: ["contacts", id, "address"],
       body: {
         update_existing_transactions_address: false,
@@ -42,6 +45,6 @@ export class ContactHandler {
       },
     });
 
-    return res.contact;
+    return res.address_info.address_id;
   }
 }
