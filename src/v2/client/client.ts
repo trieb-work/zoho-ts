@@ -62,14 +62,14 @@ export class ZohoApiClient {
       params: {
         organization_id: orgId,
       },
-      timeout: 7000,
+      timeout: 30_000,
     });
   }
 
   /**
    * Create a zoho api instance from client id and secret
    */
-  static async fromClientSecret(
+  static async fromOAuth(
     orgId: string,
     client: { id: string; secret: string },
   ): Promise<ZohoApiClient> {
@@ -102,7 +102,7 @@ export class ZohoApiClient {
    *
    * This is an undocumented unsupported hack
    */
-  static async fromBrowserCookies(config: {
+  static async fromCookies(config: {
     orgId: string;
     cookie: string;
     zsrfToken: string;
@@ -124,6 +124,7 @@ export class ZohoApiClient {
       url: `/${req.path.join("/")}`,
       headers: req.headers ?? {},
       params: req.params,
+  
     };
     if (req.timeout) {
       axiosRequest.timeout = req.timeout;
