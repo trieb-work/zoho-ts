@@ -1,5 +1,10 @@
 export type Address = {
   /**
+   * Unique id for this address
+   */
+  address_id: string;
+
+  /**
    * Intended recipient at given address
    */
   attention: string;
