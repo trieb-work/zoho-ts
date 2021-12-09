@@ -66,14 +66,14 @@ export type ZohoApiClientConfig = {
 export class ZohoApiClient {
   private httpClient: AxiosInstance;
 
-  static readonly baseUrls = {
+  static readonly BASE_URL = {
     inventory: "https://inventory.zoho.eu/api/v1",
     books: "https://books.zoho.eu/api/v1",
   };
 
   private constructor(config: ZohoApiClientConfig) {
     this.httpClient = axios.create({
-      baseURL: config.baseUrl ?? ZohoApiClient.baseUrls.inventory,
+      baseURL: config.baseUrl ?? ZohoApiClient.BASE_URL.inventory,
       headers: config.headers,
       params: {
         organization_id: config.orgId,
