@@ -24,9 +24,9 @@ export class ContactHandler {
     return res.contact ?? null;
   }
 
-  public async delete(ids: string[]): Promise<void> {
+  public async delete(id: string): Promise<void> {
     await this.client.delete({
-      path: ["contacts", ids.join(",")],
+      path: ["contacts", id],
     });
   }
 
