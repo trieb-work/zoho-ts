@@ -24,6 +24,11 @@ export type Request = {
    * @default 7000
    */
   timeout?: number;
+
+  /**
+   * Override the base Url for this request
+   */
+  baseUrl?: string;
 };
 
 export type ZohoResponse<TResponse> = TResponse & {
@@ -146,6 +151,9 @@ export class ZohoApiClient {
       headers: req.headers ?? {},
       params: req.params,
     };
+    if (req.baseUrl) {
+      axiosRequest.baseURL = req.baseUrl;
+    }
     if (req.timeout) {
       axiosRequest.timeout = req.timeout;
     }
