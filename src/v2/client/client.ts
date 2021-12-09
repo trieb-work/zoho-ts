@@ -51,9 +51,16 @@ export type ZohoResponse<TResponse> = TResponse & {
 export class ZohoApiError extends Error {
   url?: string;
 
+  code?: number;
+
+  zohoMessage?: string;
+
   constructor(err: AxiosError<{ code: number; message: string }>) {
     super(err.response?.data.message ?? err.message);
     this.url = err.request?.url + err.request?.path;
+
+    this.code = err.response?.data.code;
+    this.zohoMessage = err.response?.data.message;
   }
 }
 
