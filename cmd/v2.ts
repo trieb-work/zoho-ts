@@ -22,28 +22,26 @@ async function main() {
         quantity: 5,
       },
     ],
-
   });
-  console.log(JSON.stringify({salesOrder},null,2))
-
+  console.log(JSON.stringify({ salesOrder }, null, 2));
 
   await zoho.salesOrder.setCustomFieldValue({
     customFieldName: "cf_orderhash",
     salesOrderIds: [salesOrder.salesorder_id],
-    value: "bcc"
-  })
+    value: "bcc",
+  });
   await zoho.salesOrder.setCustomFieldValue({
     customFieldName: "cf_ready_to_fulfill",
     salesOrderIds: [salesOrder.salesorder_id],
-    value: "true"
-  })
+    value: "true",
+  });
 
   const found = await zoho.salesOrder.search("TEST-");
 
-  console.log(JSON.stringify({found}, null, 2));
+  console.log(JSON.stringify({ found }, null, 2));
 }
 
-main().catch(err=>{
-  console.error(err)
-  process.exit(1)
-})
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

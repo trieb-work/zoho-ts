@@ -53,15 +53,11 @@ export class ZohoApiError extends Error {
 
   code?: number;
 
-  rest?: unknown
-
   constructor(err: AxiosError<{ code: number; message: string }>) {
     super(err.response?.data.message ?? err.message);
     this.url = err.request?.baseUrl + err.request?.path;
 
     this.code = err.response?.data.code;
-    this.rest = err
-  
   }
 }
 
