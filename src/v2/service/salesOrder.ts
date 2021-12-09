@@ -51,7 +51,10 @@ export class SalesOrderHandler {
 
   public async delete(ids: string[]): Promise<void> {
     await this.client.delete({
-      path: ["salesorders", ids.join(",")],
+      path: ["salesorders"],
+      params:{
+        salesorder_ids: ids.join(",")
+      }
     });
   }
 
