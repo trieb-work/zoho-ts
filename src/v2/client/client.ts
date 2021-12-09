@@ -52,15 +52,26 @@ export class ZohoApiError extends Error {
   }
 }
 
+export type ZohoApiClientConfig = {
+  orgId: string;
+  headers: Record<string, string>;
+  baseUrl?: string;
+};
+
 export class ZohoApiClient {
   private httpClient: AxiosInstance;
 
-  private constructor(orgId: string, headers: Record<string, string>) {
+  static readonly baseUrls = {
+    inventory: "https://inventory.zoho.eu/api/v1",
+    books: "https://books.zoho.eu/api/v1",
+  };
+
+  private constructor(config: ZohoApiClientConfig) {
     this.httpClient = axios.create({
-      baseURL: "https://inventory.zoho.eu/api/v1",
-      headers,
+      baseURL: config.baseUrl ?? ZohoApiClient.baseUrls.inventory,
+      headers: config.headers,
       params: {
-        organization_id: orgId,
+        organization_id: config.orgId,
       },
       timeout: 30_000,
     });
@@ -69,12 +80,13 @@ export class ZohoApiClient {
   /**
    * Create a zoho api instance from client id and secret
    */
-  static async fromOAuth(
-    orgId: string,
-    client: { id: string; secret: string },
-  ): Promise<ZohoApiClient> {
+  static async fromOAuth(config: {
+    orgId: string;
+    client: { id: string; secret: string };
+    baseUrl?: string;
+  }): Promise<ZohoApiClient> {
     const clientCredentials = new ClientCredentials({
-      client,
+      client: config.client,
       auth: {
         tokenHost: "https://accounts.zoho.eu",
         tokenPath: "/oauth/v2/token",
@@ -92,8 +104,12 @@ export class ZohoApiClient {
       throw new Error(res.token.error);
     }
 
-    return new ZohoApiClient(orgId, {
-      authorization: `${res.token.token_type} ${res.token.access_token}`,
+    return new ZohoApiClient({
+      orgId: config.orgId,
+      headers: {
+        authorization: `${res.token.token_type} ${res.token.access_token}`,
+      },
+      baseUrl: config.baseUrl,
     });
   }
 
@@ -106,12 +122,17 @@ export class ZohoApiClient {
     orgId: string;
     cookie: string;
     zsrfToken: string;
+    baseUrl?: string;
   }): Promise<ZohoApiClient> {
-    return new ZohoApiClient(config.orgId, {
-      Cookie: config.cookie,
-      "X-ZCSRF-TOKEN": config.zsrfToken,
-      "User-Agent":
-        "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
+    return new ZohoApiClient({
+      orgId: config.orgId,
+      headers: {
+        Cookie: config.cookie,
+        "X-ZCSRF-TOKEN": config.zsrfToken,
+        "User-Agent":
+          "User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
+      },
+      baseUrl: config.baseUrl,
     });
   }
 
@@ -124,7 +145,6 @@ export class ZohoApiClient {
       url: `/${req.path.join("/")}`,
       headers: req.headers ?? {},
       params: req.params,
-  
     };
     if (req.timeout) {
       axiosRequest.timeout = req.timeout;
