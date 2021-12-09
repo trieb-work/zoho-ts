@@ -171,6 +171,7 @@ export class ZohoApiClient {
       }
     }
 
+    console.log({ req });
     const res = await this.httpClient
       .request<ZohoResponse<TResponse>>(axiosRequest)
       .catch((err) => {
