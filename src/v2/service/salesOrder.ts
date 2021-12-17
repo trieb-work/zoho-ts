@@ -68,9 +68,10 @@ export class SalesOrderHandler {
     for (const chunk of chunks) {
       await this.client.post<{ salesorder: SalesOrder }>({
         path: ["salesorders", "status", "confirmed"],
-        body: {
-          salesorder_ids: chunk.join(","),
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
         },
+        body: `salesorder_ids=${encodeURIComponent(chunk.join(","))}`,
       });
     }
   }

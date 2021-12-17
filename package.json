@@ -14,8 +14,7 @@
   "author": "Jannik Zinkl | trieb.work",
   "license": "MIT",
   "scripts": {
-    "build": "yarn run clean && yarn tsc",
-    "clean": "yarn rimraf dist",
+    "build": "tsc",
     "dev": "yarn tsc --watch --preserveWatchOutput",
     "prepublish": "yarn build",
     "format": "prettier --write .",
