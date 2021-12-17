@@ -53,7 +53,7 @@ export class SalesOrderHandler {
     await this.client.delete({
       path: ["salesorders"],
       params: {
-        salesorder_ids: ids.join("%"),
+        salesorder_ids: encodeURIComponent(ids.join(",")),
       },
     });
   }
@@ -69,7 +69,7 @@ export class SalesOrderHandler {
       await this.client.post<{ salesorder: SalesOrder }>({
         path: ["salesorders", "status", "confirmed"],
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
         },
         body: `salesorder_ids=${encodeURIComponent(chunk.join(","))}`,
       });
@@ -108,7 +108,7 @@ export class SalesOrderHandler {
     await this.client.put<{ salesorder: SalesOrder }>({
       path: ["salesorders"],
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
       },
       body: `bulk_update=true&JSONString=${JSON.stringify({
         custom_fields: [
