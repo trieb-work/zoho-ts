@@ -53,7 +53,7 @@ export class SalesOrderHandler {
     await this.client.delete({
       path: ["salesorders"],
       params: {
-        salesorder_ids: ids.join(","),
+        salesorder_ids: ids.join("%"),
       },
     });
   }
