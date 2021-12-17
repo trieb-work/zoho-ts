@@ -50,12 +50,29 @@ export class SalesOrderHandler {
   }
 
   public async delete(ids: string[]): Promise<void> {
-    await this.client.delete({
-      path: ["salesorders"],
-      params: {
-        salesorder_ids: encodeURIComponent(ids.join(",")),
-      },
-    });
+    if (ids.length === 0) {
+      return;
+    }
+
+    /**
+     * Zoho enforces a limit of 100 characters for the salesorder_ids field
+     */
+    while (ids.length > 0) {
+      const salesorderIds: string[] = [];
+      while (
+        ids.length > 0 &&
+        encodeURIComponent([...salesorderIds, ids[0]].join(",")).length < 100
+      ) {
+        salesorderIds.push(ids.shift()!);
+      }
+
+      await this.client.delete({
+        path: ["salesorders"],
+        params: {
+          salesorder_ids: encodeURIComponent(salesorderIds.join(",")),
+        },
+      });
+    }
   }
 
   public async confirm(ids: string[]): Promise<void> {
