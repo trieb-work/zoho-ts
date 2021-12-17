@@ -58,6 +58,7 @@ export class SalesOrderHandler {
       await this.client.delete({
         path: ["salesorders", ids[0]],
       });
+      return;
     }
 
     await this.client.delete({
