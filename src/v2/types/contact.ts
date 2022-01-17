@@ -120,7 +120,7 @@ export type CreateContact =
     /**
      * Optional fields
      */
-    Partial<Pick<Contact, "company_name">>;
+    Partial<Contact>;
 
 export type UpdateContact =
   /**
