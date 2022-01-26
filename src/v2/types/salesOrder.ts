@@ -386,4 +386,6 @@ export type SalesOrder = {
    *  Additional custom fields
    */
   [key: string]: unknown;
+
+  custom_fields: CustomField[];
 };

@@ -1,5 +1,5 @@
 export type CustomField = {
-  custom_field_id?: string;
+  customfield_id?: string;
   /**
    * Index of the custom field
    */
