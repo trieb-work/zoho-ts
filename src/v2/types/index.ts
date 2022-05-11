@@ -6,9 +6,9 @@ export type { Package } from "./package";
 export type { Invoice } from "./invoice";
 export type { Tax } from "./tax";
 export type {
-  SalesOrder,
-  CreateSalesOrder,
-  UpdateSalesOrder,
+    SalesOrder,
+    CreateSalesOrder,
+    UpdateSalesOrder,
 } from "./salesOrder";
 export type { CustomField } from "./customField";
 export type { Contact, CreateContact, UpdateContact } from "./contact";
