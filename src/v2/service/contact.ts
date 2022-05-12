@@ -8,6 +8,11 @@ export class ContactHandler {
         this.client = client;
     }
 
+    /**
+     * Create a new contact. User the contact_person array to add first name and last name to the contact
+     * @param contact
+     * @returns
+     */
     public async create(contact: CreateContact): Promise<Contact> {
         const res = await this.client.post<{ contact: Contact }>({
             path: ["contacts"],
@@ -24,9 +29,28 @@ export class ContactHandler {
         return res.contact ?? null;
     }
 
-    public async delete(id: string): Promise<void> {
+    /**
+     * Delete one ore more contacts
+     * @param ids
+     * @returns
+     */
+    public async delete(ids: string[]): Promise<void> {
+        if (ids.length === 0) {
+            return;
+        }
+
+        if (ids.length === 1) {
+            await this.client.delete({
+                path: ["contacts", ids[0]],
+            });
+            return;
+        }
+
         await this.client.delete({
-            path: ["contacts", id],
+            path: ["contacts"],
+            params: {
+                contact_ids: ids.join(","),
+            },
         });
     }
 

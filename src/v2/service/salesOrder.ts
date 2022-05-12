@@ -24,12 +24,39 @@ export class SalesOrderHandler {
         return res.salesorder;
     }
 
-    public async list(): Promise<SalesOrder[]> {
-        const res = await this.client.get<{ salesorders: SalesOrder[] }>({
-            path: ["salesorders"],
-        });
+    /**
+     * List SalesOrder using different filters and sort Orders. Default Limit is 200, resulting in 1 API calls - using pagination automatically.
+     * @param opts
+     * @returns
+     */
+    public async list(opts: {
+        sortColumn?: "date" | "created_date" | "last_modified_time" | "total";
+        sortOrder?: "ascending" | "descending";
+        limit?: number;
+    }): Promise<SalesOrder[]> {
+        const salesOrders: SalesOrder[] = [];
+        let hasMorePages = true;
+        let page = 1;
 
-        return res.salesorders;
+        while (hasMorePages) {
+            const res = await this.client.get<{ salesorders: SalesOrder[] }>({
+                path: ["salesorders"],
+                params: {
+                    sort_column: opts.sortColumn ?? "date",
+                    sort_order: opts.sortOrder === "ascending" ? "A" : "D",
+                    per_page: "200",
+                    page,
+                },
+            });
+
+            salesOrders.push(...res.salesorders);
+            hasMorePages = !opts.limit
+                ? false
+                : res.page_context?.has_more_page ?? false;
+            page = res.page_context?.page ?? 0 + 1;
+        }
+
+        return salesOrders;
     }
 
     public async update(salesOrder: UpdateSalesOrder): Promise<SalesOrder> {
@@ -41,7 +68,12 @@ export class SalesOrderHandler {
         return res.salesorder;
     }
 
-    public async retrieve(id: string): Promise<SalesOrder> {
+    /**
+     * Get a single salesorder by ID
+     * @param id
+     * @returns
+     */
+    public async get(id: string): Promise<SalesOrder> {
         const res = await this.client.get<{ salesorder: SalesOrder }>({
             path: ["salesorders", id],
         });
@@ -69,6 +101,10 @@ export class SalesOrderHandler {
         });
     }
 
+    /**
+     * Confirm one ore many salesorders at once. Can be used for unlimited amount of SalesOrders. Creates chunks of 25.
+     * @param ids
+     */
     public async confirm(ids: string[]): Promise<void> {
         const chunkSize = 25;
         const chunks: string[][] = [];
@@ -105,6 +141,11 @@ export class SalesOrderHandler {
         }
     }
 
+    /**
+     * Set custom field values of one or many sales orders. Use the API_Name of the custom field in the Zoho settings
+     * e.g. "cf_custom_field"
+     * @param opts
+     */
     public async setCustomFieldValue(
         opts: RequireOnlyOne<
             {
@@ -136,6 +177,11 @@ export class SalesOrderHandler {
         });
     }
 
+    /**
+     * Search for a salesOrder number containing the search fragment
+     * @param fragment
+     * @returns
+     */
     public async search(fragment: string): Promise<SalesOrder[]> {
         const salesOrders: SalesOrder[] = [];
         let hasMorePages = true;

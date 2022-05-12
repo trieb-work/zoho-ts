@@ -8,7 +8,7 @@ const clientId = process.env.ZOHO_CLIENT_ID as string;
 const clientSecret = process.env.ZOHO_CLIENT_SECRET as string;
 
 it("works to create a new Zoho Client Instance", async () => {
-    console.log("org ID", orgId);
+    
     const client = await ZohoApiClient.fromOAuth({
         orgId,
         client: {

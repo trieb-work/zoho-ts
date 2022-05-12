@@ -31,6 +31,13 @@ export type Request = {
     baseUrl?: string;
 };
 
+enum ZohoEntities {
+    SALESORDERS = "salesorders",
+    INVOICES = "invoices",
+    CONTACTS = "contacts",
+    ITEMS = "items",
+}
+
 export type ZohoResponse<TResponse> = TResponse & {
     /**
      * Zoho Inventory error code. This will be zero for a success response and non-zero in case of an error.
@@ -46,6 +53,11 @@ export type ZohoResponse<TResponse> = TResponse & {
         per_page: number;
         has_more_page: boolean;
     };
+} & {
+    [key in ZohoEntities]?: {
+        code: number;
+        message: string;
+    }[];
 };
 
 export class ZohoApiError extends Error {
@@ -178,10 +190,37 @@ export class ZohoApiClient {
                 throw new ZohoApiError(err);
             });
 
-        if (res.data.code !== 0) {
-            console.error(
-                `Zoho response error [${res.data.code}]: ${res.data.message}`,
+        if (res.data.code === undefined) {
+            /**
+             * The response object looks different for bulk update requests.
+             * We check here, if this is a bulk response object
+             */
+            const bulkResponse = Object.keys(res.data).find((x) =>
+                Object.values(ZohoEntities).includes(
+                    x as unknown as ZohoEntities,
+                ),
             );
+
+            if (bulkResponse) {
+                res.data[bulkResponse as ZohoEntities]?.map((x) => {
+                    if (x.code !== 0)
+                        throw new Error(
+                            `Zoho response error [${x.code}]: ${x.message}`,
+                        );
+                });
+            } else {
+                throw new Error(
+                    `Zoho returned not valid response object: ${JSON.stringify(
+                        res.data,
+                    )}`,
+                );
+            }
+        } else {
+            if (res.data.code !== 0) {
+                console.error(
+                    `Zoho response error [${res.data.code}]: ${res.data.message}`,
+                );
+            }
         }
 
         return res.data;

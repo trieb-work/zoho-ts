@@ -32,6 +32,17 @@ export type Contact = {
     email: string;
 
     /**
+     * Contact persons related to this contact. Use this to update the first and last name of the "main" contact person of a contact
+     */
+    contact_persons: Partial<{
+        salutation: string;
+        first_name: string;
+        last_name: string;
+        email: string;
+        is_primary_contact: boolean;
+    }>[];
+
+    /**
      * Search contacts by phone number of the contact person. Variants: phone_startswith and phone_contains
      */
     phone: string;
@@ -116,11 +127,14 @@ export type CreateContact =
     /**
      * Required fields
      */
-    Pick<Contact, "contact_name"> &
-        /**
-         * Optional fields
-         */
-        Partial<Contact>;
+    Omit<
+        Pick<Contact, "contact_name"> &
+            /**
+             * Optional fields
+             */
+            Partial<Contact>,
+        "first_name" | "last_name" | "email"
+    >;
 
 export type UpdateContact =
     /**
