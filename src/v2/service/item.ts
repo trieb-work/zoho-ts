@@ -7,7 +7,7 @@ export class ItemHandler {
         this.client = client;
     }
 
-    public async retrieve(id: string): Promise<Item> {
+    public async get(id: string): Promise<Item> {
         const res = await this.client.get<{ item: Item }>({
             path: ["items", id],
         });

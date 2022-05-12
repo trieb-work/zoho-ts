@@ -24,7 +24,6 @@ export class SalesOrderHandler {
         return res.salesorder;
     }
 
-
     /**
      * List SalesOrder using different filters and sort Orders. Default Limit is 200, resulting in 1 API calls - using pagination automatically.
      * @param opts

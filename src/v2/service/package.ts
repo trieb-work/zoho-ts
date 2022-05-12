@@ -7,7 +7,7 @@ export class PackageHandler {
         this.client = client;
     }
 
-    public async retrieve(id: string): Promise<Package | null> {
+    public async get(id: string): Promise<Package | null> {
         const res = await this.client.get<{ package: Package }>({
             path: ["packages", id],
         });
