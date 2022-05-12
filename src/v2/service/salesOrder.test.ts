@@ -64,7 +64,7 @@ describe("SalesOrder Tests", () => {
     })
 
     test("It should work to list salesorder sorted by last_update_date", async () => {
-        const res = await zoho.salesOrder.list({ sortColumn: "last_modified_time"})
+        const res = await zoho.salesOrder.list({ sortColumn: "last_modified_time", createdDateStart: "2022-01-01"})
         expect(res.length).toBeGreaterThan(0);
 
     })

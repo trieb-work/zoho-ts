@@ -24,6 +24,7 @@ export class SalesOrderHandler {
         return res.salesorder;
     }
 
+
     /**
      * List SalesOrder using different filters and sort Orders. Default Limit is 200, resulting in 1 API calls - using pagination automatically.
      * @param opts
@@ -33,6 +34,14 @@ export class SalesOrderHandler {
         sortColumn?: "date" | "created_date" | "last_modified_time" | "total";
         sortOrder?: "ascending" | "descending";
         limit?: number;
+        /**
+         * yyyy-mm-dd
+         */
+        createdDateStart?: `${number}-${number}-${number}`;
+        /**
+         * yyyy-mm-dd
+         */
+        createdDateEnd?: `${number}-${number}-${number}`;
     }): Promise<SalesOrder[]> {
         const salesOrders: SalesOrder[] = [];
         let hasMorePages = true;
@@ -46,6 +55,8 @@ export class SalesOrderHandler {
                     sort_order: opts.sortOrder === "ascending" ? "A" : "D",
                     per_page: "200",
                     page,
+                    created_date_start: opts.createdDateStart || "",
+                    created_date_end: opts.createdDateEnd || "",
                 },
             });
 
