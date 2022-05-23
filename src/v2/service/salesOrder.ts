@@ -26,6 +26,7 @@ export class SalesOrderHandler {
 
     /**
      * List SalesOrder using different filters and sort Orders. Default Limit is 200, resulting in 1 API calls - using pagination automatically.
+     * Limit the total result using the fields "createdDateStart" (GTE) or "createdDateEnd" (LTE)
      * @param opts
      * @returns
      */
@@ -91,6 +92,12 @@ export class SalesOrderHandler {
         return res.salesorder;
     }
 
+    /**
+     * Delete one or several sales orders at once. Can be used for
+     * unlimited amount of sales orders. Creates chunks of 25
+     * @param ids
+     * @returns
+     */
     public async delete(ids: string[]): Promise<void> {
         if (ids.length === 0) {
             return;
@@ -103,12 +110,19 @@ export class SalesOrderHandler {
             return;
         }
 
-        await this.client.delete({
-            path: ["salesorders"],
-            params: {
-                salesorder_ids: ids.join(","),
-            },
-        });
+        const chunkSize = 25;
+        const chunks: string[][] = [];
+        for (let i = 0; i < ids.length; i += chunkSize) {
+            chunks.push(ids.slice(i, i + chunkSize));
+        }
+        for (const chunk of chunks) {
+            await this.client.delete({
+                path: ["salesorders"],
+                params: {
+                    salesorder_ids: chunk.join(","),
+                },
+            });
+        }
     }
 
     /**
