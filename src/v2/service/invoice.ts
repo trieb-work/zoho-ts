@@ -30,7 +30,7 @@ export class InvoiceHandler {
      * @returns
      */
     public async list(opts: {
-        sortColumn?: "date" | "created_date" | "last_modified_time" | "total";
+        sortColumn?: "date" | "created_time" | "last_modified_time" | "total";
         sortOrder?: "ascending" | "descending";
         limit?: number;
         /**
