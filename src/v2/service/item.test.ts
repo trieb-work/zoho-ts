@@ -9,7 +9,7 @@ const clientId = process.env.ZOHO_CLIENT_ID as string;
 const clientSecret = process.env.ZOHO_CLIENT_SECRET as string;
 
 let zoho :Zoho
-let testUserId: string;
+// let testUserId: string;
 
 describe("Item Tests", () => {
     beforeAll(async () => {
@@ -27,25 +27,25 @@ describe("Item Tests", () => {
 
 
 
-    const itemIds: string[] = [];
+    // const itemIds: string[] = [];
 
-    test ("It should work to create an article", async () => {
-        const testUser = await zoho.contact.create({ contact_name: "Test Run User Zoho TS" })
-        testUserId = testUser.contact_id;
+    // test ("It should work to create an article", async () => {
+    //     const testUser = await zoho.contact.create({ contact_name: "Test Run User Zoho TS" })
+    //     testUserId = testUser.contact_id;
 
-        const item = await zoho.item.create({
-            customer_id: testUser.contact_id,
-            line_items: [
-                {
-                    item_id: "116240000000203041",
-                    quantity: 5,
-                },
-            ],
-        });
-        itemIds.push(item.Item_id)
-        expect(item.customer_id).toBe(testUser.contact_id);
+    //     const item = await zoho.item.create({
+    //         customer_id: testUser.contact_id,
+    //         line_items: [
+    //             {
+    //                 item_id: "116240000000203041",
+    //                 quantity: 5,
+    //             },
+    //         ],
+    //     });
+    //     itemIds.push(item.Item_id)
+    //     expect(item.customer_id).toBe(testUser.contact_id);
 
-    })
+    // })
 
 
 
@@ -60,15 +60,15 @@ describe("Item Tests", () => {
         expect(res[0].status === "inactive")
     })
 
-    test("It should work to delete a item", async () => {
-        await zoho.item.delete(itemIds);
+    // test("It should work to delete a item", async () => {
+    //     await zoho.item.delete(itemIds);
 
-    });
+    // });
 
-    afterAll(async () => {
-        await zoho.contact.delete([testUserId]);
+    // afterAll(async () => {
+    //     await zoho.contact.delete([testUserId]);
 
-    })
+    // })
 
 
 });
