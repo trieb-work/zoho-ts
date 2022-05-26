@@ -118,9 +118,14 @@ export type Contact = {
     addresses: Address[];
 
     /**
-     * Not documented
+     * Customer or vendor / this is Zoho specific, as contacts can be vendors or customer
      */
     contact_type: "customer";
+
+    /**
+     * Is this contact a business or an individual person
+     */
+    customer_sub_type: "business" | "individual";
 };
 
 export type CreateContact =
@@ -128,7 +133,7 @@ export type CreateContact =
      * Required fields
      */
     Omit<
-        Pick<Contact, "contact_name"> &
+        Pick<Contact, "contact_name" | "customer_sub_type"> &
             /**
              * Optional fields
              */
