@@ -91,17 +91,6 @@ export type Contact = {
     place_of_contact: string;
 
     /**
-     * 15 digit GST identification number of the customer/vendor.
-     * India Edition only.
-     */
-    gst_no: string;
-    /**
-     *  Choose whether the contact is GST registered/unregistered/consumer/overseas. Allowed values are business_gst , business_none , overseas , consumer .
-     * India Edition only.
-     */
-    gst_treatment: string;
-
-    /**
      * Name of the Tax Authority
      */
     tax_authority_name: string;
@@ -126,6 +115,10 @@ export type Contact = {
      * Is this contact a business or an individual person
      */
     customer_sub_type: "business" | "individual";
+
+    last_modified_time: string;
+
+    created_time: string; 
 };
 
 export type CreateContact =

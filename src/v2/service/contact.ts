@@ -78,6 +78,7 @@ export class ContactHandler {
     /**
      * List contact using different filters and sort Orders. Default Limit is 200, resulting in 1 API calls - using pagination automatically.
      * Limit the total result using the fields "createdDateStart" (GTE) or "createdDateEnd" (LTE)
+     * Contacts can be vendors or customers.
      * @param opts
      * @returns
      */
@@ -89,6 +90,10 @@ export class ContactHandler {
          * Filter by only active contacts
          */
         filterBy?: "active" | "inactive";
+        /**
+         * Filter contacts by either customer or vendor
+         */
+        contactType?: "customer" | "vendor";
     }): Promise<Contact[]> {
         const contacts: Contact[] = [];
         let hasMorePages = true;
@@ -103,6 +108,7 @@ export class ContactHandler {
                     per_page: "200",
                     page,
                     status: opts.filterBy || "",
+                    contact_type: opts.contactType || "",
                 },
             });
 
