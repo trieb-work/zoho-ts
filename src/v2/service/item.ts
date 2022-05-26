@@ -1,5 +1,6 @@
 import { ZohoApiClient } from "../client/client";
 import { Item } from "../types";
+import { CreateItem, CreateItemGroup, ItemGroup } from "../types/item";
 export class ItemHandler {
     private client: ZohoApiClient;
 
@@ -57,5 +58,43 @@ export class ItemHandler {
         }
 
         return items;
+    }
+
+    /**
+     * Create a new item.
+     * @param item
+     * @returns
+     */
+    public async create(item: CreateItem): Promise<Item> {
+        const res = await this.client.post<{ item: Item }>({
+            path: ["items"],
+            body: item,
+        });
+
+        return res.item;
+    }
+
+    /**
+     * Create a new Itemgroup with Items
+     * @param itemgroup
+     * @returns
+     */
+    public async createGroup(itemgroup: CreateItemGroup): Promise<ItemGroup> {
+        const res = await this.client.post<{ item_group: ItemGroup }>({
+            path: ["itemgroups"],
+            body: itemgroup,
+        });
+
+        return res.item_group;
+    }
+
+    /**
+     * Delete an item_group and all items of it
+     * @param id
+     */
+    public async deleteGroup(id: string): Promise<void> {
+        await this.client.delete({
+            path: ["itemgroups", id],
+        });
     }
 }

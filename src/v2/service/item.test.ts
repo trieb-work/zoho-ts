@@ -47,6 +47,33 @@ describe("Item Tests", () => {
 
     // })
 
+    let itemGroupId: string
+    test("It should work to create an Item Group with two Items", async () => {
+        const itemGroup = await zoho.item.createGroup({
+            group_name: "Test Item Group Lebkuchen",
+            unit: "Stück",
+            items: [{
+                sku: "test-123",
+                name: "Test Item 1",
+                rate: 1,
+                purchase_rate: 0.5,
+            }, {
+                sku: "test-124",
+                name: "Test Item 2",
+                rate: 5,
+                purchase_rate: 2,
+            }]
+        })
+
+        expect(itemGroup.group_id).toBeDefined();
+        itemGroupId = itemGroup.group_id;
+
+    } )
+
+    test("It should work to delete the item group again", async () => {
+        await zoho.item.deleteGroup(itemGroupId);
+    })
+
 
 
     test("It should work to list Item sorted by last_update_date", async () => {

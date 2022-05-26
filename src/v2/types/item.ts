@@ -220,3 +220,64 @@ export type Item = {
 
     last_modified_time: string;
 };
+
+export type CreateItem = Pick<Item, "name"> & Item;
+
+/**
+ * Zoho's ItemGroup system is actually just a different name for Product (ItemGroup) and Product Variant (Item)
+ * Products in an item group share similar features. You can create multiple product variants (items) at once, using
+ * the ItemGroup create
+ */
+export type ItemGroup = {
+    group_id: string;
+
+    /**
+     * Name of the Item Group.
+     */
+    group_name: string;
+
+    brand: string;
+
+    manufacturer: string;
+
+    /**
+     * Unit of measurement of the Item Group.
+     */
+    unit: "box" | "kg" | "Stück" | "pcs" | "Set" | "pauschal" | string;
+
+    /**
+     * Description of the Item Group.
+     */
+    description: string;
+
+    tax_id: string;
+
+    items: Item[];
+
+    /**
+     * The variant selection attribute 1 - e.g. "sort" or "color"
+     */
+    attribute_name1: string;
+
+    /**
+     * The variant selection attribute 2 - e.g. "sort" or "color"
+     */
+    attribute_name2: string;
+
+    attribute_name3: string;
+};
+
+/**
+ * When creating items directly with the "CreateItemGroup" API call, we have to set different fields mandatory and optional
+ */
+type CreateItemGroupItem = Required<
+    Pick<Item, "name" | "rate" | "purchase_rate">
+> &
+    Partial<Pick<Item, "sku" | "upc" | "ean">>;
+
+export type CreateItemGroup = Pick<ItemGroup, "group_name" | "unit"> &
+    Partial<
+        Pick<ItemGroup, "brand" | "manufacturer" | "description" | "tax_id">
+    > & {
+        items: CreateItemGroupItem[];
+    };
