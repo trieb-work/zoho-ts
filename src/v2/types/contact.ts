@@ -118,7 +118,7 @@ export type Contact = {
 
     last_modified_time: string;
 
-    created_time: string; 
+    created_time: string;
 };
 
 export type CreateContact =
@@ -130,7 +130,7 @@ export type CreateContact =
             /**
              * Optional fields
              */
-            Partial<Contact>,
+            Partial<Omit<Contact, "created_time" | "last_modified_time">>,
         "first_name" | "last_name" | "email"
     >;
 
