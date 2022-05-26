@@ -40,6 +40,15 @@ describe("Contact Tests", () => {
         expect(contactCreate.contact_name).toBe("Test User Lastname");
     });
 
+    test("It should work to list all contacts", async () => {
+        const contacts = await zoho.contact.list({})
+
+        expect(contacts.length).toBeGreaterThan(0);
+        expect(contacts[0].contact_id).toBeDefined;
+        const searchForContact = contacts.find((x) => x.contact_name === "Test User Lastname")
+        expect(searchForContact?.contact_id).toBeDefined();
+    })
+
     test("It should work to delete a contact", async () => {
         await zoho.contact.delete(contactIds)
     })

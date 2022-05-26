@@ -277,7 +277,16 @@ type CreateItemGroupItem = Required<
 
 export type CreateItemGroup = Pick<ItemGroup, "group_name" | "unit"> &
     Partial<
-        Pick<ItemGroup, "brand" | "manufacturer" | "description" | "tax_id">
+        Pick<
+            ItemGroup,
+            | "brand"
+            | "manufacturer"
+            | "description"
+            | "tax_id"
+            | "attribute_name1"
+            | "attribute_name2"
+            | "attribute_name3"
+        >
     > & {
         items: CreateItemGroupItem[];
     };
