@@ -85,6 +85,10 @@ export class ContactHandler {
         sortColumn?: "created_time" | "last_modified_time";
         sortOrder?: "ascending" | "descending";
         limit?: number;
+        /**
+         * Filter by only active contacts
+         */
+        filterBy?: "active" | "inactive";
     }): Promise<Contact[]> {
         const contacts: Contact[] = [];
         let hasMorePages = true;
@@ -98,6 +102,7 @@ export class ContactHandler {
                     sort_order: opts.sortOrder === "ascending" ? "A" : "D",
                     per_page: "200",
                     page,
+                    status: opts.filterBy || "",
                 },
             });
 
