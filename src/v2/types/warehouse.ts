@@ -1,7 +1,7 @@
 export type Warehouse = {
-    warehouse_id: String;
+    warehouse_id: string;
 
-    warehouse_name: String;
+    warehouse_name: string;
 
     is_primary: boolean;
 };
