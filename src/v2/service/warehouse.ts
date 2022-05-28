@@ -1,4 +1,4 @@
-import { Warehouse } from "src/types";
+import { Warehouse } from "../types/warehouse";
 import { ZohoApiClient } from "../client/client";
 
 export class WarehouseHandler {
