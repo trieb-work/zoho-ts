@@ -5,6 +5,7 @@ import { ContactHandler } from "./contact";
 import { PackageHandler } from "./package";
 import { InvoiceHandler } from "./invoice";
 import { WarehouseHandler } from "./warehouse";
+import { PaymentHandler } from "./payment";
 
 export class Zoho {
     public readonly salesOrder: SalesOrderHandler;
@@ -19,6 +20,8 @@ export class Zoho {
 
     public readonly warehouse: WarehouseHandler;
 
+    public readonly payment: PaymentHandler;
+
     constructor(client: ZohoApiClient) {
         this.salesOrder = new SalesOrderHandler(client);
         this.item = new ItemHandler(client);
@@ -26,5 +29,6 @@ export class Zoho {
         this.contact = new ContactHandler(client);
         this.invoice = new InvoiceHandler(client);
         this.warehouse = new WarehouseHandler(client);
+        this.payment = new PaymentHandler(client);
     }
 }
