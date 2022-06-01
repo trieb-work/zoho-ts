@@ -27,11 +27,11 @@ export class PaymentHandler {
         /**
          * yyyy-mm-dd - the date of the payment. Not the date it was created!
          */
-        dateStart?: `${number}-${number}-${number}`;
+        dateStart?: string;
         /**
          * yyyy-mm-dd - the date of the payment. Not the date it was created!
          */
-        dateEnd?: `${number}-${number}-${number}`;
+        dateEnd?: string;
     }): Promise<Payment[]> {
         const payments: Payment[] = [];
         let hasMorePages = true;

@@ -37,11 +37,11 @@ export class SalesOrderHandler {
         /**
          * yyyy-mm-dd
          */
-        createdDateStart?: `${number}-${number}-${number}`;
+        createdDateStart?: string;
         /**
          * yyyy-mm-dd
          */
-        createdDateEnd?: `${number}-${number}-${number}`;
+        createdDateEnd?: string;
     }): Promise<SalesOrder[]> {
         const salesOrders: SalesOrder[] = [];
         let hasMorePages = true;

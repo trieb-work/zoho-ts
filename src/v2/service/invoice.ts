@@ -36,11 +36,11 @@ export class InvoiceHandler {
         /**
          * yyyy-mm-dd
          */
-        createdDateStart?: `${number}-${number}-${number}`;
+        createdDateStart?: string;
         /**
          * yyyy-mm-dd
          */
-        createdDateEnd?: `${number}-${number}-${number}`;
+        createdDateEnd?: string;
     }): Promise<Invoice[]> {
         const invoices: Invoice[] = [];
         let hasMorePages = true;
