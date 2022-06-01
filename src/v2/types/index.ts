@@ -13,3 +13,4 @@ export type {
 export type { CustomField } from "./customField";
 export type { Contact, CreateContact, UpdateContact } from "./contact";
 export type { Item } from "./item";
+export type { Payment } from "./payment";
