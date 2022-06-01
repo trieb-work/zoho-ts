@@ -1,5 +1,5 @@
 import { ZohoApiClient } from "../client/client";
-import { Payment } from "../types/payment";
+import { CreatePayment, Payment } from "../types/payment";
 export class PaymentHandler {
     private client: ZohoApiClient;
 
@@ -38,7 +38,7 @@ export class PaymentHandler {
         let page = 1;
 
         while (hasMorePages) {
-            const res = await this.client.get<{ payments: Payment[] }>({
+            const res = await this.client.get<{ customerpayments: Payment[] }>({
                 path: ["customerpayments"],
                 params: {
                     sort_column: opts.sortColumn ?? "date",
@@ -50,7 +50,7 @@ export class PaymentHandler {
                 },
             });
 
-            payments.push(...res.payments);
+            payments.push(...res.customerpayments);
             hasMorePages = !opts.limit
                 ? false
                 : res.page_context?.has_more_page ?? false;
@@ -58,5 +58,47 @@ export class PaymentHandler {
         }
 
         return payments;
+    }
+
+    public async create(payment: CreatePayment): Promise<Payment> {
+        const res = await this.client.post<{ payment: Payment }>({
+            path: ["customerpayments"],
+            body: payment,
+        });
+
+        return res.payment;
+    }
+
+    /**
+     * Delete one or several customerpayments at once. Can be used for
+     * unlimited amount of customerpayments. Creates chunks of 25
+     * @param ids
+     * @returns
+     */
+    public async delete(ids: string[]): Promise<void> {
+        if (ids.length === 0) {
+            return;
+        }
+
+        if (ids.length === 1) {
+            await this.client.delete({
+                path: ["customerpayments", ids[0]],
+            });
+            return;
+        }
+
+        const chunkSize = 25;
+        const chunks: string[][] = [];
+        for (let i = 0; i < ids.length; i += chunkSize) {
+            chunks.push(ids.slice(i, i + chunkSize));
+        }
+        for (const chunk of chunks) {
+            await this.client.delete({
+                path: ["customerpayments"],
+                params: {
+                    salesorder_ids: chunk.join(","),
+                },
+            });
+        }
     }
 }

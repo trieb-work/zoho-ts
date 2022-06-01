@@ -27,6 +27,7 @@
         "await-timeout": "^1.1.1",
         "axios": "^0.21.1",
         "axios-retry": "^3.1.9",
+        "date-fns": "^2.28.0",
         "dayjs": "^1.10.4",
         "form-data": "^3.0.0",
         "http": "^0.0.1-security",

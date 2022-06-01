@@ -1,6 +1,7 @@
 import dotenv from "dotenv";
 import { Zoho } from ".";
 import { ZohoApiClient } from "../client/client";
+import { format } from "date-fns";
 dotenv.config({ path: "./.env" });
 
 const orgId = process.env.ZOHO_ORGANIZATION_ID as string;
@@ -25,19 +26,33 @@ describe("payment Tests", () => {
 
 
     const paymentIds: string[] = [];
+    let testUserId: string;
+    let testInvoiceId: string;
 
     test("It should work to create a payment", async () => {
+        const testUser = await zoho.contact.create({ contact_name: "Test Run User Zoho TS", customer_sub_type: "individual" })
+        testUserId = testUser.contact_id;
+        const testInvoice = await zoho.invoice.create({
+            customer_id: testUserId,
+            line_items: [
+                {
+                    item_id: "116240000000203041",
+                    quantity: 5,
+                },
+            ],
+        })
+        testInvoiceId = testInvoice.invoice_id;
+
+
         const paymentCreate = await zoho.payment.create({
-            payment_persons: [{
-                first_name: "Test User",
-                last_name: "Lastname",
-            }],
-            payment_name: "Test User Lastname",
+            amount: 1,
+            customer_id: testUserId,
+            payment_mode: "Banküberweisung",
+            invoices: [{ invoice_id: testInvoice.invoice_id, amount_applied: 1}],
+            date: format(new Date(), "yyyy-MM-dd")
         });
         paymentIds.push(paymentCreate.payment_id);
 
-        expect(paymentCreate.first_name).toBe("Test User");
-        expect(paymentCreate.payment_name).toBe("Test User Lastname");
     });
 
     test("It should work to list all payments", async () => {
@@ -45,11 +60,14 @@ describe("payment Tests", () => {
 
         expect(payments.length).toBeGreaterThan(0);
         expect(payments[0].payment_id).toBeDefined;
-        const searchForpayment = payments.find((x) => x.payment_name === "Test User Lastname")
-        expect(searchForpayment?.payment_id).toBeDefined();
     })
 
     test("It should work to delete a payment", async () => {
         await zoho.payment.delete(paymentIds)
+    })
+    afterAll(async () => {
+        await zoho.invoice.delete([testInvoiceId])
+        await zoho.contact.delete([testUserId]);
+        
     })
 });

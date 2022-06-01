@@ -33,6 +33,7 @@ describe("Contact Tests", () => {
                 last_name: "Lastname",
             }],
             contact_name: "Test User Lastname",
+            customer_sub_type: "individual",
         });
         contactIds.push(contactCreate.contact_id);
 

@@ -60,6 +60,17 @@ export type Payment = {
      */
     invoices: {
         invoice_id: string;
-        amount_applied: string;
+        amount_applied: number;
     }[];
 };
+
+export type CreatePayment = Pick<
+    Payment,
+    "customer_id" | "payment_mode" | "amount" | "invoices" | "date"
+> &
+    Partial<
+        Pick<
+            Payment,
+            "reference_number" | "bank_charges" | "account_id" | "description"
+        >
+    >;

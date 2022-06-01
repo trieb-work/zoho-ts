@@ -30,7 +30,7 @@ describe("invoice Tests", () => {
     const invoiceIds: string[] = [];
 
     test ("It should work to create a invoice", async () => {
-        const testUser = await zoho.contact.create({ contact_name: "Test Run User Zoho TS" })
+        const testUser = await zoho.contact.create({ contact_name: "Test Run User Zoho TS", customer_sub_type: "individual" })
         testUserId = testUser.contact_id;
 
         const invoice = await zoho.invoice.create({
