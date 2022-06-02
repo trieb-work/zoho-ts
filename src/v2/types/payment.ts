@@ -62,6 +62,12 @@ export type Payment = {
         invoice_id: string;
         amount_applied: number;
     }[];
+
+    /**
+     * Zoho returns this string with all the invoices, that this payment was applied to.
+     * It looks like this: "INV-002847, INV-002859"
+     */
+    invoice_numbers: string;
 };
 
 export type CreatePayment = Pick<
