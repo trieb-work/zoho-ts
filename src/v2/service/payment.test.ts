@@ -60,6 +60,7 @@ describe("payment Tests", () => {
 
         expect(payments.length).toBeGreaterThan(0);
         expect(payments[0].payment_id).toBeDefined;
+        expect(payments[0].invoice_numbers_array).toBeDefined
     })
 
     test("It should work to delete a payment", async () => {

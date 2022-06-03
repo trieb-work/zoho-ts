@@ -12,6 +12,8 @@ export type Payment = {
      */
     payment_mode: "braintree" | "paypal" | "banktransfer" | "Banküberweisung";
 
+    payment_number: string;
+
     /**
      * Amount paid in the respective payment.
      */
@@ -69,6 +71,32 @@ export type Payment = {
      */
     invoice_numbers: string;
 };
+
+/**
+ * The list payment is special
+ */
+export type ListPayment = Pick<
+    Payment,
+    | "payment_id"
+    | "payment_mode"
+    | "invoice_numbers"
+    | "payment_number"
+    | "amount"
+    | "account_id"
+    | "description"
+    | "reference_number"
+    | "customer_id"
+    | "created_time"
+    | "last_modified_time"
+> &
+    Partial<Pick<Payment, "invoices">> & {
+        /**
+         * Gives you an array of invoice numbers related
+         * to this payment. Wwe added this, as "invoices" array
+         * does not exist for payment list and payments with just one invoice attached
+         */
+        invoice_numbers_array: string[];
+    };
 
 export type CreatePayment = Pick<
     Payment,

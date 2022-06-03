@@ -1,5 +1,5 @@
 import { ZohoApiClient } from "../client/client";
-import { CreatePayment, Payment } from "../types/payment";
+import { CreatePayment, ListPayment, Payment } from "../types/payment";
 export class PaymentHandler {
     private client: ZohoApiClient;
 
@@ -32,13 +32,15 @@ export class PaymentHandler {
          * yyyy-mm-dd - the date of the payment. Not the date it was created!
          */
         dateEnd?: string;
-    }): Promise<Payment[]> {
-        const payments: Payment[] = [];
+    }): Promise<ListPayment[]> {
+        const payments: ListPayment[] = [];
         let hasMorePages = true;
         let page = 1;
 
         while (hasMorePages) {
-            const res = await this.client.get<{ customerpayments: Payment[] }>({
+            const res = await this.client.get<{
+                customerpayments: ListPayment[];
+            }>({
                 path: ["customerpayments"],
                 params: {
                     sort_column: opts.sortColumn ?? "date",
@@ -57,7 +59,13 @@ export class PaymentHandler {
             page = res.page_context?.page ?? 0 + 1;
         }
 
-        return payments;
+        const returnPayments = payments.map((payment) => {
+            // Invoice Numbers Array is a helper array - we generate it here
+            payment.invoice_numbers_array = payment.invoice_numbers.split(", ");
+            return payment;
+        });
+
+        return returnPayments;
     }
 
     public async create(payment: CreatePayment): Promise<Payment> {
