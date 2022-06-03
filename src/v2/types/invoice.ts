@@ -193,4 +193,14 @@ export type Invoice = {
      * Shipping charges that can be applied to the invoice.
      */
     shipping_charge: number;
+
+    /**
+     * Time at which the Sales Order was created.
+     */
+    created_time: string;
+
+    /**
+     * Time at which the sales order details were last modified.
+     */
+    last_modified_time: string;
 };
