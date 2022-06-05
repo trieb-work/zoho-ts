@@ -32,7 +32,7 @@ export type Payment = {
     /**
      * Reference number generated for the payment.
      * A string of your choice can also be used as the reference number. Maximum length of the reference number [100]
-     * Use for example the invoice number, that this payment corresponds to.
+     * Zoho uses this field to write the transaction Id of the gateway into it.
      */
     reference_number: string;
 
