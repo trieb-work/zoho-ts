@@ -14,6 +14,8 @@ export type LineItem = {
      */
     name: string;
 
+    sku: string;
+
     /**
      * Description of the line item.
      */
