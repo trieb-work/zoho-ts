@@ -15,6 +15,6 @@ export class Utils {
      * @returns
      */
     public getUnprefixedNumber(incomingNumer: string) {
-        return incomingNumer.split("-")[1];
+        return incomingNumer.replace(/^([A-Za-z])+-/, "");
     }
 }
