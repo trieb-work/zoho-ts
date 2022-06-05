@@ -96,6 +96,11 @@ export type ListPayment = Pick<
          * does not exist for payment list and payments with just one invoice attached
          */
         invoice_numbers_array: string[];
+        /**
+         * Custom field gateway transaction id - exist only, if you have created that field in
+         * Zoho
+         */
+        cf_gateway_transaction_id: string;
     };
 
 export type CreatePayment = Pick<
