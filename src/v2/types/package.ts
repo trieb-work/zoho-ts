@@ -1,3 +1,21 @@
+export type ShipmentOrder = {
+    shipment_id: string;
+    shipment_number: string;
+    shipment_date: string;
+    shipment_date_with_time: string;
+    tracking_number: string;
+    delivery_date: string;
+    delivery_date_with_time: string;
+    shipment_type: string;
+    associated_packages_count: number;
+    carrier: string;
+    service: string;
+    delivery_days: string;
+    delivery_guarantee: false;
+    tracking_url: string;
+    is_carrier_shipment: true;
+};
+
 /**
  * These are the packages created for Sales Orders
  */
@@ -74,6 +92,8 @@ export type Package = {
      * ISO 8601 format - YYYY-MM-DDThh:mm:ssTZD
      */
     shipment_date: string;
+
+    shipment_order?: ShipmentOrder;
 
     /**
      * The expected days to be taken for the delivery.
