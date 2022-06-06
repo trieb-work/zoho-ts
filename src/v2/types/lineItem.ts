@@ -9,6 +9,8 @@ export type LineItem = {
      */
     item_id: string;
 
+    variant_id: string;
+
     /**
      * Name of the line item.
      */

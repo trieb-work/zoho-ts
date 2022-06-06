@@ -31,8 +31,15 @@ export type Address = {
 
     /**
      * Name of the country of the customer’s shipping address.
+     * Is the translated country name - for example "Deutschland"
      */
     country: string;
+
+    /**
+     * The ISO country code in capital letters: DE, EN, etc..
+     * Is not always returned
+     */
+    country_code: string;
 
     /**
      * Fax number of the customer’s shipping address.

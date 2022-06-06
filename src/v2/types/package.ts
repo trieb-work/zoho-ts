@@ -58,6 +58,11 @@ export type Package = {
     tracking_number: string;
 
     /**
+     * Date, that the package got created
+     */
+    date: string;
+
+    /**
      * Shipment date of the Sales Order.
      * ISO 8601 format - YYYY-MM-DDThh:mm:ssTZD
      */
