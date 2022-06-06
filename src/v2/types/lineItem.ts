@@ -118,10 +118,26 @@ export type LineItem = {
     track_batch_number: boolean;
     is_returnable: boolean;
 
+    attribute_name1: string;
+    attribute_name2: string;
+    attribute_name3: string;
+
+    attribute_option_name1: string;
+    attribute_option_name2: string;
+    attribute_option_name3: string;
+    attribute_option_data1: string;
+    attribute_option_data2: string;
+    attribute_option_data3: string;
+
     /**
      * Add HSN/SAC code for your goods/services
      *
      * India Edition only
      */
     hsn_or_sac: number;
+
+    /**
+     *  Additional fields that Zoho adds from time to time
+     */
+    [key: string]: unknown;
 };

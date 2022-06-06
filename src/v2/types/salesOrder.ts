@@ -3,7 +3,6 @@ import type { Document } from "./document";
 import type { LineItem } from "./lineItem";
 import type { Package } from "./package";
 import type { Invoice } from "./invoice";
-import type { Tax } from "./tax";
 import type { CustomField } from "./customField";
 
 export type UpdateSalesOrder = Omit<
@@ -242,7 +241,10 @@ export type SalesOrder = {
     /**
      * Number of taxes applied on sales order.
      */
-    taxes: Tax[];
+    taxes: {
+        tax_amount: number;
+        tax_name: string;
+    }[];
 
     /**
      * The precision level for the price's decimal point in a Sales Order.

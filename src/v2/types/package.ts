@@ -62,6 +62,8 @@ export type Package = {
      */
     tracking_number: string;
 
+    is_tracking_enabled: boolean;
+
     /**
      * Date, that the package got created
      */
