@@ -1,5 +1,4 @@
 import type { Address } from "./address";
-import type { ContactPerson } from "./contactPerson";
 import type { Document } from "./document";
 import type { LineItem } from "./lineItem";
 import type { Package } from "./package";
