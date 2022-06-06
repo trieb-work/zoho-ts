@@ -23,8 +23,10 @@ export type CustomField = {
 
     /**
      * Optionally reference this field by its api name
-     *
-     * Not documented
+     * The API name can be found in the Zoho settings page when creating
+     * a new custom field. It is way more comfortable using this field
      */
     api_name?: string;
+
+    show_in_portal?: boolean;
 };

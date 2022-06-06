@@ -48,6 +48,11 @@ export type Package = {
     carrier: string;
 
     /**
+     * In most cases the same as carrier
+     */
+    delivery_method: string;
+
+    /**
      * Name of the service provided by the carrier.
      */
     service: string;

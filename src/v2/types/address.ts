@@ -41,10 +41,14 @@ export type Address = {
      */
     country_code: string;
 
+    state_code: string;
+
     /**
      * Fax number of the customer’s shipping address.
      */
     fax: string;
+
+    phone: string;
 
     /**
      * Additional Street address of the contact. Maximum length allowed [255]
