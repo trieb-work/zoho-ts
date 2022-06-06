@@ -29,4 +29,9 @@ export type CustomField = {
     api_name?: string;
 
     show_in_portal?: boolean;
+
+    /**
+     *  Additional fields that Zoho adds from time to time
+     */
+    [key: string]: unknown;
 };

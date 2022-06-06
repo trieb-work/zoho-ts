@@ -261,8 +261,9 @@ export type SalesOrder = {
 
     /**
      * These are the packages created for Sales Orders
+     * The quantity is the total amount of items in this package
      */
-    packages: Package[];
+    packages: (Package & { quantity: number })[];
 
     /**
      * Invoices created for the Sales Order.
