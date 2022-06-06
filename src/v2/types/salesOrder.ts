@@ -170,7 +170,7 @@ export type SalesOrder = {
     discount_amount: number;
 
     /**
-     * The percentage of Discount applied. Is a number for discount 
+     * The percentage of Discount applied. Is a number for discount
      * in € and string for discount in percentage ("15%")
      */
     discount: string | number;
@@ -283,12 +283,22 @@ export type SalesOrder = {
     /**
      * Customer's shipping address.
      */
-    shipping_address: Address;
+    shipping_address: Omit<Address, "address_id">;
+
+    /**
+     * The internal Id. Sometimes, Zoho is not returning this value
+     */
+    billing_address_id?: string;
+
+    /**
+     * The internal Id. Sometimes, Zoho is not returning this value
+     */
+    shipping_address_id?: string;
 
     /**
      * Customer's billing address.
      */
-    billing_address: Address;
+    billing_address: Omit<Address, "address_id">;
 
     /**
      * Notes for the Sales Order.
