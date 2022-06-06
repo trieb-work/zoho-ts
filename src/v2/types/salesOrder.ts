@@ -266,7 +266,17 @@ export type SalesOrder = {
     /**
      * Invoices created for the Sales Order.
      */
-    invoices: Invoice[];
+    invoices: Pick<
+        Invoice,
+        | "invoice_id"
+        | "invoice_number"
+        | "reference_number"
+        | "status"
+        | "date"
+        | "due_date"
+        | "total"
+        | "balance"
+    >[];
 
     /**
      * Customer's shipping address.
