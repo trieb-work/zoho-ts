@@ -80,13 +80,16 @@ export class SalesOrderHandler {
     }
 
     /**
-     * Get a single salesorder by ID
+     * Get a single salesorder by ID.
      * @param id
      * @returns
      */
     public async get(id: string): Promise<SalesOrder> {
         const res = await this.client.get<{ salesorder: SalesOrder }>({
             path: ["salesorders", id],
+            headers: {
+                "X-ZB-SOURCE": "zbclient",
+            },
         });
 
         return res.salesorder;
