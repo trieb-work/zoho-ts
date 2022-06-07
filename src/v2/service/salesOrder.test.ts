@@ -60,6 +60,7 @@ describe("SalesOrder Tests", () => {
         });
         const result = await zoho.salesOrder.get(salesOrderIds[0])
         expect(result.custom_fields.find((x) => x.api_name === "cf_orderhash")?.value).toBe("bcc");
+        expect(result.line_items[0].item_total_inclusive_of_tax).toBeGreaterThan(0);
 
     })
 
