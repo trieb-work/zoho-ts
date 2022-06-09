@@ -5,6 +5,14 @@ There are several functions already created, but in the end they are all custom.
 
 All entities are fully typed.
 
+## Installation
+```
+yarn add @trieb.work/zoho-ts
+```
+```
+npm i @trieb.work/zoho-ts
+```
+
 ## Usage on server
 
 ```
