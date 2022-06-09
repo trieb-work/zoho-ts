@@ -31,11 +31,16 @@ export type Request = {
     baseUrl?: string;
 };
 
+/**
+ * Enum definition of the different entities,
+ * that Zoho offers.
+ */
 enum ZohoEntities {
     SALESORDERS = "salesorders",
     INVOICES = "invoices",
     CONTACTS = "contacts",
     ITEMS = "items",
+    PURCHASEORDERS = "purchaseorders",
 }
 
 export type ZohoResponse<TResponse> = TResponse & {

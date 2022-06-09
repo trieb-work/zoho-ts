@@ -1,7 +1,10 @@
 import { ZohoApiClient } from "../client/client";
-import { Invoice } from "../types";
-import { CreateInvoice } from "../types/invoice";
+import { Invoice, CreateInvoice } from "../types/invoice";
 
+/**
+ * The Handler class for all functionality concerning Zoho
+ * Invoices
+ */
 export class InvoiceHandler {
     private client: ZohoApiClient;
 

@@ -1,6 +1,5 @@
 import { ZohoApiClient } from "../client/client";
-import { Item } from "../types";
-import { CreateItem, CreateItemGroup, ItemGroup } from "../types/item";
+import { CreateItem, CreateItemGroup, ItemGroup, Item } from "../types/item";
 export class ItemHandler {
     private client: ZohoApiClient;
 

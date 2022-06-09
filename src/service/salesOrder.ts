@@ -5,6 +5,11 @@ import {
     UpdateSalesOrder,
 } from "../types/salesOrder";
 import type { RequireOnlyOne } from "./util";
+
+/**
+ * The Handler class for all functionality concerning Zoho
+ * SalesOrders
+ */
 export class SalesOrderHandler {
     private client: ZohoApiClient;
 
