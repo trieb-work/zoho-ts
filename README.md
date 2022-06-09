@@ -3,6 +3,8 @@
 A typescript library used to work with Zoho Inventory and Zoho Books API.
 There are several functions already created, but in the end they are all custom. Some of them are documented and some are reverse-engineered and implemented in this library to have an optimised, easy way working with the Zoho APIs.
 
+All entities are fully typed.
+
 ## Usage on server
 
 ```
