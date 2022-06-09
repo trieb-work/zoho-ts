@@ -7,6 +7,10 @@ export type RequireOnlyOne<T, Keys extends keyof T = keyof T> = Pick<
             Partial<Record<Exclude<Keys, K>, undefined>>;
     }[Keys];
 
+/**
+ * A util class for comfort features like "un-prefixing" order / invoice etc.
+ * numbers
+ */
 export class Utils {
     /**
      * Takes a prefixed number like INV-24945 or STORE-234355 and

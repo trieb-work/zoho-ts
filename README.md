@@ -8,24 +8,31 @@ All entities are fully typed.
 ## Usage on server
 
 ```
-import { ZohoClientInstance } from '@trieb.work/zoho-ts';
+import { Zoho, ZohoApiClient } from "@trieb.work/zoho-ts";
 
+const zoho = new Zoho(
+    await ZohoApiClient.fromOAuth({
+      orgId: "243546",
+      client: {
+        id: "",
+        secret: "",
+      },
+    }),
+  );
 
-const zohoClient = new ZohoClientInstance({
-            zohoClientId: '',
-            zohoClientSecret: '',
-            zohoOrgId: '',
-        });
-
-await zohoClient.authenticate();
 ```
 
 ## Usage in Browser Context (use cookies for auth)
 
 ```
-import { ZohoBrowserInstance } from '@trieb.work/zoho-ts';
+import { Zoho, ZohoApiClient } from "@trieb.work/zoho-ts";
 
-const zohoClient = new ZohoBrowserInstance({
-    zohoOrgId: ''
-});
+const zoho = new Zoho(
+    await ZohoApiClient.fromCookies({ 
+        orgId: "",
+        cookie: "",
+        zsrfToken: ""
+    }),
+  );
+
 ```

@@ -1,3 +1,7 @@
+/**
+ * The ShipmentOrder can be included in a already shipped package
+ * This types defines the values, that the Zoho API returns us
+ */
 export type ShipmentOrder = {
     shipment_id: string;
     shipment_number: string;

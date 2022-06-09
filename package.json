@@ -20,7 +20,8 @@
         "format": "prettier --write .",
         "fmt": "yarn lint && yarn format",
         "lint": "eslint . --ext ts --ext tsx --ext js --fix",
-        "test": "jest"
+        "test": "jest",
+        "typedoc": "yarn typedoc --entryPoints src/"
     },
     "dependencies": {
         "async-retry": "^1.3.1",
@@ -63,6 +64,7 @@
         "rimraf": "^3.0.2",
         "ts-jest": "^27.0.4",
         "ts-node": "^9.1.1",
+        "typedoc": "^0.22.17",
         "typescript": "^4.6.4"
     }
 }

@@ -1,6 +1,9 @@
 import { Contact, CreateContact } from "../types/contact";
 import { ZohoApiClient } from "../client/client";
 import { CreateAddress } from "../types/address";
+/**
+ * Handling all methods related to the Zoho Contact Entity
+ */
 export class ContactHandler {
     private client: ZohoApiClient;
 
