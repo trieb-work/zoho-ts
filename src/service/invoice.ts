@@ -44,6 +44,10 @@ export class InvoiceHandler {
          * yyyy-mm-dd
          */
         createdDateEnd?: string;
+        /**
+         * Filter Invoices by a specific Custom View ID
+         */
+        customViewId?: string;
     }): Promise<Invoice[]> {
         const invoices: Invoice[] = [];
         let hasMorePages = true;
@@ -59,6 +63,7 @@ export class InvoiceHandler {
                     page,
                     created_date_start: opts.createdDateStart || "",
                     created_date_end: opts.createdDateEnd || "",
+                    customview_id: opts.customViewId || "",
                 },
             });
 

@@ -47,6 +47,10 @@ export class SalesOrderHandler {
          * yyyy-mm-dd
          */
         createdDateEnd?: string;
+        /**
+         * Filter Salesorder by a specific Custom View ID
+         */
+        customViewId?: string;
     }): Promise<SalesOrder[]> {
         const salesOrders: SalesOrder[] = [];
         let hasMorePages = true;
@@ -62,6 +66,7 @@ export class SalesOrderHandler {
                     page,
                     created_date_start: opts.createdDateStart || "",
                     created_date_end: opts.createdDateEnd || "",
+                    customview_id: opts.customViewId || "",
                 },
             });
 
