@@ -36,7 +36,6 @@ export class InvoiceHandler {
     public async list(opts: {
         sortColumn?: "date" | "created_time" | "last_modified_time" | "total";
         sortOrder?: "ascending" | "descending";
-        limit?: number;
         /**
          * yyyy-mm-dd
          */
@@ -69,10 +68,9 @@ export class InvoiceHandler {
             });
 
             invoices.push(...res.invoices);
-            hasMorePages = !opts.limit
-                ? false
-                : res.page_context?.has_more_page ?? false;
-            page = res.page_context?.page ?? 0 + 1;
+            if (!res.page_context) continue;
+            hasMorePages = res.page_context?.has_more_page ?? false;
+            page = res.page_context.page + 1 ?? 0 + 1;
             /**
              * Sleep to not get blocked by Zoho
              */

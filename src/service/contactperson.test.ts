@@ -51,19 +51,12 @@ describe("ContactPerson Tests", () => {
         contactPersonId = contactPersonCreate.contact_person_id;
     });
 
-    // test("It should work to list all contact persons of a contact", async () => {
-    //     const contactPersons = await zoho.contactperson.list(contactIds[0]);
-
-    //     expect(contactPersons.length).toBeGreaterThan(0);
-    //     expect(contactPersons[0].contact_id).toBeUndefined;
-
-    // })
     test("It should work to list all contact persons", async () => {
         const contactPersons = await zoho.contactperson.list();
 
         expect(contactPersons.length).toBeGreaterThan(0);
         expect(contactPersons[0].contact_id).toBeDefined;
-    })
+    }, 20000)
 
     test("It should work to delete a contactPerson", async () => {
         await zoho.contactperson.delete(contactPersonId)

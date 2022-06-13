@@ -116,10 +116,9 @@ export class ContactHandler {
             });
 
             contacts.push(...res.contacts);
-            hasMorePages = !opts.limit
-                ? false
-                : res.page_context?.has_more_page ?? false;
-            page = res.page_context?.page ?? 0 + 1;
+            if (!res.page_context) continue;
+            hasMorePages = res.page_context?.has_more_page ?? false;
+            page = res.page_context.page + 1 ?? 0 + 1;
         }
 
         return contacts;

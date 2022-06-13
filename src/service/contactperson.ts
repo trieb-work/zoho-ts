@@ -83,8 +83,9 @@ export class ContactPersonHandler {
             });
 
             contactPersons.push(...res.contact_persons);
+            if (!res.page_context) continue;
             hasMorePages = res.page_context?.has_more_page ?? false;
-            page = res.page_context?.page ?? 0 + 1;
+            page = res.page_context.page + 1 ?? 0 + 1;
 
             /**
              * Sleep to not get blocked by Zoho
