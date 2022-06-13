@@ -1,4 +1,5 @@
 import { ZohoApiClient } from "../client/client";
+import { sleep } from "../util/retry";
 import { CreatePayment, ListPayment, Payment } from "../types/payment";
 export class PaymentHandler {
     private client: ZohoApiClient;
@@ -23,7 +24,6 @@ export class PaymentHandler {
     public async list(opts: {
         sortColumn?: "date" | "created_time" | "last_modified_time" | "total";
         sortOrder?: "ascending" | "descending";
-        limit?: number;
         /**
          * yyyy-mm-dd - the date of the payment. Not the date it was created!
          */
@@ -53,10 +53,13 @@ export class PaymentHandler {
             });
 
             payments.push(...res.customerpayments);
-            hasMorePages = !opts.limit
-                ? false
-                : res.page_context?.has_more_page ?? false;
+            hasMorePages = res.page_context?.has_more_page ?? false;
             page = res.page_context?.page ?? 0 + 1;
+
+            /**
+             * Sleep to not get blocked by Zoho
+             */
+            await sleep(1000);
         }
 
         const returnPayments = payments.map((payment) => {

@@ -27,7 +27,6 @@ export class ItemHandler {
     public async list(opts: {
         sortColumn?: "created_time" | "last_modified_time";
         sortOrder?: "ascending" | "descending";
-        limit?: number;
         /**
          * Filter by only active products
          */
@@ -50,9 +49,7 @@ export class ItemHandler {
             });
 
             items.push(...res.items);
-            hasMorePages = !opts.limit
-                ? false
-                : res.page_context?.has_more_page ?? false;
+            hasMorePages = res.page_context?.has_more_page ?? false;
             page = res.page_context?.page ?? 0 + 1;
         }
 

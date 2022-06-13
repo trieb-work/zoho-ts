@@ -1,6 +1,7 @@
 import { ZohoApiClient } from "../client/client";
 import { ContactPerson } from "src/types";
 import { CreateContactPerson } from "src/types/contactPerson";
+import { sleep } from "../util/retry";
 
 // interface IContactPersonHandler {
 //     list(contactId: string): Promise<Omit<ContactPerson, "contact_id">[]>;
@@ -84,6 +85,11 @@ export class ContactPersonHandler {
             contactPersons.push(...res.contact_persons);
             hasMorePages = res.page_context?.has_more_page ?? false;
             page = res.page_context?.page ?? 0 + 1;
+
+            /**
+             * Sleep to not get blocked by Zoho
+             */
+            await sleep(1000);
         }
 
         return contactPersons;

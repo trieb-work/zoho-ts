@@ -1,3 +1,4 @@
+import { sleep } from "../util/retry";
 import { ZohoApiClient } from "../client/client";
 import { Invoice, CreateInvoice } from "../types/invoice";
 
@@ -72,6 +73,10 @@ export class InvoiceHandler {
                 ? false
                 : res.page_context?.has_more_page ?? false;
             page = res.page_context?.page ?? 0 + 1;
+            /**
+             * Sleep to not get blocked by Zoho
+             */
+            await sleep(1000);
         }
 
         return invoices;

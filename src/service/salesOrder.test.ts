@@ -62,6 +62,7 @@ describe("SalesOrder Tests", () => {
         expect(result.custom_fields.find((x) => x.api_name === "cf_orderhash")?.value).toBe("bcc");
         expect(result.line_items[0].item_total_inclusive_of_tax).toBeGreaterThan(0);
 
+
     })
 
     test("It should work to list salesorder sorted by last_update_date", async () => {
