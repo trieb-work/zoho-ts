@@ -262,6 +262,11 @@ export type SalesOrder = {
     is_emailed: boolean;
 
     /**
+     * The email address of the main contact person related to this salesorder
+     */
+    email: string;
+
+    /**
      * These are the packages created for Sales Orders
      * The quantity is the total amount of items in this package
      */
