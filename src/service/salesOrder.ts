@@ -1,4 +1,4 @@
-import { sleep } from "src/util/retry";
+import { sleep } from "../util/retry";
 import { ZohoApiClient } from "../client/client";
 import {
     SalesOrder,
