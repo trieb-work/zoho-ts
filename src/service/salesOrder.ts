@@ -1,3 +1,4 @@
+import { sleep } from "src/util/retry";
 import { ZohoApiClient } from "../client/client";
 import {
     SalesOrder,
@@ -74,6 +75,10 @@ export class SalesOrderHandler {
             if (!res.page_context) continue;
             hasMorePages = res.page_context?.has_more_page ?? false;
             page = res.page_context.page + 1 ?? 0 + 1;
+            /**
+             * Sleep to not get blocked by Zoho
+             */
+            await sleep(1000);
         }
 
         return salesOrders;

@@ -34,6 +34,8 @@ export type Package = {
      */
     package_number: string;
 
+    customer_id: string;
+
     /**
      * The current status of the Sales Order.
      */
@@ -108,4 +110,10 @@ export type Package = {
      * Delivery guarantee of the shipment can be true or false.
      */
     delivery_guarantee: boolean;
+
+    last_modified_time: string;
+
+    salesorder_id: string;
+
+    salesorder_number: string; 
 };
