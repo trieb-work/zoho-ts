@@ -1,3 +1,25 @@
+export type ListPackage = Pick<
+    Package,
+    | "package_id"
+    | "salesorder_id"
+    | "shipment_id"
+    | "customer_id"
+    | "customer_name"
+    | "status"
+    | "package_number"
+    | "tracking_number"
+    | "is_tracking_enabled"
+    | "shipment_type"
+    | "date"
+    | "quantity"
+    | "salesorder_number"
+    | "created_time"
+    | "delivery_method"
+    | "last_modified_time"
+    | "shipment_date"
+    | "is_carrier_shipment"
+>;
+
 /**
  * The ShipmentOrder can be included in a already shipped package
  * This types defines the values, that the Zoho API returns us
@@ -35,6 +57,16 @@ export type Package = {
     package_number: string;
 
     customer_id: string;
+
+    customer_name: string;
+
+    quantity: string;
+
+    created_time: string;
+
+    is_carrier_shipment: boolean;
+
+    shipment_type: string;
 
     /**
      * The current status of the Sales Order.
@@ -115,5 +147,28 @@ export type Package = {
 
     salesorder_id: string;
 
-    salesorder_number: string; 
+    salesorder_number: string;
 };
+
+export type PackageShortList = Pick<
+    Package,
+    | "package_id"
+    | "package_number"
+    | "date"
+    | "status"
+    | "detailed_status"
+    | "status_message"
+    | "shipment_id"
+    | "shipment_number"
+    | "shipment_status"
+    | "carrier"
+    | "service"
+    | "tracking_number"
+    | "shipment_date"
+    | "delivery_days"
+    | "delivery_guarantee"
+    | "delivery_method"
+    | "quantity"
+    | "is_tracking_enabled"
+    | "shipment_order"
+>;

@@ -1,7 +1,7 @@
 import type { Address } from "./address";
 import type { Document } from "./document";
 import type { LineItem } from "./lineItem";
-import type { Package } from "./package";
+import type { PackageShortList } from "./package";
 import type { Invoice } from "./invoice";
 import type { CustomField } from "./customField";
 
@@ -97,6 +97,11 @@ export type CreateSalesOrder =
              */
             shipping_address_id?: string;
         };
+
+/**
+ * Custom fields that always start with "cf_"
+ */
+type CustomFieldsDirectAPIResponse = { [key: string]: unknown };
 
 /**
  * A sales order is a financial document that confirms an impending sale. It
@@ -283,10 +288,32 @@ export type SalesOrder = {
     email: string;
 
     /**
+     * The shipping charges in one object
+     */
+    shipping_charges: {
+        description: string;
+        bcy_rate: number;
+        /**
+         * the gross rate shipping charges
+         */
+        rate: number;
+        tax_id: string;
+        tax_name: string;
+        tax_type: string;
+        tax_percentage: 7;
+        tax_total_fcy: number;
+        /**
+         * the net total shipping costs
+         */
+        item_total: number;
+    };
+
+    /**
      * These are the packages created for Sales Orders
      * The quantity is the total amount of items in this package
+     * TODO: fix this type, dont use the whole package type
      */
-    packages: (Package & { quantity: number })[];
+    packages: (PackageShortList & { quantity: number })[];
 
     /**
      * Invoices created for the Sales Order.
@@ -433,3 +460,35 @@ export type SalesOrder = {
 
     custom_fields: CustomField[];
 };
+
+export type ListSalesOrder = Pick<
+    SalesOrder,
+    | "salesorder_id"
+    | "customer_name"
+    | "customer_id"
+    | "email"
+    | "delivery_date"
+    | "company_name"
+    | "salesorder_number"
+    | "reference_number"
+    | "date"
+    | "shipment_date"
+    | "due_by_days"
+    | "due_in_days"
+    | "currency_code"
+    | "total"
+    | "total_invoiced_amount"
+    | "created_time"
+    | "last_modified_time"
+    | "is_emailed"
+    | "quantity"
+    | "order_status"
+    | "invoiced_status"
+    | "paid_status"
+    | "shipped_status"
+    | "status"
+    | "is_drop_shipment"
+    | "salesperson_name"
+    | "has_attachment"
+> &
+    CustomFieldsDirectAPIResponse;

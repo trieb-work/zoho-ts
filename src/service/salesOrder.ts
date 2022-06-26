@@ -4,6 +4,7 @@ import {
     SalesOrder,
     CreateSalesOrder,
     UpdateSalesOrder,
+    ListSalesOrder,
 } from "../types/salesOrder";
 import type { RequireOnlyOne } from "./util";
 
@@ -52,13 +53,15 @@ export class SalesOrderHandler {
          * Filter Salesorder by a specific Custom View ID
          */
         customViewId?: string;
-    }): Promise<SalesOrder[]> {
-        const salesOrders: SalesOrder[] = [];
+    }): Promise<ListSalesOrder[]> {
+        const salesOrders: ListSalesOrder[] = [];
         let hasMorePages = true;
         let page = 1;
 
         while (hasMorePages) {
-            const res = await this.client.get<{ salesorders: SalesOrder[] }>({
+            const res = await this.client.get<{
+                salesorders: ListSalesOrder[];
+            }>({
                 path: ["salesorders"],
                 params: {
                     sort_column: opts.sortColumn ?? "date",
