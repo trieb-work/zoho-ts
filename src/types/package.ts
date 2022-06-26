@@ -39,7 +39,7 @@ export type ShipmentOrder = {
     delivery_days: string;
     delivery_guarantee: false;
     tracking_url: string;
-    is_carrier_shipment: true;
+    is_carrier_shipment: boolean;
 };
 
 /**
@@ -60,7 +60,10 @@ export type Package = {
 
     customer_name: string;
 
-    quantity: string;
+    /**
+     * Sometime Zoho gives us the quantity in string, sometimes as number..
+     */
+    quantity: string | number;
 
     created_time: string;
 
