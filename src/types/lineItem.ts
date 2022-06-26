@@ -91,7 +91,10 @@ export type LineItem = {
      */
     item_total: number;
 
-    item_total_inclusive_of_tax: number;
+    /**
+     * This key does only exist when the salesorder/invoice etc is created "inclusive_tax"
+     */
+    item_total_inclusive_of_tax?: number;
 
     /**
      * Checks whether the Sales Order has been invoiced or not.
