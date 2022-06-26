@@ -283,11 +283,6 @@ export type SalesOrder = {
     is_emailed: boolean;
 
     /**
-     * The email address of the main contact person related to this salesorder
-     */
-    email: string;
-
-    /**
      * The shipping charges in one object
      */
     shipping_charges: {
@@ -449,9 +444,9 @@ export type SalesOrder = {
     /**
      * Shipping charge tax rate in percent.
      *
-     * Not officially documented
+     * Not officially documented. Returns empty string when not set
      */
-    shipping_charge_tax_percentage: number;
+    shipping_charge_tax_percentage: number | "";
 
     /**
      *  Additional custom fields
@@ -466,7 +461,6 @@ export type ListSalesOrder = Pick<
     | "salesorder_id"
     | "customer_name"
     | "customer_id"
-    | "email"
     | "delivery_date"
     | "company_name"
     | "salesorder_number"
@@ -491,4 +485,9 @@ export type ListSalesOrder = Pick<
     | "salesperson_name"
     | "has_attachment"
 > &
-    CustomFieldsDirectAPIResponse;
+    CustomFieldsDirectAPIResponse & {
+        /**
+         * The email address of the main contact person related to this salesorder
+         */
+        email: string;
+    };
