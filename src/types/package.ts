@@ -20,6 +20,29 @@ export type ListPackage = Pick<
     | "is_carrier_shipment"
 >;
 
+export type PackageLineItem = {
+    line_item_id: string;
+    so_line_item_id: string;
+    item_id: string;
+    picklist_item_id: string;
+    picklist_number: string;
+    sku: string;
+    name: string;
+    description: string;
+    item_order: 0;
+    quantity: 1.0;
+    unit: string;
+    image_name: string;
+    image_type: string;
+    image_document_id: string;
+    is_invoiced: true;
+    item_custom_fields: [];
+    batches: [];
+    track_batch_for_package: false;
+    warehouse_id: string;
+    warehouse_name: string;
+};
+
 /**
  * The ShipmentOrder can be included in a already shipped package
  * This types defines the values, that the Zoho API returns us
@@ -110,6 +133,8 @@ export type Package = {
      * In most cases the same as carrier
      */
     delivery_method: string;
+
+    line_items: PackageLineItem[];
 
     /**
      * Name of the service provided by the carrier.

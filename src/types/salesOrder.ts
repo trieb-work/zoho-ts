@@ -285,7 +285,7 @@ export type SalesOrder = {
     /**
      * The shipping charges in one object
      */
-    shipping_charges: {
+    shipping_charges?: {
         description: string;
         bcy_rate: number;
         /**
