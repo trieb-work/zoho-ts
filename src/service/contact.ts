@@ -1,6 +1,8 @@
 import { Contact, CreateContact } from "../types/contact";
 import { ZohoApiClient } from "../client/client";
 import { CreateAddress } from "../types/address";
+import { sleep } from "../util/retry";
+import { ContactPersonWithoutContact } from "../types/contactPerson";
 /**
  * Handling all methods related to the Zoho Contact Entity
  */
@@ -122,5 +124,39 @@ export class ContactHandler {
         }
 
         return contacts;
+    }
+
+    /**
+     * Get a list of all contact persons of this contact
+     * @param contactId
+     * @returns
+     */
+    public async listContactPersons(contactId: string) {
+        let hasMorePages = true;
+        let page = 1;
+        const contactPersons: ContactPersonWithoutContact[] = [];
+
+        while (hasMorePages) {
+            const res = await this.client.get<{
+                contact_persons: ContactPersonWithoutContact[];
+            }>({
+                path: ["contacts", contactId, "contactpersons"],
+                params: {
+                    page,
+                },
+            });
+
+            contactPersons.push(...res.contact_persons);
+            if (!res.page_context) continue;
+            hasMorePages = res.page_context?.has_more_page ?? false;
+            page = res.page_context.page + 1 ?? 0 + 1;
+
+            /**
+             * Sleep to not get blocked by Zoho
+             */
+            if (hasMorePages) await sleep(1000);
+        }
+
+        return contactPersons;
     }
 }

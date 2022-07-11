@@ -24,6 +24,8 @@ export type ContactPerson = {
     updated_time: string;
 };
 
+export type ContactPersonWithoutContact = Omit<ContactPerson, "contact_id">;
+
 export type CreateContactPerson =
     /**
      * Required fields

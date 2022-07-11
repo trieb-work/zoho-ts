@@ -63,8 +63,7 @@ export class ContactPersonHandler {
     }
 
     /**
-     * List all contact persons in general or optionally from a specific contact
-     * @param contactId
+     * List all contact persons
      * @returns
      */
     public async list(): Promise<ContactPerson[]> {
