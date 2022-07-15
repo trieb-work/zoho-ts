@@ -159,9 +159,10 @@ export type Item = {
     vendor_name: string;
 
     /**
-     * Stock available for a particular item.
+     * Stock available for a particular item. Is undefined for services and
+     * not inventory tracked products
      */
-    stock_on_hand: number;
+    stock_on_hand?: number;
 
     /**
      * The Stock Keeeping Unit (SKU) of an item. This is unique for every item in the Inventory.
