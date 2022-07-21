@@ -1,7 +1,6 @@
 import dotenv from "dotenv";
 import { Zoho } from ".";
 import { ZohoApiClient } from "../client/client";
-import { format } from "date-fns";
 dotenv.config({ path: "./.env" });
 
 const orgId = process.env.ZOHO_ORGANIZATION_ID as string;
