@@ -1,5 +1,11 @@
 import { ZohoApiClient } from "../client/client";
-import { CreateItem, CreateItemGroup, ItemGroup, Item } from "../types/item";
+import {
+    CreateItem,
+    CreateItemGroup,
+    ItemGroup,
+    Item,
+    GetItem,
+} from "../types/item";
 export class ItemHandler {
     private client: ZohoApiClient;
 
@@ -7,8 +13,8 @@ export class ItemHandler {
         this.client = client;
     }
 
-    public async get(id: string): Promise<Item> {
-        const res = await this.client.get<{ item: Item }>({
+    public async get(id: string): Promise<GetItem> {
+        const res = await this.client.get<{ item: GetItem }>({
             path: ["items", id],
         });
 
