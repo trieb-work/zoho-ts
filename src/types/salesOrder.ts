@@ -162,7 +162,7 @@ export type SalesOrder = {
     /**
      * Company name (billing address) if set in contact
      */
-    company_name: string;
+    company_name?: string;
 
     /**
      * The contact persons IDs, that are connected to this salesorder
