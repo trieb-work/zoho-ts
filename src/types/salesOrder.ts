@@ -1,4 +1,4 @@
-import type { Address } from "./address";
+import type { AddressWithoutAddressId } from "./address";
 import type { Document } from "./document";
 import type { LineItem } from "./lineItem";
 import type { PackageShortList } from "./package";
@@ -333,7 +333,7 @@ export type SalesOrder = {
     /**
      * Customer's shipping address.
      */
-    shipping_address: Omit<Address, "address_id">;
+    shipping_address: AddressWithoutAddressId;
 
     /**
      * The internal Id. Sometimes, Zoho is not returning this value
@@ -348,7 +348,7 @@ export type SalesOrder = {
     /**
      * Customer's billing address.
      */
-    billing_address: Omit<Address, "address_id">;
+    billing_address: AddressWithoutAddressId;
 
     /**
      * Notes for the Sales Order.

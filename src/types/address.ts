@@ -59,3 +59,4 @@ export type Address = {
 export type CreateAddress = Partial<Omit<Address, "address_id">> & {
     update_existing_transactions_address?: boolean;
 };
+export type AddressWithoutAddressId = Omit<Address, "address_id">;
