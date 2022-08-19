@@ -246,7 +246,7 @@ export type Item = {
     warehouses?: WarehouseStock[];
 };
 
-export type GetItem = Item & Pick<Item, "warehouses">;
+export type GetItem = Item;
 
 export type CreateItem = Pick<Item, "name"> & Item;
 
