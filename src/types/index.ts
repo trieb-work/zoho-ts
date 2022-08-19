@@ -1,4 +1,4 @@
-export type { Address } from "./address";
+export type { Address, AddressWithoutAddressId } from "./address";
 export type { ContactPerson } from "./contactPerson";
 export type { Document } from "./document";
 export type { LineItem } from "./lineItem";
