@@ -26,6 +26,16 @@ export type ContactPerson = {
 
 export type ContactPersonWithoutContact = Omit<ContactPerson, "contact_id">;
 
+export type ContactPersonShortList = Pick<
+    ContactPerson,
+    | "phone"
+    | "mobile"
+    | "last_name"
+    | "first_name"
+    | "email"
+    | "contact_person_id"
+>;
+
 export type CreateContactPerson =
     /**
      * Required fields

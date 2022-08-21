@@ -60,6 +60,8 @@ export type Item = {
      */
     description: string;
 
+    is_combo_product: boolean;
+
     /**
      * Name of the tax applied on the Item Group.
      */
