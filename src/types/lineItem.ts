@@ -92,6 +92,11 @@ export type LineItem = {
     item_total: number;
 
     /**
+     * The line item sub-total before line item discounts
+     */
+    item_sub_total: number;
+
+    /**
      * This key does only exist when the salesorder/invoice etc is created "inclusive_tax"
      */
     item_total_inclusive_of_tax?: number;
