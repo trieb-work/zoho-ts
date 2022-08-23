@@ -127,9 +127,15 @@ export type LineItem = {
     warehouse_id: string;
 
     /**
-     * The discount value that is applied to the net price
+     * The discount value that is applied to the net price.
+     * Can be a string like "100%" or "10€"
      */
-    discount: number;
+    discount: number | string;
+
+    /**
+     * The net discount amount
+     */
+    discount_amount: number;
 
     track_batch_number?: boolean;
     is_returnable?: boolean;
