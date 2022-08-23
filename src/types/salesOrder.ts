@@ -196,9 +196,10 @@ export type SalesOrder = {
     exchange_rate: number;
 
     /**
-     * Discount to be applied on the Sales Order.
+     * Discount to be applied on the Sales Order. - Exist only when entity level discount is default
+     * in this org
      */
-    discount_amount: number;
+    discount_amount?: number;
 
     /**
      * The percentage of Discount applied. Is a number for discount

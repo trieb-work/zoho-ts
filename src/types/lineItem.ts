@@ -133,9 +133,10 @@ export type LineItem = {
     discount: number | string;
 
     /**
-     * The net discount amount
+     * The net discount amount. Key exist only when active line item discount or
+     * when this org gives default discount on item level
      */
-    discount_amount: number;
+    discount_amount?: number;
 
     track_batch_number?: boolean;
     is_returnable?: boolean;
