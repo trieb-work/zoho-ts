@@ -104,7 +104,7 @@ export type Contact = {
     /**
      * Not documented
      */
-    addresses: Address[];
+    addresses: Address[] | [];
 
     /**
      * Customer or vendor / this is Zoho specific, as contacts can be vendors or customer

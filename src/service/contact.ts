@@ -60,17 +60,19 @@ export class ContactHandler {
     }
 
     /**
-     *
-     * @returns The address Id
+     * Add an address to a contact
+     * @param contactId the contact ID that this address is related to
+     * @param address the address as Zoho Address Object
+     * @returns
      */
     public async addAddress(
-        id: string,
+        contactId: string,
         address: CreateAddress,
     ): Promise<string> {
         const res = await this.client.post<{
             address_info: { address_id: string };
         }>({
-            path: ["contacts", id, "address"],
+            path: ["contacts", contactId, "address"],
             body: {
                 update_existing_transactions_address: false,
                 ...address,
