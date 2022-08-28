@@ -123,7 +123,6 @@ export type Contact = {
 
     created_time: string;
 };
-type Test = Omit<Contact, "billing_address">;
 
 export type CreateContact =
     /**
