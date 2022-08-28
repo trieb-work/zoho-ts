@@ -27,7 +27,7 @@ export class ContactHandler {
         return res.contact;
     }
 
-    public async get(id: string): Promise<Contact | null> {
+    public async get(id: string): Promise<GetContact | null> {
         const res = await this.client.get<{ contact?: GetContact }>({
             path: ["contacts", id],
         });
