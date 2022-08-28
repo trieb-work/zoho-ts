@@ -25,6 +25,10 @@ export type ContactPerson = {
 };
 
 export type ContactPersonWithoutContact = Omit<ContactPerson, "contact_id">;
+export type ContactPersonFromContactGet = Omit<
+    ContactPerson,
+    "contact_id" | "created_time" | "updated_time"
+>;
 
 export type ContactPersonShortList = Pick<
     ContactPerson,

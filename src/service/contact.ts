@@ -1,4 +1,4 @@
-import { Contact, CreateContact } from "../types/contact";
+import { Contact, CreateContact, GetContact } from "../types/contact";
 import { ZohoApiClient } from "../client/client";
 import { CreateAddress } from "../types/address";
 import { sleep } from "../util/retry";
@@ -28,7 +28,7 @@ export class ContactHandler {
     }
 
     public async get(id: string): Promise<Contact | null> {
-        const res = await this.client.get<{ contact?: Contact }>({
+        const res = await this.client.get<{ contact?: GetContact }>({
             path: ["contacts", id],
         });
         return res.contact ?? null;

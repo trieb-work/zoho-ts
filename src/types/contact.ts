@@ -1,4 +1,5 @@
 import { Address } from ".";
+import { ContactPersonFromContactGet } from "./contactPerson";
 
 export type Contact = {
     /**
@@ -102,7 +103,8 @@ export type Contact = {
     tax_exemption_code: string;
 
     /**
-     * Not documented
+     * Addresses related to this contact. Not the main billing and shipping address -
+     * get thos with billing_address and shipping_address
      */
     addresses: Address[] | [];
 
@@ -143,3 +145,7 @@ export type UpdateContact =
          * Optional fields
          */
         Partial<Pick<Contact, "company_name">>;
+
+export interface GetContact extends Contact {
+    contact_Persons: ContactPersonFromContactGet[];
+}
