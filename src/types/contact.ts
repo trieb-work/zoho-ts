@@ -163,5 +163,5 @@ export type UpdateContact =
         Partial<Pick<Contact, "company_name">>;
 
 export interface GetContact extends Contact {
-    contact_Persons: ContactPersonFromContactGet[];
+    contact_persons: ContactPersonFromContactGet[];
 }

@@ -70,7 +70,8 @@ describe("Contact Tests", () => {
 
         expect(contact?.shipping_address.address).toBe("Teststreet shipping 101")
         expect(contact?.shipping_address.country_code).toBe("DE");
-        expect(contact?.addresses[0].address).toBe("New Address 44")
+        expect(contact?.addresses[0].address).toBe("New Address 44");
+        expect(contact?.contact_persons[0].first_name).toBe("Test User");
         
     })
 
