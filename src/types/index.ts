@@ -1,5 +1,9 @@
 export type { Address, AddressWithoutAddressId } from "./address";
-export type { ContactPerson, ContactPersonShortList } from "./contactPerson";
+export type {
+    ContactPerson,
+    ContactPersonShortList,
+    ContactPersonFromContactGet,
+} from "./contactPerson";
 export type { Document } from "./document";
 export type { LineItem } from "./lineItem";
 export type { Package } from "./package";
