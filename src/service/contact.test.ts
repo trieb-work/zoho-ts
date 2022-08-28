@@ -39,12 +39,12 @@ describe("Contact Tests", () => {
             billing_address: {
                 address: "Teststreet billing 101",
                 zip: "90459",
-                country_code: "DE"
+                country: "Germany"
             },
             shipping_address: {
                 address: "Teststreet shipping 101",
                 zip: "90459",
-                country_code: "DE"
+                country: "Germany"
             }            
             
         });
@@ -55,11 +55,22 @@ describe("Contact Tests", () => {
         expect(contactCreate.contact_name).toBe("Test User Lastname");
     });
 
+    test("It should work to add an new address for a contact", async () => {
+        await zoho.contact.addAddress(createdContact, {
+            address: "New Address 44",
+            city: "Nürnberg",
+            zip: "90446",
+            country: "Germany",
+        })
+    })
+
     test("It should work to get a certain contact",async () => {
 
         const contact = await zoho.contact.get(createdContact);
 
         expect(contact?.shipping_address.address).toBe("Teststreet shipping 101")
+        expect(contact?.shipping_address.country_code).toBe("DE");
+        expect(contact?.addresses[0].address).toBe("New Address 44")
         
     })
 

@@ -30,8 +30,9 @@ export type Address = {
     zip: string;
 
     /**
-     * Name of the country of the customer’s shipping address.
-     * Is the translated country name - for example "Deutschland"
+     * Name of the country of the customer’s address.
+     * Is the translated country name - for example "Deutschland".
+     * We can't use the country_code for address create unfortunately
      */
     country: string;
 
@@ -56,7 +57,9 @@ export type Address = {
     street2: string;
 };
 
-export type CreateAddress = Partial<Omit<Address, "address_id">> & {
+export type CreateAddress = Partial<
+    Omit<Address, "address_id" | "country_code">
+> & {
     update_existing_transactions_address?: boolean;
 };
 export type AddressWithoutAddressId = Omit<Address, "address_id">;
