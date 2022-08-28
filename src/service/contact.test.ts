@@ -25,8 +25,10 @@ describe("Contact Tests", () => {
 
 
     const contactIds: string[] = [];
+    let createdContact :string; 
 
     test("It should work to create a contact", async () => {
+
         const contactCreate = await zoho.contact.create({
             contact_persons: [{
                 first_name: "Test User",
@@ -34,12 +36,32 @@ describe("Contact Tests", () => {
             }],
             contact_name: "Test User Lastname",
             customer_sub_type: "individual",
+            billing_address: {
+                address: "Teststreet billing 101",
+                zip: "90459",
+                country_code: "DE"
+            },
+            shipping_address: {
+                address: "Teststreet shipping 101",
+                zip: "90459",
+                country_code: "DE"
+            }            
+            
         });
         contactIds.push(contactCreate.contact_id);
+        createdContact = contactCreate.contact_id
 
         expect(contactCreate.first_name).toBe("Test User");
         expect(contactCreate.contact_name).toBe("Test User Lastname");
     });
+
+    test("It should work to get a certain contact",async () => {
+
+        const contact = await zoho.contact.get(createdContact);
+
+        expect(contact?.shipping_address.address).toBe("Teststreet shipping 101")
+        
+    })
 
     test("It should work to list all contacts", async () => {
         const contacts = await zoho.contact.list({})

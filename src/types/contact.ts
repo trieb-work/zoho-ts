@@ -1,4 +1,5 @@
 import { Address } from ".";
+import { CreateAddress } from "./address";
 import { ContactPersonFromContactGet } from "./contactPerson";
 
 export type Contact = {
@@ -122,6 +123,7 @@ export type Contact = {
 
     created_time: string;
 };
+type Test = Omit<Contact, "billing_address">;
 
 export type CreateContact =
     /**
@@ -132,9 +134,24 @@ export type CreateContact =
             /**
              * Optional fields
              */
-            Partial<Omit<Contact, "created_time" | "last_modified_time">>,
-        "first_name" | "last_name" | "email"
-    >;
+            Partial<
+                Omit<
+                    Contact,
+                    | "created_time"
+                    | "last_modified_time"
+                    | "billing_address"
+                    | "shipping_address"
+                >
+            >,
+        | "first_name"
+        | "last_name"
+        | "email"
+        | "billing_address"
+        | "shipping_address"
+    > & {
+        billing_address?: CreateAddress;
+        shipping_address?: CreateAddress;
+    };
 
 export type UpdateContact =
     /**
