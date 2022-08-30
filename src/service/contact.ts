@@ -18,7 +18,7 @@ export class ContactHandler {
      * @param contact
      * @returns
      */
-    public async create(contact: CreateContact): Promise<Contact> {
+    public async create(contact: CreateContact): Promise<GetContact> {
         const res = await this.client.post<{ contact: Contact }>({
             path: ["contacts"],
             body: contact,
