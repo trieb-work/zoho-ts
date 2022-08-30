@@ -19,7 +19,7 @@ export class ContactHandler {
      * @returns
      */
     public async create(contact: CreateContact): Promise<GetContact> {
-        const res = await this.client.post<{ contact: Contact }>({
+        const res = await this.client.post<{ contact: GetContact }>({
             path: ["contacts"],
             body: contact,
         });
