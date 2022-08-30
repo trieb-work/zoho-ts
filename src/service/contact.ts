@@ -63,7 +63,7 @@ export class ContactHandler {
      * Add an address to a contact
      * @param contactId the contact ID that this address is related to
      * @param address the address as Zoho Address Object
-     * @returns
+     * @returns the Address ID
      */
     public async addAddress(
         contactId: string,
