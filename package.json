@@ -1,7 +1,7 @@
 {
     "name": "@trieb.work/zoho-ts",
-    "version": "0.5.35",
-    "description": "Our Typescript library helps you to work easily with the Zoho Inventory and Zoho Books API. Most functions are generic and self-explanatory. Some are specific to our use-cases",
+    "version": "0.5.36",
+    "description": "Node Library for Zoho Inventory and Zoho Books",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [
@@ -13,6 +13,12 @@
     },
     "author": "Jannik Zinkl | trieb.work",
     "license": "MIT",
+    "keywords": [
+        "Zoho",
+        "Node",
+        "Typescript",
+        "Zoho Inventory"
+    ],
     "scripts": {
         "build": "tsc",
         "dev": "yarn tsc --watch --preserveWatchOutput",
