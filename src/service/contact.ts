@@ -83,6 +83,29 @@ export class ContactHandler {
     }
 
     /**
+     * Add an address to a contact
+     * @param contactId the contact ID that this address is related to
+     * @param address the address as Zoho Address Object
+     * @returns the Address ID
+     */
+    public async updateAddress(
+        contactId: string,
+        addressId: string,
+        address: CreateAddress,
+    ): Promise<string> {
+        const res = await this.client.put<{
+            address_info: { address_id: string };
+        }>({
+            path: ["contacts", contactId, "address", addressId],
+            body: {
+                ...address,
+            },
+        });
+
+        return res.address_info.address_id;
+    }
+
+    /**
      * List contact using different filters and sort Orders. Default Limit is 200, resulting in 1 API calls - using pagination automatically.
      * Limit the total result using the fields "createdDateStart" (GTE) or "createdDateEnd" (LTE)
      * Contacts can be vendors or customers.

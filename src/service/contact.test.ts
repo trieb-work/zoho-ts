@@ -52,14 +52,25 @@ describe("Contact Tests", () => {
         expect(contactCreate.contact_name).toBe("Test User Lastname");
     });
 
+    let zohoAddressId :string;
     test("It should work to add an new address for a contact", async () => {
-        await zoho.contact.addAddress(createdContact, {
+        zohoAddressId = await zoho.contact.addAddress(createdContact, {
             address: "New Address 44",
             city: "Nürnberg",
             zip: "90446",
             country: "Germany",
         });
     });
+    test("It should work to update the address of an contact", async () => {
+        const resp = await zoho.contact.updateAddress(createdContact, zohoAddressId, {
+            address: "New Address 44",
+            city: "Nürnberg",
+            zip: "90446",
+            country: "Germany",
+        });
+        expect(resp).toBeDefined();
+
+    })
 
     test("It should work to get a certain contact", async () => {
         const contact = await zoho.contact.get(createdContact);
