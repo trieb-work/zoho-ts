@@ -119,6 +119,12 @@ export type Contact = {
      */
     customer_sub_type: "business" | "individual";
 
+    /**
+     * Contact can be disabled, for example when merged with
+     * a different contact
+     */
+    status: "active" | "inactive";
+
     last_modified_time: string;
 
     created_time: string;
