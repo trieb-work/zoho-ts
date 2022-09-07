@@ -131,10 +131,10 @@ export type Invoice = {
      */
     salesperson_name: string;
 
-    /**
-     * List of contact persons details.
+     /**
+     * List of contact persons IDs.
      */
-    contact_persons: ContactPerson[];
+    contact_persons: string[];
 
     /**
      * Balance due for the invoice.
