@@ -33,22 +33,30 @@ export class InvoiceHandler {
      * @param opts
      * @returns
      */
-    public async list(opts: {
-        sortColumn?: "date" | "created_time" | "last_modified_time" | "total";
-        sortOrder?: "ascending" | "descending";
-        /**
-         * yyyy-mm-dd
-         */
-        createdDateStart?: string;
-        /**
-         * yyyy-mm-dd
-         */
-        createdDateEnd?: string;
-        /**
-         * Filter Invoices by a specific Custom View ID
-         */
-        customViewId?: string;
-    }): Promise<ListInvoice[]> {
+    public async list(
+        opts:
+            | {
+                  sortColumn?:
+                      | "date"
+                      | "created_time"
+                      | "last_modified_time"
+                      | "total";
+                  sortOrder?: "ascending" | "descending";
+                  /**
+                   * yyyy-mm-dd
+                   */
+                  createdDateStart?: string;
+                  /**
+                   * yyyy-mm-dd
+                   */
+                  createdDateEnd?: string;
+                  /**
+                   * Filter Invoices by a specific Custom View ID
+                   */
+                  customViewId?: string;
+              }
+            | undefined,
+    ): Promise<ListInvoice[]> {
         const invoices: ListInvoice[] = [];
         let hasMorePages = true;
         let page = 1;
@@ -57,13 +65,13 @@ export class InvoiceHandler {
             const res = await this.client.get<{ invoices: ListInvoice[] }>({
                 path: ["invoices"],
                 params: {
-                    sort_column: opts.sortColumn ?? "date",
-                    sort_order: opts.sortOrder === "ascending" ? "A" : "D",
+                    sort_column: opts?.sortColumn ?? "date",
+                    sort_order: opts?.sortOrder === "ascending" ? "A" : "D",
                     per_page: "200",
                     page,
-                    created_date_start: opts.createdDateStart || "",
-                    created_date_end: opts.createdDateEnd || "",
-                    customview_id: opts.customViewId || "",
+                    created_date_start: opts?.createdDateStart || "",
+                    created_date_end: opts?.createdDateEnd || "",
+                    customview_id: opts?.customViewId || "",
                 },
             });
 
@@ -120,7 +128,7 @@ export class InvoiceHandler {
             await this.client.delete({
                 path: ["invoices"],
                 params: {
-                    salesorder_ids: chunk.join(","),
+                    invoice_ids: chunk.join(","),
                 },
             });
         }

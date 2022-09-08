@@ -8,12 +8,14 @@ const orgId = process.env.ZOHO_ORGANIZATION_ID as string;
 const clientId = process.env.ZOHO_CLIENT_ID as string;
 const clientSecret = process.env.ZOHO_CLIENT_SECRET as string;
 
-let zoho :Zoho
+let zoho: Zoho;
 let testUserId: string;
+let testUserContactPerson: string;
+let testSalesOrderId: string;
+let testSalesOrderTotal: number;
 
 describe("invoice Tests", () => {
     beforeAll(async () => {
-
         const client = await ZohoApiClient.fromOAuth({
             orgId,
             client: {
@@ -22,16 +24,24 @@ describe("invoice Tests", () => {
             },
         });
         zoho = new Zoho(client);
-
-    })
-
-
+    });
 
     const invoiceIds: string[] = [];
 
-    test ("It should work to create a invoice", async () => {
-        const testUser = await zoho.contact.create({ contact_name: "Test Run User Zoho TS", customer_sub_type: "individual" })
+    test("It should work to create a invoice", async () => {
+        const testUser = await zoho.contact.create({
+            contact_name: "Test Run User Zoho TS",
+            customer_sub_type: "individual",
+            contact_persons: [
+                {
+                    email: "testuser@trieb.work",
+                    first_name: "Jest",
+                    last_name: "Runner",
+                },
+            ],
+        });
         testUserId = testUser.contact_id;
+        testUserContactPerson = testUser.contact_persons[0].contact_person_id;
 
         const invoice = await zoho.invoice.create({
             customer_id: testUser.contact_id,
@@ -42,14 +52,14 @@ describe("invoice Tests", () => {
                 },
             ],
         });
-        invoiceIds.push(invoice.invoice_id)
+        invoiceIds.push(invoice.invoice_id);
         expect(invoice.customer_id).toBe(testUser.contact_id);
+    });
 
-    })
-
-    test ("it should work to create an invoice from a salesorder", async () => {
+    test("it should work to create an invoice from a salesorder", async () => {
         const salesOrderCreate = await zoho.salesOrder.create({
             customer_id: testUserId,
+            contact_persons: [testUserContactPerson],
             discount_type: "entity_level",
             salesorder_number: "TEST-34003594",
             line_items: [
@@ -59,45 +69,38 @@ describe("invoice Tests", () => {
                     discount: 10,
                 },
             ],
-        })
+        });
+        testSalesOrderId = salesOrderCreate.salesorder_id;
+        testSalesOrderTotal = salesOrderCreate.total;
 
-        const invoice = await zoho.invoice.createFromSalesOrder(salesOrderCreate.salesorder_id)
-        console.log(invoice)
-
-        await zoho.salesOrder.delete([salesOrderCreate.salesorder_id]);
-
-
+        const invoice = await zoho.invoice.createFromSalesOrder(
+            salesOrderCreate.salesorder_id,
+        );
+        invoiceIds.push(invoice.invoice_id);
+        expect(invoice.invoice_id).toBeDefined();
+        expect(invoice.contact_persons_details.length).toBe(1);
+        expect(invoice.reference_number).toBe("TEST-34003594");
+        expect(invoice.total).toBe(testSalesOrderTotal);
     });
 
-
-    
-    // test("It should work to set a custom Field Value", async () => {
-  
-    //     await zoho.invoice.setCustomFieldValue({
-    //         customFieldName: "cf_orderhash",
-    //         invoiceIds: [invoiceIds[0]],
-    //         value: "bcc",
-    //     });
-    //     const result = await zoho.invoice.get(invoiceIds[0])
-    //     expect(result.custom_fields.find((x) => x.api_name === "cf_orderhash")?.value).toBe("bcc");
-
-    // })
-
     test("It should work to list invoice sorted by last_update_date", async () => {
-        const res = await zoho.invoice.list({ sortColumn: "last_modified_time", createdDateStart: "2022-01-01"})
+        const res = await zoho.invoice.list({
+            sortColumn: "last_modified_time",
+            createdDateStart: "2022-01-01",
+        });
         expect(res.length).toBeGreaterThan(0);
+    });
 
-    })
-
-    test("IT should work to delete a invoice", async () => {
+    test("It should work to delete invoices", async () => {
         await zoho.invoice.delete(invoiceIds);
-
+        const allInvoices = await zoho.invoice.list({});
+        expect(
+            allInvoices.find((i) => i.invoice_id === invoiceIds[0]),
+        ).toBeUndefined();
     });
 
     afterAll(async () => {
+        await zoho.salesOrder.delete([testSalesOrderId]);
         await zoho.contact.delete([testUserId]);
-
-    })
-
-
+    });
 });
