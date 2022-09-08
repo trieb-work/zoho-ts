@@ -15,6 +15,7 @@ npm i @trieb.work/zoho-ts
 ```
 
 ## Usage on server
+Make sure to select the correct datacenter for your API client credentials: e.g. ".com" or ".eu"
 
 ```
 import { Zoho, ZohoApiClient } from "@trieb.work/zoho-ts";
@@ -22,6 +23,7 @@ import { Zoho, ZohoApiClient } from "@trieb.work/zoho-ts";
 const zoho = new Zoho(
     await ZohoApiClient.fromOAuth({
       orgId: "243546",
+      dc: ".com",
       client: {
         id: "",
         secret: "",

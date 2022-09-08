@@ -1,3 +1,4 @@
+import { AddressWithoutAddressId } from "./address";
 import { ContactPerson } from "./contactPerson";
 import { CustomField } from "./customField";
 import { LineItem } from "./lineItem";
@@ -137,6 +138,31 @@ export type Invoice = {
     contact_persons: ContactPerson[];
 
     /**
+     * Only visible in Invoice List
+     */
+    customer_name: string;
+
+    /**
+     * The related company name. Only visible in Invoice List
+     */
+    company_name: string;
+
+    /**
+     * The email address of the related main contact. Only visible in invoice list
+     */
+    email?: string;
+
+    /**
+     * For example EUR
+     */
+    currency_code: string;
+
+    billing_address?: AddressWithoutAddressId;
+    shipping_address?: AddressWithoutAddressId;
+
+    country?: string;
+
+    /**
      * Balance due for the invoice.
      */
     balance: number;
@@ -204,3 +230,29 @@ export type Invoice = {
      */
     last_modified_time: string;
 };
+
+/**
+ * Custom fields that always start with "cf_"
+ */
+type CustomFieldsDirectAPIResponse = { [key: string]: unknown };
+
+export type ListInvoice = Pick<
+    Invoice,
+    | "invoice_id"
+    | "customer_name"
+    | "customer_id"
+    | "company_name"
+    | "status"
+    | "invoice_number"
+    | "reference_number"
+    | "date"
+    | "due_date"
+    | "email"
+    | "currency_code"
+    | "billing_address"
+    | "shipping_address"
+    | "country"
+    | "created_time"
+    | "last_modified_time"
+> &
+    CustomFieldsDirectAPIResponse;

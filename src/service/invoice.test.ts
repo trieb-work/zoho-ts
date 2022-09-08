@@ -47,6 +47,28 @@ describe("invoice Tests", () => {
 
     })
 
+    test ("it should work to create an invoice from a salesorder", async () => {
+        const salesOrderCreate = await zoho.salesOrder.create({
+            customer_id: testUserId,
+            discount_type: "entity_level",
+            salesorder_number: "TEST-34003594",
+            line_items: [
+                {
+                    item_id: "116240000000203041",
+                    quantity: 5,
+                    discount: 10,
+                },
+            ],
+        })
+
+        const invoice = await zoho.invoice.createFromSalesOrder(salesOrderCreate.salesorder_id)
+        console.log(invoice)
+
+        await zoho.salesOrder.delete([salesOrderCreate.salesorder_id]);
+
+
+    });
+
 
     
     // test("It should work to set a custom Field Value", async () => {

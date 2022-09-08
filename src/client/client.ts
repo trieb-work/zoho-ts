@@ -78,8 +78,14 @@ export class ZohoApiError extends Error {
     }
 }
 
+type DataCenter = ".com" | ".eu" | ".in" | ".com.au" | ".jp";
+
 export type ZohoApiClientConfig = {
     orgId: string;
+    /**
+     * The data center of Zoho you want to connect to
+     */
+    dc?: DataCenter;
     headers: Record<string, string>;
     baseUrl?: string;
 };
@@ -87,14 +93,21 @@ export type ZohoApiClientConfig = {
 export class ZohoApiClient {
     private httpClient: AxiosInstance;
 
-    static readonly BASE_URL = {
-        inventory: "https://inventory.zoho.eu/api/v1",
-        books: "https://books.zoho.eu/api/v3",
+    private dataCenter: DataCenter;
+
+    private BASE_URL: {
+        inventory: string;
+        books: string;
     };
 
     private constructor(config: ZohoApiClientConfig) {
+        this.dataCenter = config.dc || ".eu";
+        this.BASE_URL = {
+            inventory: `https://inventory.zoho${this.dataCenter}/api/v1`,
+            books: `https://books.zoho${this.dataCenter}/api/v3`,
+        };
         this.httpClient = axios.create({
-            baseURL: config.baseUrl ?? ZohoApiClient.BASE_URL.inventory,
+            baseURL: config.baseUrl ?? this.BASE_URL.inventory,
             headers: config.headers,
             params: {
                 organization_id: config.orgId,
@@ -110,11 +123,16 @@ export class ZohoApiClient {
         orgId: string;
         client: { id: string; secret: string };
         baseUrl?: string;
+        /**
+         * The datacenter you want to use. Defaults to .eu
+         */
+        dc?: DataCenter;
     }): Promise<ZohoApiClient> {
+        const dataCenter = config.dc || ".eu";
         const clientCredentials = new ClientCredentials({
             client: config.client,
             auth: {
-                tokenHost: "https://accounts.zoho.eu",
+                tokenHost: `https://accounts.zoho${dataCenter}`,
                 tokenPath: "/oauth/v2/token",
             },
             options: {
@@ -136,6 +154,7 @@ export class ZohoApiClient {
                 authorization: `${res.token.token_type} ${res.token.access_token}`,
             },
             baseUrl: config.baseUrl,
+            dc: dataCenter,
         });
     }
 

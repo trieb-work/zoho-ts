@@ -1,6 +1,6 @@
 import { sleep } from "../util/retry";
 import { ZohoApiClient } from "../client/client";
-import { Invoice, CreateInvoice } from "../types/invoice";
+import { Invoice, CreateInvoice, ListInvoice } from "../types/invoice";
 
 /**
  * The Handler class for all functionality concerning Zoho
@@ -48,13 +48,13 @@ export class InvoiceHandler {
          * Filter Invoices by a specific Custom View ID
          */
         customViewId?: string;
-    }): Promise<Invoice[]> {
-        const invoices: Invoice[] = [];
+    }): Promise<ListInvoice[]> {
+        const invoices: ListInvoice[] = [];
         let hasMorePages = true;
         let page = 1;
 
         while (hasMorePages) {
-            const res = await this.client.get<{ invoices: Invoice[] }>({
+            const res = await this.client.get<{ invoices: ListInvoice[] }>({
                 path: ["invoices"],
                 params: {
                     sort_column: opts.sortColumn ?? "date",

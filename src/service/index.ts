@@ -9,6 +9,7 @@ import { PaymentHandler } from "./payment";
 import { Utils } from "./util";
 import { TaxHandler } from "./tax";
 import { ContactPersonHandler } from "./contactperson";
+import { OrganizationHandler } from "./organizations";
 export class Zoho {
     public readonly salesOrder: SalesOrderHandler;
 
@@ -30,6 +31,8 @@ export class Zoho {
 
     public readonly contactperson: ContactPersonHandler;
 
+    public readonly organization: OrganizationHandler;
+
     constructor(client: ZohoApiClient) {
         this.salesOrder = new SalesOrderHandler(client);
         this.item = new ItemHandler(client);
@@ -41,5 +44,6 @@ export class Zoho {
         this.util = new Utils();
         this.tax = new TaxHandler(client);
         this.contactperson = new ContactPersonHandler(client);
+        this.organization = new OrganizationHandler(client);
     }
 }
