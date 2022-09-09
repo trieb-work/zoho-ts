@@ -91,12 +91,26 @@ describe("invoice Tests", () => {
         expect(res.length).toBeGreaterThan(0);
     });
 
+    test("It should work to mark invoices as sent", async () => {
+        await zoho.invoice.sent(invoiceIds);
+        const allInvoices = await zoho.invoice.list({});
+        for(const invoiceId of invoiceIds){
+            const invoice = allInvoices.find((inv) => inv.invoice_id === invoiceId);
+            if(invoice?.status !== "sent") {
+                throw new Error(`Invoice with id ${invoiceId} was marked as status sent but did not have status sent in status check.`);
+            }
+        }
+    });
+
     test("It should work to delete invoices", async () => {
         await zoho.invoice.delete(invoiceIds);
         const allInvoices = await zoho.invoice.list({});
-        expect(
-            allInvoices.find((i) => i.invoice_id === invoiceIds[0]),
-        ).toBeUndefined();
+        for(const invoiceId of invoiceIds){
+            const invoice = allInvoices.find((inv) => inv.invoice_id === invoiceId);
+            if(invoice) {
+                throw new Error(`Invoice with id ${invoiceId} was deleted by test but was still returned by the search.`);
+            }
+        }
     });
 
     afterAll(async () => {
