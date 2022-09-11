@@ -9,12 +9,10 @@ export class BankAccountHandler {
     }
 
     public async list() {
-        const res = await this.client.get<{ bankaccounts?: ListBankaccount[] }>(
-            {
-                path: ["bankaccounts"],
-                apiType: "books",
-            },
-        );
-        return res?.bankaccounts || null;
+        const res = await this.client.get<{ bankaccounts: ListBankaccount[] }>({
+            path: ["bankaccounts"],
+            apiType: "books",
+        });
+        return res.bankaccounts;
     }
 }
