@@ -8,6 +8,10 @@ export class TaxHandler {
         this.client = client;
     }
 
+    /**
+     * List all current active taxes
+     * @returns
+     */
     public async list(): Promise<Tax[]> {
         const res = await this.client.get<{ taxes: Tax[] }>({
             path: ["settings", "taxes"],

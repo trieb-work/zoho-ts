@@ -29,6 +29,11 @@ export type Request = {
      * Override the base Url for this request
      */
     baseUrl?: string;
+
+    /**
+     * Should we use Zoho Books or Zoho Inventory API. Defaults to "inventory"
+     */
+    apiType?: "books" | "inventory";
 };
 
 /**
@@ -91,7 +96,9 @@ export type ZohoApiClientConfig = {
 };
 
 export class ZohoApiClient {
-    private httpClient: AxiosInstance;
+    private httpClientInventory: AxiosInstance;
+
+    private httpClientBooks: AxiosInstance;
 
     private dataCenter: DataCenter;
 
@@ -106,8 +113,16 @@ export class ZohoApiClient {
             inventory: `https://inventory.zoho${this.dataCenter}/api/v1`,
             books: `https://books.zoho${this.dataCenter}/api/v3`,
         };
-        this.httpClient = axios.create({
+        this.httpClientInventory = axios.create({
             baseURL: config.baseUrl ?? this.BASE_URL.inventory,
+            headers: config.headers,
+            params: {
+                organization_id: config.orgId,
+            },
+            timeout: 30_000,
+        });
+        this.httpClientBooks = axios.create({
+            baseURL: this.BASE_URL.books,
             headers: config.headers,
             params: {
                 organization_id: config.orgId,
@@ -141,7 +156,7 @@ export class ZohoApiClient {
         });
 
         const res = await clientCredentials.getToken({
-            scope: "ZohoInventory.FullAccess.all",
+            scope: "ZohoInventory.FullAccess.all,ZohoBooks.fullaccess.all",
         });
 
         if (res.token.error) {
@@ -208,7 +223,11 @@ export class ZohoApiClient {
             }
         }
 
-        const res = await this.httpClient
+        // Selection, if this request should use the Zoho Books or Zoho Inventory API
+        const res = await (req.apiType === "books"
+            ? this.httpClientBooks
+            : this.httpClientInventory
+        )
             .request<ZohoResponse<TResponse>>(axiosRequest)
             .catch((err) => {
                 throw new ZohoApiError(err);
