@@ -17,7 +17,10 @@
         "Zoho",
         "Node",
         "Typescript",
-        "Zoho Inventory"
+        "Zoho Inventory",
+        "zoho",
+        "inventory",
+        "books"
     ],
     "scripts": {
         "build": "tsc",
