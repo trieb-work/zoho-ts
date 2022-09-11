@@ -1,4 +1,4 @@
-import { ListBankaccount } from "src/types/bankaccount";
+import { ListBankaccount } from "../types/bankaccount";
 import { ZohoApiClient } from "../client/client";
 
 export class BankAccountHandler {
