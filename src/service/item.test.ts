@@ -7,6 +7,7 @@ dotenv.config({ path: "./.env" });
 const orgId = process.env.ZOHO_ORGANIZATION_ID as string;
 const clientId = process.env.ZOHO_CLIENT_ID as string;
 const clientSecret = process.env.ZOHO_CLIENT_SECRET as string;
+const testCompositeItemId = "116240000001686001"
 
 let zoho :Zoho
 // let testUserId: string;
@@ -85,6 +86,12 @@ describe("Item Tests", () => {
         const res = await zoho.item.list({ filterBy: "inactive" })
         expect(res.length).toBeGreaterThan(0);
         expect(res[0].status === "inactive")
+    })
+
+    test("It should work to get a composite item", async () => {
+        const res = await zoho.item.getComposite(testCompositeItemId)
+
+        expect(res.mapped_items.length).toBe(2)
     })
 
     // test("It should work to delete a item", async () => {

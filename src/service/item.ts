@@ -5,6 +5,7 @@ import {
     ItemGroup,
     Item,
     GetItem,
+    FullCompositeItem,
 } from "../types/item";
 export class ItemHandler {
     private client: ZohoApiClient;
@@ -22,6 +23,25 @@ export class ItemHandler {
             throw new Error(`Item with id: ${id} was not found`);
         }
         return res.item;
+    }
+
+    /**
+     * Item ID and composite Item IDs are the same - this route just returns the exact mapped items
+     * of a composite item
+     * @param id
+     * @returns
+     */
+    public async getComposite(id: string): Promise<FullCompositeItem> {
+        const res = await this.client.get<{
+            composite_item: FullCompositeItem;
+        }>({
+            path: ["compositeitems", id],
+        });
+
+        if (!res.composite_item) {
+            throw new Error(`CompositeItem with id: ${id} was not found`);
+        }
+        return res.composite_item;
     }
 
     /**

@@ -72,6 +72,10 @@ export type Item = {
      */
     tax_percentage: number;
 
+    brand: string;
+
+    manufacturer: string;
+
     /**
      * Type of the Tax.
      */
@@ -248,6 +252,37 @@ export type Item = {
     warehouses?: WarehouseStock[];
 };
 
+type MappedProduct = {
+    mapped_item_id: string;
+    item_id: string;
+    /**
+     * Every mapped item can have a specific order
+     */
+    item_order: number;
+    name: string;
+    rate: number;
+    rate_formatted: "€0,00";
+    purchase_rate: 0.42;
+    purchase_rate_formatted: "€0,42";
+    sku: string;
+    status: 1;
+    image_name: "";
+    image_document_id: "";
+    purchase_description: string;
+    image_type: "";
+    unit: string;
+    product_type: "goods";
+    is_combo_product: false;
+    description: "";
+    quantity: number;
+    stock_on_hand: number;
+    stock_on_hand_formatted: "0,00";
+    available_stock: number;
+    available_stock_formatted: "0,00";
+    actual_available_stock: number;
+    actual_available_stock_formatted: "0,00";
+};
+
 export type GetItem = Item;
 
 export type CreateItem = Pick<Item, "name"> & Item;
@@ -294,6 +329,17 @@ export type ItemGroup = {
     attribute_name2: string;
 
     attribute_name3: string;
+};
+
+export type FullCompositeItem = Omit<
+    Item,
+    "group_id" | "group_name" | "is_combo_product" | "item_id"
+> & {
+    is_combo_product: true;
+    mapped_items: MappedProduct[];
+    composite_component_items: MappedProduct[];
+    composite_service_items: MappedProduct[];
+    composite_item_id: string;
 };
 
 /**

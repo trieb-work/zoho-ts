@@ -31,6 +31,7 @@ export type Bankaccount = {
 export type ListBankaccount = Pick<
     Bankaccount,
     | "account_code"
+    | "account_id"
     | "account_name"
     | "account_type"
     | "balance"
