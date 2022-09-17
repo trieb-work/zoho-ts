@@ -255,6 +255,7 @@ export type ListInvoice = Pick<
     | "shipping_address"
     | "country"
     | "created_time"
-    | "last_modified_time"
+    | "last_modified_time"
+    | "total"
 > &
     CustomFieldsDirectAPIResponse;
