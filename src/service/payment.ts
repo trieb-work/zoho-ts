@@ -1,6 +1,11 @@
 import { ZohoApiClient } from "../client/client";
 import { sleep } from "../util/retry";
-import { CreatePayment, ListPayment, Payment } from "../types/payment";
+import {
+    CreatePayment,
+    CreatePaymentRes,
+    ListPayment,
+    Payment,
+} from "../types/payment";
 export class PaymentHandler {
     private client: ZohoApiClient;
 
@@ -72,8 +77,8 @@ export class PaymentHandler {
         return returnPayments;
     }
 
-    public async create(payment: CreatePayment): Promise<PaymentCreateRes> {
-        const res = await this.client.post<{ payment: Payment }>({
+    public async create(payment: CreatePayment): Promise<CreatePaymentRes> {
+        const res = await this.client.post<{ payment: CreatePaymentRes }>({
             path: ["customerpayments"],
             body: payment,
         });
