@@ -72,7 +72,7 @@ export class PaymentHandler {
         return returnPayments;
     }
 
-    public async create(payment: CreatePayment): Promise<Payment> {
+    public async create(payment: CreatePayment): Promise<PaymentCreateRes> {
         const res = await this.client.post<{ payment: Payment }>({
             path: ["customerpayments"],
             body: payment,
