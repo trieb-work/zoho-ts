@@ -165,6 +165,8 @@ export type SalesOrder = {
      */
     company_name?: string;
 
+    is_inclusive_tax: boolean;
+
     /**
      * The contact persons IDs, that are connected to this salesorder
      */

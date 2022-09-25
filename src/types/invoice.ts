@@ -90,6 +90,12 @@ export type Invoice = {
     invoice_number: string;
 
     /**
+     * Used to specify whether the line item rates are inclusive or exclusive of
+     * tax.
+     */
+    is_inclusive_tax: boolean;
+
+    /**
      * The current status of the Invoice.
      */
     status: string;
