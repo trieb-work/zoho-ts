@@ -83,7 +83,7 @@ export class ZohoApiError extends Error {
     }
 }
 
-type DataCenter = ".com" | ".eu" | ".in" | ".com.au" | ".jp";
+export type DataCenter = ".com" | ".eu" | ".in" | ".com.au" | ".jp";
 
 export type ZohoApiClientConfig = {
     orgId: string;
