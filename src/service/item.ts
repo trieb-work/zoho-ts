@@ -6,6 +6,7 @@ import {
     Item,
     GetItem,
     FullCompositeItem,
+    ListItem,
 } from "../types/item";
 export class ItemHandler {
     private client: ZohoApiClient;
@@ -57,13 +58,13 @@ export class ItemHandler {
          * Filter by only active products
          */
         filterBy?: "active" | "inactive";
-    }): Promise<Item[]> {
-        const items: Item[] = [];
+    }): Promise<ListItem[]> {
+        const items: ListItem[] = [];
         let hasMorePages = true;
         let page = 1;
 
         while (hasMorePages) {
-            const res = await this.client.get<{ items: Item[] }>({
+            const res = await this.client.get<{ items: ListItem[] }>({
                 path: ["items"],
                 params: {
                     sort_column: opts.sortColumn ?? "created_time",
