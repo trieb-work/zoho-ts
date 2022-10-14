@@ -240,6 +240,15 @@ export type Item = {
      */
     purchase_description: string;
 
+    package_details: {
+        dimension_unit: "cm";
+        height: string;
+        length: string;
+        weight: number;
+        weight_unit: "kg" | "g" | "lb" | "oz";
+        width: string;
+    };
+
     /**
      * Type of the image i.e., its file format.
      */
