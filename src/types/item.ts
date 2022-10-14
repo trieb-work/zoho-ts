@@ -334,6 +334,7 @@ export type ListItem = Pick<
     | "tax_id"
     | "tax_percentage"
     | "unit"
+    | "status"
 > &
     Partial<Pick<Item, "group_name">> &
     PackageDetails &
