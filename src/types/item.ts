@@ -321,6 +321,8 @@ export type ListItem = Pick<
     | "item_name"
     | "item_type"
     | "last_modified_time"
+    | "created_time"
+    | "name"
     | "manufacturer"
     | "name"
     | "product_type"
@@ -333,6 +335,7 @@ export type ListItem = Pick<
     | "tax_percentage"
     | "unit"
 > &
+    Partial<Pick<Item, "group_name">> &
     PackageDetails &
     CustomFieldsDirectAPIResponse;
 
