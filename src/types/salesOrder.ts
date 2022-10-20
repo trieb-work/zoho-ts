@@ -462,6 +462,8 @@ export type SalesOrder = {
      */
     shipping_charge_tax_percentage: number | "";
 
+    invoiced_status: "invoiced" | "not_invoiced";
+
     /**
      *  Additional custom fields
      */
