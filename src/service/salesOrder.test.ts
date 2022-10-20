@@ -49,7 +49,12 @@ describe("SalesOrder Tests", () => {
 
     })
 
+    test("It should work to list all salesOrders", async () => {
+        const list = await zoho.salesOrder.list({});
 
+        expect(list.length).toBeGreaterThan(0)
+
+    })
     
     test("It should work to set a custom Field Value", async () => {
   
