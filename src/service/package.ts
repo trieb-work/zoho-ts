@@ -1,5 +1,11 @@
 import { ZohoApiClient } from "../client/client";
-import { Package } from "../types/package";
+import {
+    CreatePackage,
+    CreatePackageRes,
+    CreateShipment,
+    CreateShipmentRes,
+    Package,
+} from "../types/package";
 export class PackageHandler {
     private client: ZohoApiClient;
 
@@ -66,6 +72,57 @@ export class PackageHandler {
     }
 
     /**
+     * Creates a package for a specific salesorder. The shipment for it needs to be created afterwards with "createShipment"
+     * @param createPackage
+     * @param salesOrderId
+     * @returns
+     */
+    public async create(
+        createPackage: CreatePackage,
+        salesOrderId: string,
+    ): Promise<CreatePackageRes> {
+        const res = await this.client.post<{ package: CreatePackageRes }>({
+            path: ["packages"],
+            params: {
+                salesorder_id: salesOrderId,
+            },
+            body: createPackage,
+        });
+
+        return res.package;
+    }
+
+    /**
+     * Create a shipment for a package - ships out a package and adds information like the carrier and tracking number
+     * @param createShipment
+     * @param salesOrderId
+     * @param packageId
+     * @param liveTrackingEnabled
+     * @returns
+     */
+    public async createShipment(
+        createShipment: CreateShipment,
+        salesOrderId: string,
+        packageId: string,
+        liveTrackingEnabled?: boolean,
+    ): Promise<CreateShipmentRes> {
+        const res = await this.client.post<{
+            shipmentorder: CreateShipmentRes;
+        }>({
+            path: ["shipmentorders"],
+            params: {
+                salesorder_id: salesOrderId,
+                package_ids: packageId,
+                send_notification: false,
+                is_tracking_required: liveTrackingEnabled || false,
+            },
+            body: createShipment,
+        });
+
+        return res.shipmentorder;
+    }
+
+    /**
      * Delete one or several packages at once. Can be used for
      * unlimited amount of packages. Creates chunks of 25. You always need
      * to delete a corresponding shipment before the package can be deleted
@@ -94,6 +151,33 @@ export class PackageHandler {
                 path: ["packages"],
                 params: {
                     package_ids: chunk.join(","),
+                },
+            });
+        }
+    }
+
+    public async deleteShipmentOrder(ids: string[]): Promise<void> {
+        if (ids.length === 0) {
+            return;
+        }
+
+        if (ids.length === 1) {
+            await this.client.delete({
+                path: ["shipmentorders", ids[0]],
+            });
+            return;
+        }
+
+        const chunkSize = 25;
+        const chunks: string[][] = [];
+        for (let i = 0; i < ids.length; i += chunkSize) {
+            chunks.push(ids.slice(i, i + chunkSize));
+        }
+        for (const chunk of chunks) {
+            await this.client.delete({
+                path: ["shipmentorders"],
+                params: {
+                    shipment_ids: chunk.join(","),
                 },
             });
         }

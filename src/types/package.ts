@@ -29,8 +29,8 @@ export type PackageLineItem = {
     sku: string;
     name: string;
     description: string;
-    item_order: 0;
-    quantity: 1.0;
+    item_order: number;
+    quantity: number;
     unit: string;
     image_name: string;
     image_type: string;
@@ -48,13 +48,20 @@ export type PackageLineItem = {
  * This types defines the values, that the Zoho API returns us
  */
 export type ShipmentOrder = {
+    date: string;
     shipment_id: string;
+    aftership_carrier_code: "dhl-germany" | "dpd-de" | "ups" | "hermes";
     shipment_number: string;
     shipment_date: string;
     shipment_date_with_time: string;
     tracking_number: string;
+    /**
+     * When you use live tracking, you can't set the trcking link by yourself
+     */
+    tracking_link: string;
     delivery_date: string;
     delivery_date_with_time: string;
+    delivery_method: string;
     shipment_type: string;
     associated_packages_count: number;
     carrier: string;
@@ -63,6 +70,7 @@ export type ShipmentOrder = {
     delivery_guarantee: false;
     tracking_url: string;
     is_carrier_shipment: boolean;
+    notes: string;
 };
 
 /**
@@ -176,6 +184,8 @@ export type Package = {
     salesorder_id: string;
 
     salesorder_number: string;
+
+    notes: string;
 };
 
 export type PackageShortList = Pick<
@@ -200,3 +210,24 @@ export type PackageShortList = Pick<
     | "is_tracking_enabled"
     | "shipment_order"
 >;
+
+export type CreatePackage = Partial<
+    Pick<Package, Required<"date"> | "package_number" | "notes">
+> & {
+    line_items: Pick<PackageLineItem, "so_line_item_id" | "quantity">[];
+};
+
+export type CreatePackageRes = Package;
+
+export type CreateShipment = Pick<
+    ShipmentOrder,
+    "date" | "delivery_method" | "tracking_number"
+> &
+    Partial<
+        Pick<
+            ShipmentOrder,
+            "tracking_link" | "notes" | "aftership_carrier_code"
+        >
+    >;
+
+export type CreateShipmentRes = ShipmentOrder;
