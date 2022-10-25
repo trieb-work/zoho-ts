@@ -466,6 +466,8 @@ export type SalesOrder = {
 
     invoiced_status: "invoiced" | "not_invoiced" | "";
 
+    shipped_status: "shipped" | "fulfilled" | "pending" | "";
+
     order_status: SalesOrderStatus;
 
     /**
