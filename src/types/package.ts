@@ -83,7 +83,7 @@ export type Package = {
     package_id: string;
 
     /**
-     * Package number of the Sales Order.
+     * Package number.
      */
     package_number: string;
 
@@ -103,9 +103,9 @@ export type Package = {
     shipment_type: string;
 
     /**
-     * The current status of the Sales Order.
+     * The current status of the Package.
      */
-    status: string;
+    status: "not_shipped" | "shipped" | "delivered";
 
     /**
      * Detailed status.
