@@ -211,10 +211,14 @@ export type PackageShortList = Pick<
     | "shipment_order"
 >;
 
+export type CreatePackageLineItems = Pick<
+    PackageLineItem,
+    "so_line_item_id" | "quantity"
+>[];
 export type CreatePackage = Partial<
     Pick<Package, Required<"date"> | "package_number" | "notes">
 > & {
-    line_items: Pick<PackageLineItem, "so_line_item_id" | "quantity">[];
+    line_items: CreatePackageLineItems;
 };
 
 export type CreatePackageRes = Package;
