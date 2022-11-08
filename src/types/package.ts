@@ -215,11 +215,10 @@ export type CreatePackageLineItems = Pick<
     PackageLineItem,
     "so_line_item_id" | "quantity"
 >[];
-export type CreatePackage = Partial<
-    Pick<Package, Required<"date"> | "package_number" | "notes">
-> & {
-    line_items: CreatePackageLineItems;
-};
+export type CreatePackage = Pick<Package, "date"> &
+    Partial<Pick<Package, "package_number" | "notes">> & {
+        line_items: CreatePackageLineItems;
+    };
 
 export type CreatePackageRes = Package;
 
