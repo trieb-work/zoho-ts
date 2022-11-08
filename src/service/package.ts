@@ -85,6 +85,9 @@ export class PackageHandler {
             path: ["packages"],
             params: {
                 salesorder_id: salesOrderId,
+                ignore_auto_number_generation: createPackage.package_number
+                    ? true
+                    : false,
             },
             body: createPackage,
         });
