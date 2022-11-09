@@ -50,7 +50,7 @@ export type PackageLineItem = {
 export type ShipmentOrder = {
     date: string;
     shipment_id: string;
-    aftership_carrier_code: "dhl-germany" | "dpd-de" | "ups" | "hermes";
+    aftership_carrier_code: "dhl" | "dpd" | "ups" | "hermes";
     shipment_number: string;
     shipment_date: string;
     shipment_date_with_time: string;
