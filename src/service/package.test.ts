@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import dotenv from "dotenv";
 import { Zoho } from ".";
 import { ZohoApiClient } from "../client/client";
+import { SalesOrder } from "../types";
 dotenv.config({ path: "./.env" });
 
 const orgId = process.env.ZOHO_ORGANIZATION_ID as string;
@@ -29,6 +30,7 @@ describe("package Tests", () => {
     const packageIds: string[] = [];
     let testUserId: string;
     let testSalesOrderId: string;
+    let testSalesOrder: SalesOrder;
     let testShipmentOrderId: string;
 
     test("It should work to create a package", async () => {
@@ -48,17 +50,32 @@ describe("package Tests", () => {
             ],
         });
         testSalesOrderId = salesOrder.salesorder_id;
+        testSalesOrder = salesOrder;
 
         const packageCreate = await zoho.package.create({
             date: format(new Date(), "yyyy-MM-dd"),
             line_items: [{
                 so_line_item_id: salesOrder.line_items[0].line_item_id,
-                quantity: 5
+                quantity: 3
             }]
         }, testSalesOrderId);
         packageIds.push(packageCreate.package_id);
 
     });
+
+    test("It should work to create a package with a manual set package number", async () => {
+        const packageCreate = await zoho.package.create({
+            package_number: "LF-33567434",
+            date: format(new Date(), "yyyy-MM-dd"),
+            line_items: [{
+                so_line_item_id: testSalesOrder.line_items[0].line_item_id,
+                quantity: 2
+            }]
+        }, testSalesOrderId);
+        packageIds.push(packageCreate.package_id);
+        expect(packageCreate.package_number).toBe("LF-33567434")        
+
+    })
 
     test("It should work to create a shipmentorder for a package", async () => {
         const shipmentCreate = await zoho.package.createShipment({
