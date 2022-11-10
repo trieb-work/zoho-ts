@@ -82,7 +82,7 @@ describe("package Tests", () => {
             date: format(new Date(), "yyyy-MM-dd"),
             delivery_method: "DHL Germany",
             tracking_number: "92358gfw8reg5",
-            aftership_carrier_code: "dhl-germany",
+            aftership_carrier_code: "dhl",
         }, testSalesOrderId, packageIds[0], true)
 
         expect(shipmentCreate.tracking_number).toBe("92358gfw8reg5")

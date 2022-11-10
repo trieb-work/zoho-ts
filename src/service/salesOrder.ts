@@ -40,6 +40,11 @@ export class SalesOrderHandler {
     public async list(opts: {
         sortColumn?: "date" | "created_time" | "last_modified_time" | "total";
         sortOrder?: "ascending" | "descending";
+        /**
+         * Filter for salesorders last modified after this date. API has some bugs, date has to look like this:
+         * 2022-11-02T00:00:00-0000  -- doesn't work with timezone +0100 for example
+         */
+        last_modified_time?: string;
         limit?: number;
         /**
          * yyyy-mm-dd
@@ -70,6 +75,7 @@ export class SalesOrderHandler {
                     page,
                     created_date_start: opts.createdDateStart || "",
                     created_date_end: opts.createdDateEnd || "",
+                    last_modified_time: opts.last_modified_time || "",
                     customview_id: opts.customViewId || "",
                 },
             });
