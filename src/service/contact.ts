@@ -144,8 +144,7 @@ export class ContactHandler {
                     page,
                     status: opts.filterBy || "",
                     contact_type: opts.contactType || "",
-                    last_modified_time:
-                        encodeURIComponent(opts.lastModifiedTime || "") || "",
+                    last_modified_time: opts.lastModifiedTime || "",
                 },
             });
 

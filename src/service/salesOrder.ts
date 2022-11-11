@@ -75,8 +75,7 @@ export class SalesOrderHandler {
                     page,
                     created_date_start: opts.createdDateStart || "",
                     created_date_end: opts.createdDateEnd || "",
-                    last_modified_time:
-                        encodeURIComponent(opts.lastModifiedTime || "") || "",
+                    last_modified_time: opts.lastModifiedTime || "",
                     customview_id: opts.customViewId || "",
                 },
             });

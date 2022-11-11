@@ -94,6 +94,19 @@ describe("Contact Tests", () => {
         expect(searchForContact?.contact_id).toBeDefined();
     }, 10000);
 
+    test("It should work to list all contacts with last modified time filter", async () => {
+        const contacts = await zoho.contact.list({
+            lastModifiedTime: "2022-11-10T00:00:00+0100"
+        });
+
+        expect(contacts.length).toBeGreaterThan(0);
+        expect(contacts[0].contact_id).toBeDefined;
+        const searchForContact = contacts.find(
+            (x) => x.contact_name === "Test User Lastname",
+        );
+        expect(searchForContact?.contact_id).toBeDefined();
+    });
+
     test("It should work to list the contactpersons of a contact", async () => {
         const response = await zoho.contact.listContactPersons(contactIds[0]);
         expect(response.length).toBeGreaterThan(0);
