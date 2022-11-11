@@ -117,6 +117,11 @@ export class ContactHandler {
         sortOrder?: "ascending" | "descending";
         limit?: number;
         /**
+         * Filter for contacts last modified after this date. API has some bugs, date has to look like this:
+         * 2022-11-02T00:00:00-0000  -- you need to URL encode it
+         */
+        lastModifiedTime?: string;
+        /**
          * Filter by only active contacts
          */
         filterBy?: "active" | "inactive";
@@ -139,6 +144,8 @@ export class ContactHandler {
                     page,
                     status: opts.filterBy || "",
                     contact_type: opts.contactType || "",
+                    last_modified_time:
+                        encodeURIComponent(opts.lastModifiedTime || "") || "",
                 },
             });
 
