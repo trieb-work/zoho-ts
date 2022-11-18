@@ -6,6 +6,7 @@ import {
     CreateShipmentRes,
     Package,
 } from "../types/package";
+import { lastModifiedDateFormat } from "../util/format";
 export class PackageHandler {
     private client: ZohoApiClient;
 
@@ -31,6 +32,11 @@ export class PackageHandler {
         sortColumn?: "date" | "created_time" | "last_modified_time" | "total";
         sortOrder?: "ascending" | "descending";
         limit?: number;
+
+        /**
+         * Filter for paxkages last modified after this date.
+         */
+        lastModifiedTime?: Date;
         /**
          * yyyy-mm-dd
          */
@@ -59,6 +65,9 @@ export class PackageHandler {
                     date_start: opts.createdDateStart || "",
                     date_end: opts.createdDateEnd || "",
                     customview_id: opts.customViewId || "",
+                    last_modified_time: opts.lastModifiedTime
+                        ? lastModifiedDateFormat(opts.lastModifiedTime)
+                        : "",
                 },
             });
 

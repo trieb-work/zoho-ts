@@ -7,6 +7,8 @@ import {
     ListSalesOrder,
 } from "../types/salesOrder";
 import type { RequireOnlyOne } from "./util";
+import { lastModifiedDateFormat } from "../util/format";
+
 
 /**
  * The Handler class for all functionality concerning Zoho
@@ -41,10 +43,9 @@ export class SalesOrderHandler {
         sortColumn?: "date" | "created_time" | "last_modified_time" | "total";
         sortOrder?: "ascending" | "descending";
         /**
-         * Filter for salesorders last modified after this date. API has some bugs, date has to look like this:
-         * 2022-11-02T00:00:00-0000
+         * Filter for salesorders last modified after this date.
          */
-        lastModifiedTime?: string;
+        lastModifiedTime?: Date;
         limit?: number;
         /**
          * yyyy-mm-dd
@@ -75,8 +76,10 @@ export class SalesOrderHandler {
                     page,
                     created_date_start: opts.createdDateStart || "",
                     created_date_end: opts.createdDateEnd || "",
-                    last_modified_time: opts.lastModifiedTime || "",
                     customview_id: opts.customViewId || "",
+                    last_modified_time: opts.lastModifiedTime
+                        ? lastModifiedDateFormat(opts.lastModifiedTime)
+                        : "",
                 },
             });
 

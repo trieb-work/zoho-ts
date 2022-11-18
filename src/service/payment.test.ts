@@ -1,7 +1,7 @@
 import dotenv from "dotenv";
 import { Zoho } from ".";
 import { ZohoApiClient } from "../client/client";
-import { format } from "date-fns";
+import { format, subHours } from "date-fns";
 dotenv.config({ path: "./.env" });
 
 const orgId = process.env.ZOHO_ORGANIZATION_ID as string;
@@ -56,7 +56,9 @@ describe("payment Tests", () => {
     });
 
     test("It should work to list all payments", async () => {
-        const payments = await zoho.payment.list({})
+        const payments = await zoho.payment.list({
+            lastModifiedTime: subHours(new Date(), 1),
+        })
 
         expect(payments.length).toBeGreaterThan(0);
         expect(payments[0].payment_id).toBeDefined;

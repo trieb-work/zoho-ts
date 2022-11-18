@@ -8,6 +8,8 @@ import {
     FullCompositeItem,
     ListItem,
 } from "../types/item";
+import { lastModifiedDateFormat } from "../util/format";
+
 export class ItemHandler {
     private client: ZohoApiClient;
 
@@ -58,6 +60,10 @@ export class ItemHandler {
          * Filter by only active products
          */
         filterBy?: "active" | "inactive";
+        /**
+         * Filter for items last modified after this date.
+         */
+        lastModifiedTime?: Date;
     }): Promise<ListItem[]> {
         const items: ListItem[] = [];
         let hasMorePages = true;
@@ -72,6 +78,9 @@ export class ItemHandler {
                     per_page: "200",
                     page,
                     status: opts.filterBy || "",
+                    last_modified_time: opts.lastModifiedTime
+                        ? lastModifiedDateFormat(opts.lastModifiedTime)
+                        : "",
                 },
             });
 

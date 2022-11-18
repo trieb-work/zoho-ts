@@ -96,7 +96,7 @@ describe("Contact Tests", () => {
 
     test("It should work to list all contacts with last modified time filter", async () => {
         const contacts = await zoho.contact.list({
-            lastModifiedTime: "2022-11-10T00:00:00+0100"
+            lastModifiedTime: new Date("2022-11-10T00:00:00+0100")
         });
 
         expect(contacts.length).toBeGreaterThan(0);

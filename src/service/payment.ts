@@ -6,6 +6,7 @@ import {
     ListPayment,
     Payment,
 } from "../types/payment";
+import { lastModifiedDateFormat } from "../util/format";
 export class PaymentHandler {
     private client: ZohoApiClient;
 
@@ -30,10 +31,9 @@ export class PaymentHandler {
         sortColumn?: "date" | "created_time" | "last_modified_time" | "total";
         sortOrder?: "ascending" | "descending";
         /**
-         * Filter for salesorders last modified after this date. API has some bugs, date has to look like this:
-         * 2022-11-02T00:00:00-0000
+         * Filter for payments last modified after this date.
          */
-        lastModifiedTime?: string;
+        lastModifiedTime?: Date;
         /**
          * yyyy-mm-dd - the date of the payment. Not the date it was created!
          */
@@ -59,7 +59,9 @@ export class PaymentHandler {
                     page,
                     date_start: opts.dateStart || "",
                     date_end: opts.dateEnd || "",
-                    last_modified_time: opts.lastModifiedTime || "",
+                    last_modified_time: opts.lastModifiedTime
+                        ? lastModifiedDateFormat(opts.lastModifiedTime)
+                        : "",
                 },
             });
 

@@ -3,6 +3,8 @@ import { ZohoApiClient } from "../client/client";
 import { CreateAddress } from "../types/address";
 import { sleep } from "../util/retry";
 import { ContactPersonWithoutContact } from "../types/contactPerson";
+import { lastModifiedDateFormat } from "../util/format";
+
 /**
  * Handling all methods related to the Zoho Contact Entity
  */
@@ -117,10 +119,9 @@ export class ContactHandler {
         sortOrder?: "ascending" | "descending";
         limit?: number;
         /**
-         * Filter for contacts last modified after this date. API has some bugs, date has to look like this:
-         * 2022-11-02T00:00:00-0000  -- you need to URL encode it
+         * Filter for contacts last modified after this date.
          */
-        lastModifiedTime?: string;
+        lastModifiedTime?: Date;
         /**
          * Filter by only active contacts
          */
@@ -144,7 +145,9 @@ export class ContactHandler {
                     page,
                     status: opts.filterBy || "",
                     contact_type: opts.contactType || "",
-                    last_modified_time: opts.lastModifiedTime || "",
+                    last_modified_time: opts.lastModifiedTime
+                        ? lastModifiedDateFormat(opts.lastModifiedTime)
+                        : "",
                 },
             });
 
