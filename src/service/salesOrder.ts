@@ -42,7 +42,7 @@ export class SalesOrderHandler {
         sortOrder?: "ascending" | "descending";
         /**
          * Filter for salesorders last modified after this date. API has some bugs, date has to look like this:
-         * 2022-11-02T00:00:00-0000  -- doesn't work with timezone +0100 for example
+         * 2022-11-02T00:00:00-0000
          */
         lastModifiedTime?: string;
         limit?: number;

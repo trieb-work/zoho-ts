@@ -30,6 +30,11 @@ export class PaymentHandler {
         sortColumn?: "date" | "created_time" | "last_modified_time" | "total";
         sortOrder?: "ascending" | "descending";
         /**
+         * Filter for salesorders last modified after this date. API has some bugs, date has to look like this:
+         * 2022-11-02T00:00:00-0000
+         */
+        lastModifiedTime?: string;
+        /**
          * yyyy-mm-dd - the date of the payment. Not the date it was created!
          */
         dateStart?: string;
@@ -54,6 +59,7 @@ export class PaymentHandler {
                     page,
                     date_start: opts.dateStart || "",
                     date_end: opts.dateEnd || "",
+                    last_modified_time: opts.lastModifiedTime || "",
                 },
             });
 
