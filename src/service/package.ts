@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { ZohoApiClient } from "../client/client";
 import {
     CreatePackage,
@@ -132,6 +133,29 @@ export class PackageHandler {
         });
 
         return res.shipmentorder;
+    }
+
+    public async markDelivered(shipmentOrderId: string, time: Date) {
+        const res = await this.client.post<{
+            data: {
+                statusupdate_error_list: [];
+            };
+        }>({
+            path: ["shipmentorders", shipmentOrderId, "status", "delivered"],
+            body: {
+                delivered_date: format(time, "yyyy-MM-dd HH:mm"),
+            },
+        });
+
+        if (res.data.statusupdate_error_list?.length === 0) return;
+
+        throw new Error(
+            res?.data?.statusupdate_error_list
+                ? JSON.stringify(res.data.statusupdate_error_list)
+                : `Error marking package as delivered! Undefined error: ${JSON.stringify(
+                      res,
+                  )}`,
+        );
     }
 
     /**

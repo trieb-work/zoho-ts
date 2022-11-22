@@ -97,7 +97,15 @@ describe("package Tests", () => {
         expect(packages.length).toBeGreaterThan(0);
         expect(packages[0].package_id).toBeDefined;
         expect(packages.filter((p) => p.package_id === packageIds[0])).toBeDefined()
+
     })
+
+    test ("It should work to mark a package as delivered",async () => {
+        await expect(zoho.package.markDelivered(testShipmentOrderId, new Date())).resolves.not.toThrow()
+        const testpackage = await zoho.package.get(packageIds[0])
+
+        expect(testpackage?.status).toBe("delivered")
+    })    
 
     test("It should work to delete a shipmentorder", async () => {
         await zoho.package.deleteShipmentOrder([testShipmentOrderId])
