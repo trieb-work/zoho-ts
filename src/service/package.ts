@@ -135,6 +135,12 @@ export class PackageHandler {
         return res.shipmentorder;
     }
 
+    /**
+     * Mark a package as delivered. If it is already delivered, you receive code 37135
+     * @param shipmentOrderId
+     * @param time
+     * @returns
+     */
     public async markDelivered(shipmentOrderId: string, time: Date) {
         const res = await this.client.post<{
             data: {

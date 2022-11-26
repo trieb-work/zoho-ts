@@ -2,7 +2,7 @@ import { randomInt } from "crypto";
 import { format } from "date-fns";
 import dotenv from "dotenv";
 import { Zoho } from ".";
-import { ZohoApiClient } from "../client/client";
+import { ZohoApiClient, ZohoApiError } from "../client/client";
 import { SalesOrder } from "../types";
 dotenv.config({ path: "./.env" });
 
@@ -105,7 +105,12 @@ describe("package Tests", () => {
         const testpackage = await zoho.package.get(packageIds[0])
 
         expect(testpackage?.status).toBe("delivered")
-    })    
+    })  
+    
+    test ("It should fail correctly when marking a package a second time as delivered", async () => {
+
+        await expect(zoho.package.markDelivered(testShipmentOrderId, new Date())).rejects.toBeInstanceOf(ZohoApiError)
+    })  
 
     test("It should work to delete a shipmentorder", async () => {
         await zoho.package.deleteShipmentOrder([testShipmentOrderId])
