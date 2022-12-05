@@ -8,6 +8,7 @@ const orgId = process.env.ZOHO_ORGANIZATION_ID as string;
 const clientId = process.env.ZOHO_CLIENT_ID as string;
 const clientSecret = process.env.ZOHO_CLIENT_SECRET as string;
 const testCompositeItemId = "116240000001686001"
+const testItemsArray :string[] = [];
 
 let zoho :Zoho
 // let testUserId: string;
@@ -75,11 +76,17 @@ describe("Item Tests", () => {
         await zoho.item.deleteGroup(itemGroupId);
     })
 
-
-
     test("It should work to list Item sorted by last_update_date", async () => {
         const res = await zoho.item.list({ sortColumn: "last_modified_time" })
         expect(res.length).toBeGreaterThan(0);
+        res.map((r) => testItemsArray.push(r.item_id))
+    })
+
+    test("It should work to pull many items with GetMany",async () => {
+        console.log(`Pulling ${testItemsArray.length} items with getMany`)
+        const res = await zoho.item.getMany(testItemsArray)
+        console.log(res)
+        expect(res.find((i) => i.item_id === testItemsArray[0])).toBeDefined();
     })
 
     test("It should work to list only inactive items", async () => {

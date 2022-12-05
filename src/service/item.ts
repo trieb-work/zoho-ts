@@ -17,6 +17,35 @@ export class ItemHandler {
         this.client = client;
     }
 
+    /**
+     * Get many items at once - needs just 1 API call for 100 item details.
+     * @param ids
+     * @returns
+     */
+    public async getMany(ids: string[]): Promise<GetItem[]> {
+        const chunkSize = 100;
+        const chunks: string[][] = [];
+        for (let i = 0; i < ids.length; i += chunkSize) {
+            chunks.push(ids.slice(i, i + chunkSize));
+        }
+        const responseArray: GetItem[] = [];
+        for (const chunk of chunks) {
+            const result = await this.client.get<{ items: GetItem[] }>({
+                path: ["itemdetails"],
+                params: {
+                    item_ids: chunk.join(","),
+                },
+            });
+            result.items.map((i) => responseArray.push(i));
+        }
+        return responseArray;
+    }
+
+    /**
+     * Gets just one item. Better use getMany
+     * @param id
+     * @returns
+     */
     public async get(id: string): Promise<GetItem> {
         const res = await this.client.get<{ item: GetItem }>({
             path: ["items", id],
@@ -48,7 +77,7 @@ export class ItemHandler {
     }
 
     /**
-     * List invoice using different filters and sort Orders. Default Limit is 200, resulting in 1 API calls - using pagination automatically.
+     * List items using different filters and sort Orders. Default Limit is 200, resulting in 1 API calls - using pagination automatically.
      * Limit the total result using the fields "createdDateStart" (GTE) or "createdDateEnd" (LTE)
      * @param opts
      * @returns
