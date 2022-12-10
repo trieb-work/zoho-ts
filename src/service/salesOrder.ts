@@ -9,7 +9,6 @@ import {
 import type { RequireOnlyOne } from "./util";
 import { lastModifiedDateFormat } from "../util/format";
 
-
 /**
  * The Handler class for all functionality concerning Zoho
  * SalesOrders

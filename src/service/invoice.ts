@@ -149,12 +149,11 @@ export class InvoiceHandler {
         return res.invoice;
     }
 
-
     /**
      * Sent (similar to confirm) one ore many invoices at once. Can be used for unlimited amount of Invoices. Creates chunks of 25.
      * @param ids
      */
-     public async sent(ids: string[]): Promise<void> {
+    public async sent(ids: string[]): Promise<void> {
         const chunkSize = 25;
         const chunks: string[][] = [];
         for (let i = 0; i < ids.length; i += chunkSize) {

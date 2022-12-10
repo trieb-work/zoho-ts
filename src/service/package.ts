@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { sleep } from "../util/retry";
 import { ZohoApiClient } from "../client/client";
 import {
     CreatePackage,
@@ -6,8 +7,10 @@ import {
     CreateShipment,
     CreateShipmentRes,
     Package,
+    QuickCreateInput,
 } from "../types/package";
 import { lastModifiedDateFormat } from "../util/format";
+
 export class PackageHandler {
     private client: ZohoApiClient;
 
@@ -103,6 +106,33 @@ export class PackageHandler {
         });
 
         return res.package;
+    }
+
+    /**
+     * Create up to 25 packages with just one API call. This works only for fully shipped salesorders. Partial shipment is not working.
+     * Takes an array of objects as input: { salesorder_id: string; tracking_number: string; carrier: string; }[]. Package and shipment Ids
+     * are auto-created. We are sending chunks of 25 to Zoho. Unfortunately, we don't get the package or shipment ids back
+     * @param input
+     */
+    public async bulkCreateQuickShipment(
+        input: QuickCreateInput,
+    ): Promise<void> {
+        const chunkSize = 25;
+        const chunks: QuickCreateInput[] = [];
+        for (let i = 0; i < input.length; i += chunkSize) {
+            chunks.push(input.slice(i, i + chunkSize));
+        }
+
+        for (const chunk of chunks) {
+            await this.client.post<{ data: [] }>({
+                path: ["salesorders", "quickcreate", "shipment"],
+                body: {
+                    salesorders: chunk,
+                },
+            });
+
+            await sleep(500);
+        }
     }
 
     /**

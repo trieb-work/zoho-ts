@@ -20,6 +20,12 @@ export type ListPackage = Pick<
     | "is_carrier_shipment"
 >;
 
+export type QuickCreateInput = {
+    salesorder_id: string;
+    tracking_number: string;
+    carrier: string;
+}[];
+
 export type PackageLineItem = {
     line_item_id: string;
     so_line_item_id: string;
