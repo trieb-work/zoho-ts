@@ -77,6 +77,9 @@ export type ShipmentOrder = {
     tracking_url: string;
     is_carrier_shipment: boolean;
     notes: string;
+
+    created_time: string;
+    last_modified_time: string;
 };
 
 /**
