@@ -38,10 +38,6 @@ export class PackageHandler {
         limit?: number;
 
         /**
-         * Filter for paxkages last modified after this date.
-         */
-        lastModifiedTime?: Date;
-        /**
          * yyyy-mm-dd
          */
         createdDateStart?: string;
@@ -69,9 +65,6 @@ export class PackageHandler {
                     date_start: opts.createdDateStart || "",
                     date_end: opts.createdDateEnd || "",
                     customview_id: opts.customViewId || "",
-                    last_modified_time: opts.lastModifiedTime
-                        ? lastModifiedDateFormat(opts.lastModifiedTime)
-                        : "",
                 },
             });
 
