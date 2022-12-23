@@ -1,7 +1,7 @@
 import { sleep } from "../util/retry";
 import { ZohoApiClient } from "../client/client";
 import { Invoice, CreateInvoice, ListInvoice } from "../types/invoice";
-import { lastModifiedDateFormat } from "src/util/format";
+import { lastModifiedDateFormat } from "../util/format";
 
 /**
  * The Handler class for all functionality concerning Zoho
