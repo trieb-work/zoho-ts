@@ -1,6 +1,7 @@
 import { sleep } from "../util/retry";
 import { ZohoApiClient } from "../client/client";
 import { Invoice, CreateInvoice, ListInvoice } from "../types/invoice";
+import { lastModifiedDateFormat } from "src/util/format";
 
 /**
  * The Handler class for all functionality concerning Zoho
@@ -43,6 +44,10 @@ export class InvoiceHandler {
                       | "total";
                   sortOrder?: "ascending" | "descending";
                   /**
+                   * Filter for salesorders last modified after this date.
+                   */
+                  lastModifiedTime?: Date;
+                  /**
                    * yyyy-mm-dd
                    */
                   createdDateStart?: string;
@@ -72,6 +77,9 @@ export class InvoiceHandler {
                     created_date_start: opts?.createdDateStart || "",
                     created_date_end: opts?.createdDateEnd || "",
                     customview_id: opts?.customViewId || "",
+                    last_modified_time: opts?.lastModifiedTime
+                        ? lastModifiedDateFormat(opts.lastModifiedTime)
+                        : "",
                 },
             });
 
