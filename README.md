@@ -55,3 +55,18 @@ const zoho = new Zoho(
   );
 
 ```
+
+## Implemented entities
+|Entity|Functions|
+|---|---|
+|bankaccount||
+|contact||
+|contactperson||
+|invoice||
+|item||
+|organizations||
+|package||
+|payment||
+|salesorder||
+|tax||
+|warehouse||
