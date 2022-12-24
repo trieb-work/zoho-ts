@@ -70,3 +70,24 @@ const zoho = new Zoho(
 |salesorder|`create`, `get`, `delete`, `list`, `update`, `confirm`, `markVoid`, `setCustomFieldValue`, `search`|
 |tax|`list`|
 |warehouse|`get`, `list`|
+
+Usage example:
+```
+import { Zoho, ZohoApiClient } from "@trieb.work/zoho-ts";
+
+const zoho = new Zoho(
+    await ZohoApiClient.fromOAuth({
+      orgId: "243546",
+      dc: ".com",
+      client: {
+        id: "",
+        secret: "",
+      },
+    }),
+  );
+
+/// Get all payments that were modified in the last hour
+const payments = await zoho.payment.list({
+    lastModifiedTime: subHours(new Date(), 1),
+})  
+```
