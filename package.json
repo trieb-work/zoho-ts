@@ -1,7 +1,7 @@
 {
     "name": "@trieb.work/zoho-ts",
     "version": "0.5.73",
-    "description": "Node Library for Zoho Inventory and Zoho Books",
+    "description": "Node Library for Zoho Inventory, Invoice and Zoho Books",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "files": [
