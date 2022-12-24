@@ -65,8 +65,8 @@ const zoho = new Zoho(
 |invoice|`create`, `get`, `delete`, `list`, `createFromSalesOrder`, `sent`|
 |item|`create`, `get`, `delete`, `list`, `createGroup`, `deleteGroup`, `getComposite`|
 |organizations|`list`|
-|package||
-|payment||
-|salesorder||
-|tax||
-|warehouse||
+|package|`create`, `get`, `delete`, `list`,`bulkCreateQuickShipment`, `createShipment`, `markDelivered`, `deleteShipmentOrder`|
+|payment|`create`, `get`, `delete`, `list`|
+|salesorder|`create`, `get`, `delete`, `list`, `update`, `confirm`, `markVoid`, `setCustomFieldValue`, `search`|
+|tax|`list`|
+|warehouse|`get`, `list`|
