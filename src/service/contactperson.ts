@@ -1,6 +1,6 @@
 import { ZohoApiClient } from "../client/client";
-import { ContactPerson } from "src/types";
-import { CreateContactPerson } from "src/types/contactPerson";
+import { ContactPerson } from "../types";
+import { CreateContactPerson } from "../types/contactPerson";
 import { sleep } from "../util/retry";
 
 // interface IContactPersonHandler {
