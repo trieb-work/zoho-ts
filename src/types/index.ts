@@ -17,5 +17,5 @@ export type {
 export type { CustomField } from "./customField";
 export type { Contact, CreateContact, UpdateContact } from "./contact";
 export type { Item, FullCompositeItem } from "./item";
-export type { Payment } from "./payment";
+export type { Payment, CreatePayment } from "./payment";
 export type { ListBankaccount } from "./bankaccount";
