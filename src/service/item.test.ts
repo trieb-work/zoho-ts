@@ -85,7 +85,6 @@ describe("Item Tests", () => {
     test("It should work to pull many items with GetMany",async () => {
         console.log(`Pulling ${testItemsArray.length} items with getMany`)
         const res = await zoho.item.getMany(testItemsArray)
-        console.log(res)
         expect(res.find((i) => i.item_id === testItemsArray[0])).toBeDefined();
     })
 
