@@ -66,10 +66,6 @@ export type CreateSalesOrder =
          */ {
             line_items: (Pick<LineItem, "item_id" | "quantity"> &
                 Partial<LineItem>)[];
-            /**
-             * Unique ID generated for the customer. This is used as an identifier.
-             */
-            customer_id: string;
 
             custom_fields?: CustomField[];
 
