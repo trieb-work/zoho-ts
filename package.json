@@ -20,7 +20,8 @@
         "Zoho Inventory",
         "zoho",
         "inventory",
-        "books"
+        "books",
+        "invoice"
     ],
     "scripts": {
         "build": "tsc",

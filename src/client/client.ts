@@ -33,7 +33,7 @@ export type Request = {
     /**
      * Should we use Zoho Books or Zoho Inventory API. Defaults to "inventory"
      */
-    apiType?: "books" | "inventory";
+    apiType?: "books" | "inventory" | "invoice";
 };
 
 /**
@@ -101,11 +101,14 @@ export class ZohoApiClient {
 
     private httpClientBooks: AxiosInstance;
 
+    private httpClientInvoice: AxiosInstance;
+
     private dataCenter: DataCenter;
 
     private BASE_URL: {
         inventory: string;
         books: string;
+        invoice: string;
     };
 
     private constructor(config: ZohoApiClientConfig) {
@@ -113,9 +116,18 @@ export class ZohoApiClient {
         this.BASE_URL = {
             inventory: `https://inventory.zoho${this.dataCenter}/api/v1`,
             books: `https://books.zoho${this.dataCenter}/api/v3`,
+            invoice: `https://invoice.zoho${this.dataCenter}/api/v3`,
         };
         this.httpClientInventory = axios.create({
             baseURL: config.baseUrl ?? this.BASE_URL.inventory,
+            headers: config.headers,
+            params: {
+                organization_id: config.orgId,
+            },
+            timeout: 30_000,
+        });
+        this.httpClientInvoice = axios.create({
+            baseURL: config.baseUrl ?? this.BASE_URL.invoice,
             headers: config.headers,
             params: {
                 organization_id: config.orgId,
@@ -143,6 +155,12 @@ export class ZohoApiClient {
          * The datacenter you want to use. Defaults to .eu
          */
         dc?: DataCenter;
+        /**
+         * The API authentication scope, that we are requesting. You might change it to
+         * less, if you need just certain requests. Defaults to:
+         * ZohoInventory.FullAccess.all,ZohoBooks.fullaccess.all
+         */
+        scope?: string;
     }): Promise<ZohoApiClient> {
         const dataCenter = config.dc || ".eu";
         const clientCredentials = new ClientCredentials({
@@ -157,7 +175,9 @@ export class ZohoApiClient {
         });
 
         const res = await clientCredentials.getToken({
-            scope: "ZohoInventory.FullAccess.all,ZohoBooks.fullaccess.all",
+            scope:
+                config.scope ??
+                "ZohoInventory.FullAccess.all,ZohoBooks.fullaccess.all",
         });
 
         if (res.token.error) {
@@ -224,11 +244,21 @@ export class ZohoApiClient {
             }
         }
 
+        const selectApiClient = () => {
+            switch (req.apiType) {
+                case "books":
+                    return this.httpClientBooks;
+                case "inventory":
+                    return this.httpClientInventory;
+                case "invoice":
+                    return this.httpClientInvoice;
+                default:
+                    return this.httpClientInventory;
+            }
+        };
+
         // Selection, if this request should use the Zoho Books or Zoho Inventory API
-        const res = await (req.apiType === "books"
-            ? this.httpClientBooks
-            : this.httpClientInventory
-        )
+        const res = await selectApiClient()
             .request<ZohoResponse<TResponse>>(axiosRequest)
             .catch((err) => {
                 throw new ZohoApiError(err);
