@@ -3,12 +3,8 @@ import { ContactPerson } from "../types";
 import { CreateContactPerson } from "../types/contactPerson";
 import { sleep } from "../util/retry";
 
-// interface IContactPersonHandler {
-//     list(contactId: string): Promise<Omit<ContactPerson, "contact_id">[]>;
-//     list(): Promise<ContactPerson[]>;
-// }
 /**
- * Handling all methods related to the Zoho Contact Entity
+ * Handling all methods related to the Zoho ContactPerson Entity
  */
 export class ContactPersonHandler {
     private client: ZohoApiClient;
