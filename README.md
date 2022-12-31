@@ -101,7 +101,7 @@ try {
 
 } catch(err) {
   if ((err as ZohoApiError).code === 36026) {
-    this.logger.warn(
+    console.warn(
       "Aborting sync of this invoice since it was already created. Original Error: " +
         err.message,
     );
