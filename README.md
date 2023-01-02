@@ -96,3 +96,24 @@ const payments = await zoho.payment.list({
     lastModifiedTime: subHours(new Date(), 1),
 })  
 ```
+
+## Error Handling
+The library includes a custom error type, that you can use to handle the from Zoho returned error type:
+```
+try {
+  
+  await zoho.invoice.createFromSalesOrder(id)
+
+} catch(err) {
+  if ((err as ZohoApiError).code === 36026) {
+    console.warn(
+      "Aborting sync of this invoice since it was already created. Original Error: " +
+        err.message,
+    );
+  } else {
+    console.error(err.message);
+  }
+}
+
+```          
+
