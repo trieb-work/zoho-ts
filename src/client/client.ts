@@ -1,6 +1,14 @@
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
 import { ClientCredentials } from "simple-oauth2";
 
+/**
+ * Use it to select the Zoho API to use (/books /inventory /invoice).
+ * The main API of the Zoho finance suite to connect to. Some API endpoints,
+ * that are existing for example only for Zoho Books (like "bankaccount") will still
+ * use a specific API endpoint. Use together with "scope" to use the correct security scope
+ */
+export type APIFlavour = "inventory" | "books" | "invoice";
+
 export type Request = {
     path: string[];
     /**
@@ -33,7 +41,7 @@ export type Request = {
     /**
      * Should we use Zoho Books or Zoho Inventory API. Defaults to "inventory"
      */
-    apiType?: "books" | "inventory" | "invoice";
+    overwriteApiType?: APIFlavour;
 };
 
 /**
@@ -92,6 +100,7 @@ export type ZohoApiClientConfig = {
      * The data center of Zoho you want to connect to
      */
     dc?: DataCenter;
+    apiFlavour?: APIFlavour;
     headers: Record<string, string>;
     baseUrl?: string;
 };
@@ -104,6 +113,8 @@ export class ZohoApiClient {
     private httpClientInvoice: AxiosInstance;
 
     private dataCenter: DataCenter;
+
+    private apiFlavour: APIFlavour;
 
     private BASE_URL: {
         inventory: string;
@@ -142,6 +153,7 @@ export class ZohoApiClient {
             },
             timeout: 30_000,
         });
+        this.apiFlavour = config.apiFlavour || "inventory";
     }
 
     /**
@@ -161,6 +173,7 @@ export class ZohoApiClient {
          * ZohoInventory.FullAccess.all,ZohoBooks.fullaccess.all
          */
         scope?: string;
+        apiFlavour?: APIFlavour;
     }): Promise<ZohoApiClient> {
         const dataCenter = config.dc || ".eu";
         const clientCredentials = new ClientCredentials({
@@ -244,8 +257,8 @@ export class ZohoApiClient {
             }
         }
 
-        const selectApiClient = () => {
-            switch (req.apiType) {
+        const selectApiClient = (apiType: APIFlavour) => {
+            switch (apiType) {
                 case "books":
                     return this.httpClientBooks;
                 case "inventory":
@@ -257,8 +270,10 @@ export class ZohoApiClient {
             }
         };
 
-        // Selection, if this request should use the Zoho Books or Zoho Inventory API
-        const res = await selectApiClient()
+        // Selection, if this request should use the Zoho Books, Inventory or Invoice API. Can be overwritten by every request
+        const res = await selectApiClient(
+            req.overwriteApiType || this.apiFlavour,
+        )
             .request<ZohoResponse<TResponse>>(axiosRequest)
             .catch((err) => {
                 throw new ZohoApiError(err);

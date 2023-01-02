@@ -33,3 +33,17 @@ it("works to create a new Zoho Client Instance with datacenter .com", async () =
     });
     expect(client).toBeInstanceOf(ZohoApiClient);
 });
+
+it("works to create a new Zoho Client Instance with API flavour invoice", async () => {
+    
+    const client = await ZohoApiClient.fromOAuth({
+        orgId,
+        client: {
+            id: clientId,
+            secret: clientSecret,
+        },
+        apiFlavour: "invoice",
+        scope: "ZohoInvoice.fullaccess.all"
+    });
+    expect(client).toBeInstanceOf(ZohoApiClient);
+});

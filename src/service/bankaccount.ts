@@ -11,7 +11,7 @@ export class BankAccountHandler {
     public async list() {
         const res = await this.client.get<{ bankaccounts: ListBankaccount[] }>({
             path: ["bankaccounts"],
-            apiType: "books",
+            overwriteApiType: "books",
         });
         return res.bankaccounts;
     }

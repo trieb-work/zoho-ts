@@ -1,6 +1,6 @@
 {
     "name": "@trieb.work/zoho-ts",
-    "version": "0.5.73",
+    "version": "0.6.0",
     "description": "Node Library for Zoho Inventory, Invoice and Zoho Books",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -21,7 +21,8 @@
         "zoho",
         "inventory",
         "books",
-        "invoice"
+        "invoice",
+        "Zoho Invoice"
     ],
     "scripts": {
         "build": "tsc",
