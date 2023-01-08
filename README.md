@@ -1,3 +1,5 @@
+[![npm version](https://badge.fury.io/js/@trieb.work%2Fzoho-ts.svg)](https://badge.fury.io/js/@trieb.work%2Fzoho-ts)
+
 # Zoho TS
 
 A typescript / node.js library used to work with Zoho Finance Suite APIs:  Zoho Inventory, Zoho Books and Zoho Invoice.
