@@ -187,10 +187,26 @@ export class ZohoApiClient {
             },
         });
 
+        /**
+         * Select an API scope that we request for our auth token. If we got one from the user, we
+         * always use this one
+         * @returns
+         */
+        const scopeSelect = () => {
+            if (config.scope) return config.scope;
+            switch (config.apiFlavour) {
+                case "books":
+                    return "ZohoBooks.fullaccess.all";
+                case "inventory":
+                    return "ZohoInventory.FullAccess.all";
+                case "invoice":
+                    return "ZohoInvoice.FullAccess.all";
+                default:
+                    return "ZohoInventory.FullAccess.all";
+            }
+        };
         const res = await clientCredentials.getToken({
-            scope:
-                config.scope ??
-                "ZohoInventory.FullAccess.all,ZohoBooks.fullaccess.all",
+            scope: scopeSelect(),
         });
 
         if (res.token.error) {
