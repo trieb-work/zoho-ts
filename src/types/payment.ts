@@ -88,6 +88,7 @@ export type ListPayment = Pick<
     | "customer_id"
     | "created_time"
     | "last_modified_time"
+    | "date"
 > &
     Partial<Pick<Payment, "invoices">> & {
         /**
@@ -132,7 +133,6 @@ export type CreatePaymentRes = {
     payment_number: string;
     payment_number_prefix: string;
     payment_number_suffix: string;
-
 
     payment_link_id: string;
 
