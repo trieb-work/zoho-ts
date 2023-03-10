@@ -59,7 +59,7 @@ export class PackageHandler {
                 params: {
                     sort_column: opts.sortColumn ?? "date",
                     sort_order: opts.sortOrder === "ascending" ? "A" : "D",
-                    per_page: "200",
+                    per_page: opts.limit ?? "200",
                     page,
                     date_start: opts.createdDateStart || "",
                     date_end: opts.createdDateEnd || "",
@@ -69,6 +69,7 @@ export class PackageHandler {
 
             packages.push(...res.packages);
             if (!res.page_context) continue;
+            if (opts.limit && packages.length >= opts.limit) continue;
             hasMorePages = res.page_context?.has_more_page ?? false;
             page = res.page_context.page + 1 ?? 0 + 1;
         }
