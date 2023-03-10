@@ -69,8 +69,8 @@ export class PackageHandler {
 
             packages.push(...res.packages);
             if (!res.page_context) continue;
-            if (opts.limit && packages.length >= opts.limit) continue;
             hasMorePages = res.page_context?.has_more_page ?? false;
+            if (opts.limit && packages.length >= opts.limit) hasMorePages = false;
             page = res.page_context.page + 1 ?? 0 + 1;
         }
 
