@@ -100,9 +100,10 @@ export type CreateSalesOrder =
  */
 type CustomFieldsDirectAPIResponse = { [key: string]: unknown };
 
-export type SalesOrderStatus = "void" | "confirmed" | "closed";
-export type SalesOrderShippedStatus = "shipped" | "fulfilled" | "pending" | "";
-export type SalesOrderInvoicedStatus = "invoiced" | "not_invoiced" | "";
+export type SalesOrderStatus = "draft" | "void" | "onhold" | "confirmed" | "closed";
+export type SalesOrderShippedStatus = "shipped" | "partially_shipped" | "fulfilled" | "pending" | "";
+export type SalesOrderInvoicedStatus = "invoiced" | "not_invoiced" | "partially_invoiced" | "";
+export type SalesOrderPaidStatus = "paid" | "not_paid" | "partially_paid" | "";
 
 /**
  * A sales order is a financial document that confirms an impending sale. It
@@ -463,6 +464,8 @@ export type SalesOrder = {
     shipping_charge_tax_percentage: number | "";
 
     invoiced_status: SalesOrderInvoicedStatus;
+
+    paid_status: SalesOrderPaidStatus;
 
     shipped_status: SalesOrderShippedStatus;
 
