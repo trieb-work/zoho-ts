@@ -210,7 +210,7 @@ export class ZohoApiClient {
         });
 
         if (res.token.error) {
-            throw new Error(res.token.error);
+            throw new Error(res.token.error as string);
         }
 
         return new ZohoApiClient({
@@ -268,6 +268,7 @@ export class ZohoApiClient {
                 axiosRequest.data = req.body;
             } else {
                 axiosRequest.data = req.body;
+                if (!axiosRequest.headers) axiosRequest.headers = {};
                 axiosRequest.headers["Content-Type"] =
                     "application/json;charset=UTF-8";
             }
