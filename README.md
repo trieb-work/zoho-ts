@@ -16,6 +16,9 @@ yarn add @trieb.work/zoho-ts
 ```
 npm i @trieb.work/zoho-ts
 ```
+```
+pnpm i @trieb.work/zoho-ts
+```
 
 ## Usage on server
 Make sure to select the correct datacenter for your API client credentials: e.g. ".com" or ".eu".
@@ -44,11 +47,12 @@ const zoho = new Zoho(
 You can decide, which API to use - Zoho Inventory, Zoho Books, Zoho Invoice. Currently, you can only decide per instance. It is planned 
 to make it possible to decide which API to use on function level.
 
-### Authentication
+### Authentication with OAuth
 The library on the server should be used with a client ID and a client secret, that you can register at the developer console: https://api-console.zoho.eu/ (Self Client)
 
 
 ## Usage in Browser Context (use cookies for auth)
+The library can run in the browser as well (for example with browser extensions)
 
 ```
 import { Zoho, ZohoApiClient } from "@trieb.work/zoho-ts";
