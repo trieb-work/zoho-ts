@@ -1,4 +1,9 @@
-import { Contact, CreateContact, GetContact } from "../types/contact";
+import {
+    Contact,
+    CreateContact,
+    GetContact,
+    UpdateContact,
+} from "../types/contact";
 import { ZohoApiClient } from "../client/client";
 import { CreateAddress } from "../types/address";
 import { sleep } from "../util/retry";
@@ -23,6 +28,20 @@ export class ContactHandler {
     public async create(contact: CreateContact): Promise<GetContact> {
         const res = await this.client.post<{ contact: GetContact }>({
             path: ["contacts"],
+            body: contact,
+        });
+
+        return res.contact;
+    }
+
+    /**
+     * Update a contact. User the contact_person array to add first name and last name to the contact
+     * @param contact
+     * @returns
+     */
+    public async update(contact: UpdateContact): Promise<GetContact> {
+        const res = await this.client.put<{ contact: GetContact }>({
+            path: ["contacts", contact.contact_id.toString()],
             body: contact,
         });
 

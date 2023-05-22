@@ -162,7 +162,7 @@ export type UpdateContact =
     /**
      * Required fields
      */
-    Pick<Contact, "contact_name"> &
+    Pick<Contact, "contact_id"> &
         /**
          * Optional fields
          */

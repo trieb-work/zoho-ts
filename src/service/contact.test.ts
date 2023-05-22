@@ -112,6 +112,15 @@ describe("Contact Tests", () => {
         expect(response.length).toBeGreaterThan(0);
     });
 
+    test("It should work to update a contact", async () => {
+        const updateContact = {
+            contact_id: contactIds[0],
+            contact_name: "Neuer Name"
+        }
+        const response = await zoho.contact.update(updateContact);
+        expect(response.contact_name).toBe("Neuer Name")
+    });
+
     test("It should work to delete a contact", async () => {
         await zoho.contact.delete(contactIds);
     });

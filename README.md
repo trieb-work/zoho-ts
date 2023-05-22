@@ -71,7 +71,7 @@ const zoho = new Zoho(
 |Entity|Functions|
 |---|---|
 |bankaccount|`list`|
-|contact|`create`, `get`, `delete`, `list`, `addAddress`,`updateAddress`, `listContactPersons`|
+|contact|`create`, `get`, `update`, `delete`, `list`, `addAddress`,`updateAddress`, `listContactPersons`|
 |contactperson|`create`, `get`, `delete`, `list`|
 |invoice|`create`, `get`, `delete`, `list`, `createFromSalesOrder`, `sent`|
 |item|`create`, `get`, `delete`, `list`, `createGroup`, `deleteGroup`, `getComposite`|
