@@ -112,7 +112,7 @@ export type Contact = {
     /**
      * Customer or vendor / this is Zoho specific, as contacts can be vendors or customer
      */
-    contact_type: "customer";
+    contact_type: "customer" | "vendor";
 
     /**
      * Is this contact a business or an individual person
