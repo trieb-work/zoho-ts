@@ -100,9 +100,23 @@ export type CreateSalesOrder =
  */
 type CustomFieldsDirectAPIResponse = { [key: string]: unknown };
 
-export type SalesOrderStatus = "draft" | "void" | "onhold" | "confirmed" | "closed";
-export type SalesOrderShippedStatus = "shipped" | "partially_shipped" | "fulfilled" | "pending" | "";
-export type SalesOrderInvoicedStatus = "invoiced" | "not_invoiced" | "partially_invoiced" | "";
+export type SalesOrderStatus =
+    | "draft"
+    | "void"
+    | "onhold"
+    | "confirmed"
+    | "closed";
+export type SalesOrderShippedStatus =
+    | "shipped"
+    | "partially_shipped"
+    | "fulfilled"
+    | "pending"
+    | "";
+export type SalesOrderInvoicedStatus =
+    | "invoiced"
+    | "not_invoiced"
+    | "partially_invoiced"
+    | "";
 export type SalesOrderPaidStatus = "paid" | "not_paid" | "partially_paid" | "";
 
 /**

@@ -1,4 +1,4 @@
-import { Address } from ".";
+import { Address, CustomField } from ".";
 import { CreateAddress } from "./address";
 import { ContactPersonFromContactGet } from "./contactPerson";
 
@@ -156,6 +156,7 @@ export type CreateContact =
     > & {
         billing_address?: CreateAddress;
         shipping_address?: CreateAddress;
+        custom_fields?: CustomField[];
     };
 
 export type UpdateContact =
@@ -166,7 +167,9 @@ export type UpdateContact =
         /**
          * Optional fields
          */
-        Partial<Pick<Contact, "company_name">>;
+        Partial<Pick<Contact, "company_name">> & {
+            custom_fields?: CustomField[];
+        };
 
 export interface GetContact extends Contact {
     contact_persons: ContactPersonFromContactGet[];
