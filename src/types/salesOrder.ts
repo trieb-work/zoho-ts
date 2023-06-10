@@ -332,6 +332,8 @@ export type SalesOrder = {
         item_total: number;
     };
 
+    refund_status: "" | "refunded";
+
     /**
      * These are the packages created for Sales Orders
      * The quantity is the total amount of items in this package
