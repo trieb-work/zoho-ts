@@ -107,6 +107,8 @@ export type Package = {
      */
     quantity: string | number;
 
+    total_quantity: number;
+
     created_time: string;
 
     is_carrier_shipment: boolean;
