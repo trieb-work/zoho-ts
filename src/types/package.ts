@@ -1,3 +1,5 @@
+import { CustomField } from "./customField";
+
 export type ListPackage = Pick<
     Package,
     | "package_id"
@@ -105,6 +107,8 @@ export type Package = {
      */
     quantity: string | number;
 
+    total_quantity: number;
+
     created_time: string;
 
     is_carrier_shipment: boolean;
@@ -195,6 +199,8 @@ export type Package = {
     salesorder_number: string;
 
     notes: string;
+
+    custom_fields?: CustomField[];
 };
 
 export type PackageShortList = Pick<
