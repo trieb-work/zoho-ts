@@ -10,7 +10,12 @@ export type Payment = {
      * Maximum length [100]
      * Get all methods by: https://inventory.zoho.eu/api/v1/meta/paymentmodes
      */
-    payment_mode: "braintree" | "paypal" | "banktransfer" | "Banküberweisung";
+    payment_mode:
+        | "braintree"
+        | "paypal"
+        | "banktransfer"
+        | "Banküberweisung"
+        | "authorizeNet";
 
     payment_number: string;
 
@@ -142,7 +147,6 @@ export type CreatePaymentRes = {
     amount: number;
     unused_amount: number;
 
-
     /**
      * Denotes any additional bank charges. - Use this field for paypal etc. transaction costs.
      */
@@ -186,7 +190,6 @@ export type CreatePaymentRes = {
     currency_id: string;
     currency_symbol: string;
     currency_code: string;
-
 
     /**
      * List of invoices associated with the payment. Each invoice object contains invoice_id,
