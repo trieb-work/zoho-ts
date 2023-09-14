@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: pnpm i
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-        run: pnpm audit signatures
+        run: pnpm audit signatures --audit-level high
       - name: Build package
         run: pnpm build
       - name: Release
